@@ -8,15 +8,29 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
-    "format": "prettier .  --write"
+    "format": "prettier .  --write",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "devDependencies": {
-    "@typescript-eslint/parser": "^5.36.1",
+    "@babel/core": "^7.19.0",
+    "@storybook/addon-actions": "^6.5.10",
+    "@storybook/addon-essentials": "^6.5.10",
+    "@storybook/addon-interactions": "^6.5.10",
+    "@storybook/addon-links": "^6.5.10",
+    "@storybook/builder-webpack4": "^6.5.10",
+    "@storybook/manager-webpack4": "^6.5.10",
+    "@storybook/testing-library": "^0.0.13",
+    "@storybook/vue3": "^6.5.10",
+    "@typescript-eslint/parser": "^5.36.2",
+    "babel-loader": "^8.2.5",
     "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-vue": "^9.4.0",
     "nuxt": "3.0.0-rc.9",
     "prettier": "2.7.1",
-    "vite-plugin-eslint": "^1.8.1"
+    "typescript": "^4.8.3",
+    "vite-plugin-eslint": "^1.8.1",
+    "vue-loader": "^16.8.3"
   }
 }
