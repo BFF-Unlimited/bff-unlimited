@@ -1,0 +1,17 @@
+.form-input {
+  margin-bottom: 0.5rem;
+}
+
+input {
+  border: 1px solid #bababa;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+.is-validated input:invalid {
+  border-color: var(--error-color);;
+}
+
+.is-validated .error-message {
+  color: var(--error-color);;
+}
