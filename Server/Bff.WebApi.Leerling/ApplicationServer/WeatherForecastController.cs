@@ -1,37 +1,40 @@
+using Bff.Domain.Model.Core.Framework;
 using Bff.WebApi.Services.Teacher.Requests.Dto;
+using Bff.WebApi.Services.Teacher.Requests.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Ninject;
 
 namespace Bff.WebApi.Services.Teacher.ApplicationServer
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IHandlerFactory _handlerFactory;
+        private readonly IExceptionHandler _exceptionHandler;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IHandlerFactory handlerFactory, IExceptionHandler exceptionHandler)
         {
             _logger = logger;
+            _handlerFactory = handlerFactory;
+            _exceptionHandler = exceptionHandler;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        public IActionResult GetWeatherForecast()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            var query = new GetWeatherForecastQuery
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+            };
+
+            var handler = _handlerFactory.GetQueryHandler<GetWeatherForecastQuery>();
+
+            return _exceptionHandler.PerformGetOperation(() => handler.Execute(query));
+
         }
     }
 }

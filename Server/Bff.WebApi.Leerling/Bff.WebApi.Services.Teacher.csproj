@@ -9,11 +9,14 @@
   <ItemGroup>
     <Folder Include="DataAccess\" />
     <Folder Include="Domain\" />
-    <Folder Include="Handles\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bff.Domain.Model\Bff.Domain.Model.csproj" />
   </ItemGroup>
 
 </Project>
