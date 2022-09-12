@@ -14,7 +14,7 @@ namespace Bff.Domain.Model.Core.Framework
         private static readonly ConcurrentDictionary<Type, PropertyInfoCacheItem> Cache = new ConcurrentDictionary<Type, PropertyInfoCacheItem>();
         private static DateTime nextPrune = DateTime.Now.AddMinutes(PRUNE_INTERVAL_IN_MINUTES);
 
-        public void VisitProperties(object o, Action<PropertyInfo, object> action)
+        public void VisitProperties(object o, Action<PropertyInfo?, object?> action)
         {
             this.Visit(null, o, new ObjectIDGenerator(), action);
 
@@ -34,7 +34,7 @@ namespace Bff.Domain.Model.Core.Framework
                 Cache.TryRemove(key, out _);
         }
 
-        private void Visit(PropertyInfo propertyInfo, object o, ObjectIDGenerator idGenerator, Action<PropertyInfo, object> action)
+        private void Visit(PropertyInfo? propertyInfo, object o, ObjectIDGenerator idGenerator, Action<PropertyInfo?, object?> action)
         {
             idGenerator.GetId(o, out var firstTime);
             if (!firstTime)
@@ -60,7 +60,7 @@ namespace Bff.Domain.Model.Core.Framework
 
                     var propertyInfos = key.GetProperties(FLAGS);
 
-                    return new PropertyInfoCacheItem { LastAccessed = DateTime.Now, Type = key, PropertyInfos = propertyInfos };
+                    return new PropertyInfoCacheItem(DateTime.Now, key, propertyInfos);
                 });
 
                 item.LastAccessed = DateTime.Now;
@@ -71,12 +71,12 @@ namespace Bff.Domain.Model.Core.Framework
 
         private static bool IsEnumerable(Type type)
         {
-            if (type.FullName.StartsWith("System.Collections.Generic.List"))
+            if (type.FullName!.StartsWith("System.Collections.Generic.List"))
                 return true;
             return type.FullName.StartsWith("System.Collections.Generic.Dictionary") || type.IsArray;
         }
 
-        private void ProcessProperties(object o, IEnumerable<PropertyInfo> pi, ObjectIDGenerator idGenerator, Action<PropertyInfo, object> action)
+        private void ProcessProperties(object o, IEnumerable<PropertyInfo> pi, ObjectIDGenerator idGenerator, Action<PropertyInfo?, object?> action)
         {
             foreach (var prop in from prop in pi let indexerCount = prop.GetIndexParameters().Any() where !indexerCount select prop)
             {
@@ -90,7 +90,7 @@ namespace Bff.Domain.Model.Core.Framework
             }
         }
 
-        private void ProcessMember(PropertyInfo propertyInfo, object value, ObjectIDGenerator idGenerator, Action<PropertyInfo, object> action)
+        private void ProcessMember(PropertyInfo? propertyInfo, object? value, ObjectIDGenerator idGenerator, Action<PropertyInfo?, object?> action)
         {
             switch (value)
             {
@@ -116,7 +116,7 @@ namespace Bff.Domain.Model.Core.Framework
             }
         }
 
-        private void ProcessEnumerable(PropertyInfo propertyInfo, object value, ObjectIDGenerator idGenerator, Action<PropertyInfo, object> action)
+        private void ProcessEnumerable(PropertyInfo? propertyInfo, object value, ObjectIDGenerator idGenerator, Action<PropertyInfo?, object?> action)
         {
             foreach (var o in (IEnumerable)value)
                 this.ProcessMember(propertyInfo, o, idGenerator, action);
@@ -124,9 +124,15 @@ namespace Bff.Domain.Model.Core.Framework
 
         private class PropertyInfoCacheItem
         {
-            public Type Type { get; set; }
+            public PropertyInfoCacheItem(DateTime lastAccessed, Type type, PropertyInfo[] propertyInfos)
+            {
+                PropertyInfos = propertyInfos;
+                Type = type;
+                LastAccessed = lastAccessed;
+            }
+            public Type Type { get; }
 
-            public PropertyInfo[] PropertyInfos { get; set; }
+            public PropertyInfo[] PropertyInfos { get; }
 
             public DateTime LastAccessed { get; set; }
         }

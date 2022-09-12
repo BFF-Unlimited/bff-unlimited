@@ -78,8 +78,6 @@ namespace Bff.WebApi
 
     internal sealed class StartApplicationServerTask : StartupTask
     {
-        private readonly IConfiguration configuration;
-        private readonly IWebHostEnvironment hostingEnvironment;
         private readonly IKernel kernel;
         private readonly ILoggerFactory loggerFactory;
         private readonly IServiceProvider serviceProvider;
@@ -110,10 +108,10 @@ namespace Bff.WebApi
         private void LoadModules()
         {
             Assembly applicationServerAssembly = Assembly.GetExecutingAssembly() ?? throw new ApplicationException();
-            var executingAssemblyFullPath = new Uri(applicationServerAssembly.GetName().CodeBase).LocalPath;
+            var executingAssemblyFullPath = new Uri(applicationServerAssembly.GetName().CodeBase!).LocalPath;
             var folderPath = Path.GetDirectoryName(executingAssemblyFullPath);
 
-            var di = new DirectoryInfo(folderPath);
+            var di = new DirectoryInfo(folderPath!);
             var files = di.GetFiles("*.Services.*.dll");
 
             var modules = files

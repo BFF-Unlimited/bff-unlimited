@@ -18,20 +18,16 @@ namespace Bff.Domain.Model.Core.Framework
     public abstract class HandlerBase 
     {
         [Inject]
+#pragma warning disable CS8618 // Will be added bij Ninject
         public IKernel Kernel { get; set; }
 
         [Inject]
         public IRovictLogger Logger { get; set; }
+#pragma warning restore CS8618 
 
         [DebuggerStepThrough]
         protected void AssertHasAccess()
-        {
-            //var permissions = this.AttributePermissionFactory.CreateAccessPermissionInstancesFor(this, this.Container);
-            //if (permissions.Count == 0 || permissions.Any(permission => permission.HasAccess()))
-            //    return;
-
-            //throw new ForbiddenException(ApplicationServerErrorMessages.NO_PERMISSION_TO_PERFORM_ACTION);
-        }
+        { }
 
         [DebuggerStepThrough]
         protected static void GuardHandler(object request)

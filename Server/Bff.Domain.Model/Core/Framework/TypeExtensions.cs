@@ -19,7 +19,7 @@ namespace Bff.Domain.Model.Core.Framework
             return body.Method;
         }
 
-        public static ConstructorInfo ConstructorOf<T>(Expression<Func<T>> expression)
+        public static ConstructorInfo? ConstructorOf<T>(Expression<Func<T>> expression)
         {
             var body = (NewExpression)expression.Body;
             return body.Constructor;
@@ -49,7 +49,7 @@ namespace Bff.Domain.Model.Core.Framework
             throw new ArgumentException($"Invalid expression type: Expected ExpressionType.MemberAccess, Found {property.Body.NodeType}", nameof(property));
         }
 
-        public static T GetAttributeOfType<T>(Type type, string value) where T : Attribute
+        public static T? GetAttributeOfType<T>(Type type, string value) where T : Attribute
         {
             var memInfo = type.GetMember(value);
             return memInfo[0].GetCustomAttribute<T>(false);
