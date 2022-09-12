@@ -2,13 +2,18 @@
 
 A proof of concept of the landing page of 'ESIS Nieuw'.
 
-This project requires [Node.js](http://nodejs.org/) and [npm](https://npmjs.org/) (comes with Node).
-
 ## Getting started
 
 ```sh
 git clone https://github.com/BFF-Unlimited/bff-unlimited.git
-cd bff-unlimited
+```
+
+### Client
+
+The front-end requires [Node.js](http://nodejs.org/) and [npm](https://npmjs.org/) (comes with Node).
+
+```sh
+cd bff-unlimited/client
 npm i
 ```
 
