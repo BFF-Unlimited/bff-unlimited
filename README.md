@@ -7,8 +7,8 @@ This project requires [Node.js](http://nodejs.org/) and [npm](https://npmjs.org/
 ## Getting started
 
 ```sh
-git clone https://github.com/sveroude/bff-unlimited.git
-cd bff-unlimited
+git clone https://github.com/BFF-Unlimited/bff-unlimited.git
+cd bff-unlimited/client
 npm i
 ```
 
