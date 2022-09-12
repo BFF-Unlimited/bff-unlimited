@@ -76,3 +76,5 @@ UpgradeLog*.htm
 *.pidb
 *.log
 *.scc
+.vscode
+dist
