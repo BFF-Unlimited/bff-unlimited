@@ -8,6 +8,15 @@ A proof of concept of the landing page of 'ESIS Nieuw'.
 git clone https://github.com/BFF-Unlimited/bff-unlimited.git
 ```
 
+### Server
+
+```sh
+cd bff-unlimited/server
+dotnet restore
+dotnet run --project Bff.WebApi\\Bff.WebApi.csproj
+open browser naar: https://localhost:7182/swagger/index.html
+```
+
 ### Client
 
 The front-end requires [Node.js](http://nodejs.org/) and [npm](https://npmjs.org/) (comes with Node).
