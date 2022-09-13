@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Runtime.Serialization;
 
-namespace Bff.Core.Framework.Exceptions
+namespace Bff.Domain.Model.Core.Framework.Exceptions
 {
     [Serializable]
     public class UnauthorizedException : Exception
