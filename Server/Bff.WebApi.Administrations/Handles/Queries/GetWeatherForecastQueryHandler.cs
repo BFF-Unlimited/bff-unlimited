@@ -1,5 +1,4 @@
-﻿using Bff.Domain.Model.Core.Framework;
-using Bff.WebApi.Services.Administrations.DataAccess.Mysql;
+﻿using Bff.Core.Framework;
 using Bff.WebApi.Services.Administrations.Requests.Dto;
 using Bff.WebApi.Services.Administrations.Requests.Queries;
 using Ninject;
@@ -13,7 +12,7 @@ namespace Bff.WebApi.Services.Administrations.Handles.Queries
 {
     internal class GetWeatherForecastQueryHandler : QueryHandlerBase<GetWeatherForecastQuery>
     {
-        private static readonly string[] Summaries = new[]
+        private static readonly string[] _Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
@@ -38,7 +37,7 @@ namespace Bff.WebApi.Services.Administrations.Handles.Queries
 
                 a.Date = DateTime.Now.AddDays(index);
                 a.TemperatureC = Random.Shared.Next(-20, 55);
-                a.Summary = Summaries[Random.Shared.Next(Summaries.Length)];
+                a.Summary = _Summaries[Random.Shared.Next(_Summaries.Length)];
                 return a;
             })
             .ToArray();

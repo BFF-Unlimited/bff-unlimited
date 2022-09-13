@@ -1,7 +1,6 @@
 ﻿using Bff.Core.Framework;
 using Bff.Core.Framework.Exceptions;
-using Bff.WebApi.Services.Teacher.Requests.Commands;
-using Ninject;
+using Bff.WebApi.Services.Administrations.Requests.Commands;
 
 namespace Bff.WebApi.Services.Teacher.Handles.CommandHandlers
 {

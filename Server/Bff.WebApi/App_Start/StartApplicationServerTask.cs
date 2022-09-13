@@ -61,6 +61,7 @@ namespace Bff.WebApi
             _kernel.Bind<IHttpContextAccessor>().ToMethod(x => x.Kernel.Get<IServiceProvider>().GetRequiredService<IHttpContextAccessor>());
             _kernel.Bind<IHttpClientFactory>().ToMethod(x => x.Kernel.Get<IServiceProvider>().GetRequiredService<IHttpClientFactory>());
             _kernel.Bind<IRovictLogger>().ToMethod(x => x.Kernel.Get<IServiceProvider>().GetRequiredService<IRovictLogger>());
+            _kernel.Bind<IConfiguration>().ToMethod(x => x.Kernel.Get<IServiceProvider>().GetRequiredService<IConfiguration>());
         }
     }
 }
