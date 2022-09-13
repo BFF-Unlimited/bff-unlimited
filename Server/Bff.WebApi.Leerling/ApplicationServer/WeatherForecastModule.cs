@@ -1,4 +1,4 @@
-﻿using Bff.Domain.Model.Core.Framework;
+﻿using Bff.Core.Framework;
 using Bff.WebApi.Services.Teacher.Handles.CommandHandlers;
 using Bff.WebApi.Services.Teacher.Handles.Queries;
 using Bff.WebApi.Services.Teacher.Requests.Commands;

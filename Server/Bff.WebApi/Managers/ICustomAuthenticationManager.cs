@@ -13,7 +13,7 @@ namespace Bff.WebApi.Managers
 {
     public interface ICustomAuthenticationManager
     {
-        string Authenticate(string username, string password);
+        string? Authenticate(string username, string password);
 
         IDictionary<string, string> Tokens { get; }
     }

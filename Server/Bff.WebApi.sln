@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bff.WebApi", "Bff.WebApi\Bff.WebApi.csproj", "{D006CF1C-8B66-47E5-95CB-99C74F76CA60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bff.WebApi", "Bff.WebApi\Bff.WebApi.csproj", "{D006CF1C-8B66-47E5-95CB-99C74F76CA60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bff.WebApi.Services.Teacher", "Bff.WebApi.Leerling\Bff.WebApi.Services.Teacher.csproj", "{53E54142-8046-495D-8CFF-3CE6838CCFFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bff.WebApi.Services.Teacher", "Bff.WebApi.Leerling\Bff.WebApi.Services.Teacher.csproj", "{53E54142-8046-495D-8CFF-3CE6838CCFFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bff.Domain.Model", "Bff.Domain.Model\Bff.Domain.Model.csproj", "{D89FE759-28C4-46AA-8DEE-8DC354967E07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bff.Core", "Bff.Core\Bff.Core.csproj", "{D89FE759-28C4-46AA-8DEE-8DC354967E07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

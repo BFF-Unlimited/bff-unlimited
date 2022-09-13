@@ -1,6 +1,6 @@
 using Autofac.Core;
-using Bff.Domain.Model.Core.Framework;
-using Bff.Domain.Model.Core.Framework.RequestErrorHandling;
+using Bff.Core.Framework;
+using Bff.Core.Framework.RequestErrorHandling;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;

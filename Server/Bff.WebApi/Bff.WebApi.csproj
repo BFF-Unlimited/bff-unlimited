@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bff.Domain.Model\Bff.Domain.Model.csproj" />
+    <ProjectReference Include="..\Bff.Core\Bff.Core.csproj" />
     <ProjectReference Include="..\Bff.WebApi.Leerling\Bff.WebApi.Services.Teacher.csproj" />
   </ItemGroup>
 

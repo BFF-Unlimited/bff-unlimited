@@ -1,5 +1,5 @@
-using Bff.Domain.Model.Core.Framework;
-using Bff.Domain.Model.Core.Framework.Attributes;
+using Bff.Core.Framework;
+using Bff.Core.Framework.Attributes;
 using Bff.WebApi.Services.Teacher.Requests.Commands;
 using Bff.WebApi.Services.Teacher.Requests.Dto;
 using Bff.WebApi.Services.Teacher.Requests.Queries;
@@ -18,13 +18,11 @@ namespace Bff.WebApi.Services.Teacher.ApplicationServer
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private readonly ILogger<WeatherForecastController> _logger;
         private readonly IHandlerFactory _handlerFactory;
         private readonly IExceptionHandler _exceptionHandler;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IHandlerFactory handlerFactory, IExceptionHandler exceptionHandler)
+        public WeatherForecastController(IHandlerFactory handlerFactory, IExceptionHandler exceptionHandler)
         {
-            _logger = logger;
             _handlerFactory = handlerFactory;
             _exceptionHandler = exceptionHandler;
         }
@@ -45,7 +43,6 @@ namespace Bff.WebApi.Services.Teacher.ApplicationServer
             var handler = _handlerFactory.GetQueryHandler<GetWeatherForecastQuery>();
 
             return _exceptionHandler.PerformGetOperation(() => handler.Execute(query));
-
         }
 
         [HttpPut(Name = "CreateWeatherForecast")]
@@ -65,7 +62,6 @@ namespace Bff.WebApi.Services.Teacher.ApplicationServer
             var handler = _handlerFactory.GetCommandHandler<CreateWeatherForcastCommand>();
 
             return _exceptionHandler.PerformGetOperation(() => handler.Handle(query));
-
         }
     }
 }
