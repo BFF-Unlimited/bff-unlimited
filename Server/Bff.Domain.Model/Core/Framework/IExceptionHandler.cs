@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Bff.Domain.Model.Core.Framework.RequestErrorHandling;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Bff.Domain.Model.Core.Framework
 {

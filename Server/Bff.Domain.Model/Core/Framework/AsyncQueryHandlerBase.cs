@@ -1,25 +1,21 @@
-﻿using Bff.Domain.Model.Core.Framework.Extensions;
-using Ninject;
-using System.Diagnostics;
-using System.Reflection.Metadata;
-using System.Runtime.CompilerServices;
+﻿using System.Diagnostics;
 using System.Runtime.ExceptionServices;
 
 namespace Bff.Domain.Model.Core.Framework
 {
-    public abstract class QueryHandlerBase<TQuery> : HandlerBase, IQueryHandler<TQuery> where TQuery : class
+    public abstract class AsyncQueryHandlerBase<TQuery> : HandlerBase, IAsyncQueryHandler<TQuery> where TQuery : class
     {
         private const int LONG_RUNNING_QUERY_WARNING_IN_MS = 500;
 
-        protected QueryHandlerBase()
+        protected AsyncQueryHandlerBase()
         {
             this.UseReadOnlySession = true;
         }
 
-        protected bool UseReadOnlySession { get; set; }
+        protected bool UseReadOnlySession { get; }
 
         [DebuggerStepThrough]
-        public object Execute(TQuery query)
+        public async Task<object> ExecuteAsync(TQuery query)
         {
             try
             {
@@ -31,12 +27,12 @@ namespace Bff.Domain.Model.Core.Framework
 
                 //this.UnitOfWork.SetReadOnly(this.UseReadOnlySession);
                 //this.UnitOfWork.Start();
-                
+
                 this.AssertHasAccess();
 
-                var result = this.DoExecute(query);
+                var result = await this.DoExecute(query);
 
-                //this.UnitOfWork.Commit(); 
+                //await this.UnitOfWork.CommitAsync();
 
                 this.Logger.Debug(this.GetType(), "Exiting Execute. Total time {0} ms", stopwatch.ElapsedMilliseconds);
 
@@ -53,8 +49,7 @@ namespace Bff.Domain.Model.Core.Framework
                 this.Logger.Warn(this.GetType(), e, "Exception while executing query");
                 this.Logger.Error(e, e.Message);
 
-
-                // this.UnitOfWork.Rollback();
+                //await this.UnitOfWork.RollbackAsync();
 
                 ExceptionDispatchInfo.Capture(e).Throw();
                 throw; // Will never get here
@@ -65,6 +60,6 @@ namespace Bff.Domain.Model.Core.Framework
             }
         }
 
-        protected abstract object DoExecute(TQuery query);
+        protected abstract Task<object> DoExecute(TQuery query);
     }
 }

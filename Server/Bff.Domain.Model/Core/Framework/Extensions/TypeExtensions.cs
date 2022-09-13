@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Bff.Domain.Model.Core.Framework
+namespace Bff.Domain.Model.Core.Framework.Extensions
 {
     public static class TypeExtensions
     {
@@ -69,7 +69,7 @@ namespace Bff.Domain.Model.Core.Framework
             if (type.BaseType is null)
                 yield break;
 
-            foreach (var prop in GetPropertiesWithNewKeyWordCheck(type.BaseType).Where(prop => !alreadyReturnedPropertyNames.Contains(prop.Name)))
+            foreach (var prop in type.BaseType.GetPropertiesWithNewKeyWordCheck().Where(prop => !alreadyReturnedPropertyNames.Contains(prop.Name)))
                 yield return prop;
         }
 
@@ -79,7 +79,7 @@ namespace Bff.Domain.Model.Core.Framework
 
             if (type.BaseType != null)
             {
-                foreach (var prop in GetPropertiesWithNewKeyWordCheck(type.BaseType))
+                foreach (var prop in type.BaseType.GetPropertiesWithNewKeyWordCheck())
                 {
                     alreadyReturnedPropertyNames.Add(prop.Name);
                     yield return prop;

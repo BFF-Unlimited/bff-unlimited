@@ -1,8 +1,10 @@
 ﻿using System.Diagnostics;
 using System.Runtime.Serialization;
 
-namespace Bff.Domain.Model.Core.Framework
+namespace Bff.Domain.Model.Core.Framework.Exceptions
 {
+
+
     [Serializable]
     public class ForbiddenException : Exception
     {
@@ -13,7 +15,7 @@ namespace Bff.Domain.Model.Core.Framework
 
         public ForbiddenException(string messageKey, object exceptionData) : this(messageKey)
         {
-            this.ExceptionData = exceptionData;
+            ExceptionData = exceptionData;
         }
 
         public ForbiddenException(string messageKey, params string[] messageParams) : base(string.Format(messageKey, messageParams))

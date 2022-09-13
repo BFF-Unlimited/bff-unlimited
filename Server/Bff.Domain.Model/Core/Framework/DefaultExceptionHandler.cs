@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Bff.Domain.Model.Core.Framework.Exceptions;
+using Bff.Domain.Model.Core.Framework.RequestErrorHandling;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Bff.Domain.Model.Core.Framework
 {
@@ -78,42 +80,42 @@ namespace Bff.Domain.Model.Core.Framework
 
                 return result == null ? this.OperationResultFactory.NoContent() : transformResult(result);
             }
-            //catch (UnprocessableEntityException e)
-            //{
-            //    return this.OperationResultFactory.UnprocessableEntity(apiController, e);
-            //}
-            //catch (ResourceNotFoundException e)
-            //{
-            //    return this.OperationResultFactory.NotFound(apiController, e);
-            //}
-            //catch (UnauthorizedException e)
-            //{
-            //    return this.OperationResultFactory.Unauthorized(apiController, e);
-            //}
+            catch (UnprocessableEntityException e)
+            {
+                return this.OperationResultFactory.UnprocessableEntity(e);
+            }
+            catch (ResourceNotFoundException e)
+            {
+                return this.OperationResultFactory.NotFound(e);
+            }
+            catch (UnauthorizedException e)
+            {
+                return this.OperationResultFactory.Unauthorized(e);
+            }
             catch (ForbiddenException e)
             {
                 return this.OperationResultFactory.Forbidden(e);
             }
-            //catch (TooManyRequestsException e)
-            //{
-            //    return this.OperationResultFactory.TooManyRequests(apiController, e);
-            //}
-            //catch (ArgumentNullException e)
-            //{
-            //    return this.OperationResultFactory.ArgumentNull(apiController, e);
-            //}
-            //catch (ArgumentException e)
-            //{
-            //    return this.OperationResultFactory.Argument(apiController, e);
-            //}
-            //catch (DataConflictException e)
-            //{
-            //    return this.OperationResultFactory.DataConflict(apiController, e);
-            //}
-            //catch (OverflowException e)
-            //{
-            //    return this.OperationResultFactory.Forbidden(apiController, new ForbiddenException("FRAMEWORK_OVERFLOW_ERRORMESSAGE", e));
-            //}
+            catch (TooManyRequestsException e)
+            {
+                return this.OperationResultFactory.TooManyRequests(e);
+            }
+            catch (ArgumentNullException e)
+            {
+                return this.OperationResultFactory.ArgumentNull(e);
+            }
+            catch (ArgumentException e)
+            {
+                return this.OperationResultFactory.Argument(e);
+            }
+            catch (DataConflictException e)
+            {
+                return this.OperationResultFactory.DataConflict(e);
+            }
+            catch (OverflowException e)
+            {
+                return this.OperationResultFactory.Forbidden(new ForbiddenException("FRAMEWORK_OVERFLOW_ERRORMESSAGE", e));
+            }
             catch (Exception)
             {
                 return this.OperationResultFactory.InternalServerError();
@@ -127,42 +129,42 @@ namespace Bff.Domain.Model.Core.Framework
                 var result = operation();
                 return result == null ? this.OperationResultFactory.NoContent() : transformResult(result);
             }
-            //catch (UnprocessableEntityException e)
-            //{
-            //    return this.OperationResultFactory.UnprocessableEntity(apiController, e);
-            //}
-            //catch (ResourceNotFoundException e)
-            //{
-            //    return this.OperationResultFactory.NotFound(apiController, e);
-            //}
-            //catch (UnauthorizedException e)
-            //{
-            //    return this.OperationResultFactory.Unauthorized(apiController, e);
-            //}
-            //catch (ForbiddenException e)
-            //{
-            //    return this.OperationResultFactory.Forbidden(apiController, e);
-            //}
-            //catch (TooManyRequestsException e)
-            //{
-            //    return this.OperationResultFactory.TooManyRequests(apiController, e);
-            //}
-            //catch (DataConflictException e)
-            //{
-            //    return this.OperationResultFactory.DataConflict(apiController, e);
-            //}
-            //catch (ArgumentNullException e)
-            //{
-            //    return this.OperationResultFactory.ArgumentNull(apiController, e);
-            //}
-            //catch (ArgumentException e)
-            //{
-            //    return this.OperationResultFactory.Argument(apiController, e);
-            //}
-            //catch (OverflowException e)
-            //{
-            //    return this.OperationResultFactory.Forbidden(apiController, new ForbiddenException("FRAMEWORK_OVERFLOW_ERRORMESSAGE", e));
-            //}
+            catch (UnprocessableEntityException e)
+            {
+                return this.OperationResultFactory.UnprocessableEntity(e);
+            }
+            catch (ResourceNotFoundException e)
+            {
+                return this.OperationResultFactory.NotFound(e);
+            }
+            catch (UnauthorizedException e)
+            {
+                return this.OperationResultFactory.Unauthorized(e);
+            }
+            catch (ForbiddenException e)
+            {
+                return this.OperationResultFactory.Forbidden(e);
+            }
+            catch (TooManyRequestsException e)
+            {
+                return this.OperationResultFactory.TooManyRequests(e);
+            }
+            catch (DataConflictException e)
+            {
+                return this.OperationResultFactory.DataConflict(e);
+            }
+            catch (ArgumentNullException e)
+            {
+                return this.OperationResultFactory.ArgumentNull(e);
+            }
+            catch (ArgumentException e)
+            {
+                return this.OperationResultFactory.Argument(e);
+            }
+            catch (OverflowException e)
+            {
+                return this.OperationResultFactory.Forbidden(new ForbiddenException("FRAMEWORK_OVERFLOW_ERRORMESSAGE", e));
+            }
             catch (Exception)
             {
                 return this.OperationResultFactory.InternalServerError();

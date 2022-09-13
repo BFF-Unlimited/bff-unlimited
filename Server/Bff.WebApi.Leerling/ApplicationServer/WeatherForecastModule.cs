@@ -1,5 +1,7 @@
 ﻿using Bff.Domain.Model.Core.Framework;
+using Bff.WebApi.Services.Teacher.Handles.CommandHandlers;
 using Bff.WebApi.Services.Teacher.Handles.Queries;
+using Bff.WebApi.Services.Teacher.Requests.Commands;
 using Bff.WebApi.Services.Teacher.Requests.Dto;
 using Bff.WebApi.Services.Teacher.Requests.Queries;
 using Ninject;
@@ -16,7 +18,7 @@ namespace Bff.WebApi.Services.Teacher.ApplicationServer
         protected override void DoInitializeNinject(IKernel container)
         {
             container.Bind<IQueryHandler<GetWeatherForecastQuery>>().To<GetWeatherForecastQueryHandler>();
-            container.Bind<IWeatherForecast>().To<WeatherForecast>();
+            container.Bind<ICommandHandler<CreateWeatherForcastCommand>>().To<CreateWeatherForcastCommandHandler>();
         }
     }
 }

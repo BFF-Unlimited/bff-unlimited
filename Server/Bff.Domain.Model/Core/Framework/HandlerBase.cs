@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Bff.Domain.Model.Core.Framework.Exceptions;
+using Bff.Domain.Model.Core.Framework.Extensions;
+using Microsoft.Extensions.Logging;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -15,7 +17,7 @@ using System.Threading.Tasks;
 namespace Bff.Domain.Model.Core.Framework
 {
 
-    public abstract class HandlerBase 
+    public abstract class HandlerBase : IHandler
     {
         [Inject]
 #pragma warning disable CS8618 // Will be added bij Ninject
@@ -51,6 +53,12 @@ namespace Bff.Domain.Model.Core.Framework
                 if (s.Length > stringLengthAttribute.MaximumLength)
                     throw new ForbiddenException("De ingevoerde tekst '{0}' is te lang. Maximale lengte is {1}.", pi.Name, stringLengthAttribute.MaximumLength.ToString());
             });
+        }
+
+        public virtual void Initialize()
+        {
+            Guard.NotNull(this.Logger);
+            Guard.NotNull(this.Kernel);
         }
     }
 }

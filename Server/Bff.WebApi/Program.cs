@@ -1,5 +1,6 @@
 using Autofac.Core;
 using Bff.Domain.Model.Core.Framework;
+using Bff.Domain.Model.Core.Framework.RequestErrorHandling;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;
@@ -52,6 +53,7 @@ namespace Bff.WebApi
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.UseDeveloperExceptionPage();
             }
             
             app.UseHttpsRedirection();

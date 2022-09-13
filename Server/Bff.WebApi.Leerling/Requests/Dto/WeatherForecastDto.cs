@@ -1,6 +1,6 @@
 namespace Bff.WebApi.Services.Teacher.Requests.Dto
 {
-    public class WeatherForecast : IWeatherForecast
+    public class WeatherForecastDto
     {
         public DateTime Date { get; set; }
 

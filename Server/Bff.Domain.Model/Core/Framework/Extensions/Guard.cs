@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Bff.Domain.Model.Core.Framework
+namespace Bff.Domain.Model.Core.Framework.Extensions
 {
     /// <summary>
     /// Helps with guarding the sanity of the application
