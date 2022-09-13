@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  db: 
+    image: mysql:latest
+    container_name: bff_unlimited_db
+    restart: always
+    ports: 
+      - 3306:3306
+    networks:
+      - bff_unlimited_network
+    environment: 
+      - MYSQL_DATABASE=bff_unlimited
+      - MYSQL_ROOT_PASSWORD=bffunlimited123
+    volumes:
+      - db-data:/var/lib/mysql
+
+  client: 
+    build: 
+      context: ./client
+    container_name: bff_unlimited_client
+    command: npm run dev
+    ports: 
+      - 3000:3000
+    networks:
+      - bff_unlimited_network
+
+  server: 
+    build: 
+      context: ./Server
+      dockerfile: Bff.WebApi/Dockerfile
+    container_name: bff_unlimited_server
+    ports:
+      - 8080:80
+      - 6000:443
+    networks:
+      - bff_unlimited_network
+
+volumes:
+  db-data:
+networks:
+  bff_unlimited_network:
+    name: bff_unlimited_network
