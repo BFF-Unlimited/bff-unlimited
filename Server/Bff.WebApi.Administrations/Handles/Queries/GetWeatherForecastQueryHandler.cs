@@ -38,7 +38,7 @@ namespace Bff.WebApi.Services.Teacher.Handles.Queries
 
                 a.Date = DateTime.Now.AddDays(index);
                 a.TemperatureC = Random.Shared.Next(-20, 55);
-                a.Summary = Summaries[Random.Shared.Next(Summaries.Length)];
+                a.Summary = test;
                 return a;
             })
             .ToArray();
