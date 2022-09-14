@@ -1,4 +1,4 @@
-namespace Bff.WebApi.Services.Teacher.Requests.Dto
+namespace Bff.WebApi.Services.Administrations.Requests.Dto
 {
     public interface IWeatherForecast
     {

@@ -1,4 +1,4 @@
-﻿using Bff.WebApi.Services.Administrations.DataAccess.Models;
+﻿using Bff.WebApi.Services.Administrations.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Bff.WebApi.Services.Administrations.DataAccess.Mysql
 {
-    public class UserContext : DbContext
+    public class AdministrationContext : DbContext
     {
         protected readonly IConfiguration Configuration;
 
-        public UserContext(IConfiguration configuration)
+        public AdministrationContext(IConfiguration configuration)
         {
             Configuration = configuration;
         }

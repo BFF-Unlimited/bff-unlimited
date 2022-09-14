@@ -1,12 +1,12 @@
 using Bff.Domain.Model.Core.Framework;
+using Bff.WebApi.Services.Administrations.Requests.Queries;
 using Bff.WebApi.Services.Teacher.Requests.Dto;
-using Bff.WebApi.Services.Teacher.Requests.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Ninject;
 
-namespace Bff.WebApi.Services.Teacher.ApplicationServer
+namespace Bff.WebApi.Services.Administrations.ApplicationServer
 {
     //[Authorize]
     [ApiController]
