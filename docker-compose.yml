@@ -41,7 +41,7 @@ services:
     networks:
       - bff_unlimited_network
     volumes:
-      - ./Certificates:/https:ro
+      - ~/.aspnet/https:/https:ro
 
 volumes:
   db-data:
