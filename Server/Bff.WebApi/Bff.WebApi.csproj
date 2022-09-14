@@ -14,7 +14,18 @@
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Negotiate" Version="6.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.NewtonsoftJson" Version="6.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.22" />
+    <PackageReference Include="MySql.EntityFrameworkCore" Version="6.0.4" />
     <PackageReference Include="Ninject" Version="3.3.6" />
     <PackageReference Include="Ninject.Web.Common" Version="3.3.2" />
     <PackageReference Include="Serilog" Version="2.11.0" />
@@ -25,7 +36,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Bff.Core\Bff.Core.csproj" />
-    <ProjectReference Include="..\Bff.WebApi.Leerling\Bff.WebApi.Services.Teacher.csproj" />
+    <ProjectReference Include="..\Bff.WebApi.Administrations\Bff.WebApi.Services.Administrations.csproj" />
   </ItemGroup>
 
 </Project>
