@@ -24,3 +24,8 @@ npm run dev
 ```
 
 to serve the app on [`http://localhost:3000`](http://localhost:3000).
+
+## Other scripts
+`npm run ...` | Description
+---|---
+`storybook` | Starts the Storybook server on [`http://localhost:6006`](http://localhost:6006)
