@@ -1,9 +1,8 @@
 ﻿using Bff.Core.Framework;
-using Bff.WebApi.Services.Teacher.Handles.CommandHandlers;
-using Bff.WebApi.Services.Teacher.Handles.Queries;
-using Bff.WebApi.Services.Teacher.Requests.Commands;
+using Bff.WebApi.Services.Administrations.Handles.Queries;
+using Bff.WebApi.Services.Administrations.Requests.Dto;
+using Bff.WebApi.Services.Administrations.Requests.Queries;
 using Bff.WebApi.Services.Teacher.Requests.Dto;
-using Bff.WebApi.Services.Teacher.Requests.Queries;
 using Ninject;
 using System;
 using System.Collections.Generic;

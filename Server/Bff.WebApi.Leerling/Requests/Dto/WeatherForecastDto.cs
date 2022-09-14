@@ -1,3 +1,5 @@
+using Bff.WebApi.Services.Administrations.Requests.Dto;
+
 namespace Bff.WebApi.Services.Teacher.Requests.Dto
 {
     public class WeatherForecastDto

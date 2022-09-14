@@ -1,7 +1,7 @@
 ﻿using Bff.Domain.Model.Core.Framework;
 using Bff.WebApi.Services.Administrations.DataAccess.Mysql;
-using Bff.WebApi.Services.Teacher.Requests.Dto;
-using Bff.WebApi.Services.Teacher.Requests.Queries;
+using Bff.WebApi.Services.Administrations.Requests.Dto;
+using Bff.WebApi.Services.Administrations.Requests.Queries;
 using Ninject;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bff.WebApi.Services.Teacher.Handles.Queries
+namespace Bff.WebApi.Services.Administrations.Handles.Queries
 {
     internal class GetWeatherForecastQueryHandler : QueryHandlerBase<GetWeatherForecastQuery>
     {

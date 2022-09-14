@@ -1,8 +1,8 @@
 using Bff.Core.Framework;
 using Bff.Core.Framework.Attributes;
-using Bff.WebApi.Services.Teacher.Requests.Commands;
-using Bff.WebApi.Services.Teacher.Requests.Dto;
-using Bff.WebApi.Services.Teacher.Requests.Queries;
+using Bff.WebApi.Services.Administrations.Requests.Commands;
+using Bff.WebApi.Services.Administrations.Requests.Queries;
+using Bff.WebApi.Services.Administrations.Requests.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,7 +11,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Net;
 
-namespace Bff.WebApi.Services.Teacher.ApplicationServer
+namespace Bff.WebApi.Services.Administrations.ApplicationServer
 {
     [Authorize]
     [ApiController]

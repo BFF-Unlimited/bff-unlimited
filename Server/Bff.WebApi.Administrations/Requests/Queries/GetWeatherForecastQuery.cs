@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bff.WebApi.Services.Teacher.Requests.Queries
+namespace Bff.WebApi.Services.Administrations.Requests.Queries
 {
     public class GetWeatherForecastQuery
     {
