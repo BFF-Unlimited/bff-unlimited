@@ -134,6 +134,7 @@ namespace Bff.WebApi
             this.kernel.Bind<IHttpContextAccessor>().ToMethod(_ => _.Kernel.Get<IServiceProvider>().GetRequiredService<IHttpContextAccessor>());
             this.kernel.Bind<IHttpClientFactory>().ToMethod(_ => _.Kernel.Get<IServiceProvider>().GetRequiredService<IHttpClientFactory>());
             this.kernel.Bind<IRovictLogger>().ToMethod(_ => _.Kernel.Get<IServiceProvider>().GetRequiredService<IRovictLogger>());
+            this.kernel.Bind<IConfiguration>().ToMethod(x => x.Kernel.Get<IServiceProvider>().GetRequiredService<IConfiguration>());
         }
     }
 }

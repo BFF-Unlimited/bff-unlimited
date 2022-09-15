@@ -42,6 +42,8 @@ services:
       - bff_unlimited_network
     volumes:
       - ~/.aspnet/https:/https:ro
+    depends_on:
+      - db
 
 volumes:
   db-data:
