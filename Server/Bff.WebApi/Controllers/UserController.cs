@@ -9,11 +9,11 @@ namespace Bff.WebApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly ICustomAuthenticationManager customAuthenticationManager;
+        private readonly ICustomAuthenticationManager _customAuthenticationManager;
 
         public UserController(ICustomAuthenticationManager customAuthenticationManager)
         {
-            this.customAuthenticationManager = customAuthenticationManager;
+            _customAuthenticationManager = customAuthenticationManager;
         }
 
 
@@ -21,7 +21,7 @@ namespace Bff.WebApi.Controllers
         [HttpPost("token")]
         public IActionResult Authenticate([FromBody] UserDto userCred)
         {
-            var token = customAuthenticationManager.Authenticate(userCred.Username, userCred.Password);
+            var token = _customAuthenticationManager.Authenticate(userCred.Username, userCred.Password);
 
             if (token == null)
                 return Unauthorized();

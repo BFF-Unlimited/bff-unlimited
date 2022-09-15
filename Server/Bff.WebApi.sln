@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bff.WebApi", "Bff.WebApi\Bf
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bff.WebApi.Services.Administrations", "Bff.WebApi.Administrations\Bff.WebApi.Services.Administrations.csproj", "{53E54142-8046-495D-8CFF-3CE6838CCFFD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bff.Domain.Model", "Bff.Domain.Model\Bff.Domain.Model.csproj", "{D89FE759-28C4-46AA-8DEE-8DC354967E07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bff.Core", "Bff.Core\Bff.Core.csproj", "{D89FE759-28C4-46AA-8DEE-8DC354967E07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

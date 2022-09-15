@@ -9,7 +9,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Bff.WebApi/Bff.WebApi.csproj", "Bff.WebApi/"]
 COPY ["Bff.WebApi.Administrations/Bff.WebApi.Services.Administrations.csproj", "Bff.WebApi.Administrations/"]
-COPY ["Bff.Domain.Model/Bff.Domain.Model.csproj", "Bff.Domain.Model/"]
+COPY ["Bff.Core/Bff.Core.csproj", "Bff.Core/"]
 RUN dotnet restore "Bff.WebApi/Bff.WebApi.csproj"
 COPY . .
 WORKDIR "/src/Bff.WebApi"
