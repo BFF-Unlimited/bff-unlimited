@@ -25,7 +25,6 @@ namespace Bff.WebApi.Services.Administrations.DataAccess.Mysql
             options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
         }
 
-        public DbSet<User> User { get; set; }
-
+        public DbSet<User>? User { get; set; }
     }
 }
