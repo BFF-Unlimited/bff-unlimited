@@ -53,7 +53,8 @@ function checkValidity() {
   isValid.value = form.value.checkValidity();
 }
 
-function onSubmit() {
+async function onSubmit() {
+  const {public: {baseURL}} = useRuntimeConfig();
   shouldValidate.value = true;
   emit('validated');
   isValid.value = form.value.checkValidity();
@@ -62,18 +63,34 @@ function onSubmit() {
     return;
   }
 
-  fetch(props.action, {
-    method: props.method,
-    body: JSON.stringify(Object.fromEntries(new FormData(form.value))),
-  })
-    .then((res) => res.json())
-    .then(() => {
-      return emit('success');
+  // fetch(props.action, {
+  //   method: props.method,
+  //   body: JSON.stringify(Object.fromEntries(new FormData(form.value))),
+  // })
+  //   .then((res) => res.json())
+  //   .then(() => {
+  //     return emit('success');
+  //   })
+  //   .catch((err) => console.log(err))
+  //   .finally(() => {
+  //     isValid.value = false;
+  //   });
+
+  try{
+    let response: any = await useFetch(props.action, {
+      method: props.method,
+      body: JSON.stringify(Object.fromEntries(new FormData(form.value))),
+      baseURL
     })
-    .catch((err) => console.log(err))
-    .finally(() => {
-      isValid.value = false;
-    });
+    window.localStorage.setItem("token", response.data.value)
+    emit('success')
+  }
+  catch(err){
+    console.log(err)
+  }
+  finally {
+    isValid.value = false;
+  }
 }
 </script>
 

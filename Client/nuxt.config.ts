@@ -8,4 +8,10 @@ export default defineNuxtConfig({
   vite: {
     plugins: [eslintPlugin()],
   },
+  runtimeConfig: {
+    public: {
+      baseURL: process.env.BASE_URL || 'https://localhost:7182',
+    },
+    token: ""
+  }
 });
