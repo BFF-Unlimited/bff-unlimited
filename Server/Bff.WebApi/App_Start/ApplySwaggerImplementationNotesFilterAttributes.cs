@@ -7,12 +7,6 @@ namespace Bff.WebApi
 {
     internal class ApplySwaggerImplementationNotesFilterAttributes : IOperationFilter
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="operation"></param>
-        /// <param name="schemaRegistry"></param>
-        /// <param name="apiDescription"></param>
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             foreach (var attr in context.ApiDescription.GetControllerAndActionAttributes<SwaggerImplementationNotesAttribute>())
