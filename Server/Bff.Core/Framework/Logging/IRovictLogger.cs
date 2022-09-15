@@ -1,4 +1,4 @@
-﻿namespace Bff.Core.Framework
+﻿namespace Bff.Core.Framework.Logging
 {
     public interface IRovictLogger
     {

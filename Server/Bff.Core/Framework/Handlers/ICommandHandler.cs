@@ -1,4 +1,4 @@
-﻿namespace Bff.Core.Framework
+﻿namespace Bff.Core.Framework.Handlers
 {
     public interface ICommandHandler<in TCommand> : IHandler
             where TCommand : class

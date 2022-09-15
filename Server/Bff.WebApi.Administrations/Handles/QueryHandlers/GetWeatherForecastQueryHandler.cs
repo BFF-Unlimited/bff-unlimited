@@ -1,4 +1,4 @@
-﻿using Bff.Core.Framework;
+﻿using Bff.Core.Framework.Handlers;
 using Bff.WebApi.Services.Administrations.Requests.Dto;
 using Bff.WebApi.Services.Administrations.Requests.Queries;
 

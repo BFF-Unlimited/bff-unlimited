@@ -8,47 +8,45 @@ namespace Bff.Core.Framework
     {
         public DefaultExceptionHandler(IOperationResultFactory resultFactory)
         {
-            this.OperationResultFactory = resultFactory;
+            OperationResultFactory = resultFactory;
         }
 
         public IOperationResultFactory OperationResultFactory { get; }
 
         public IActionResult PerformGetOperation<TResult>(Func<TResult> operation) =>
-            this.PerformOperation(operation, TransformGetOperationResult);
+            PerformOperation(operation, TransformGetOperationResult);
 
         public Task<IActionResult> PerformGetOperation<TResult>(Func<Task<TResult>> operation) =>
-            this.PerformOperationAsync(operation, TransformGetOperationResult);
+            PerformOperationAsync(operation, TransformGetOperationResult);
 
         public IActionResult PerformCreateOperation<TResult>(Func<TResult> operation) =>
-            this.PerformOperation(operation, TransformCreateOperationResult);
+            PerformOperation(operation, TransformCreateOperationResult);
 
         public IActionResult PerformUpdateOperation<TResult>(Func<TResult> operation) =>
-            this.PerformOperation(operation, TransformUpdateOperationResult);
+            PerformOperation(operation, TransformUpdateOperationResult);
 
         public IActionResult PerformCreateOrUpdateOperation<TResult>(Func<TResult> operation) =>
-            this.PerformOperation(operation, TransformCreateOrUpdateOperationResult);
+            PerformOperation(operation, TransformCreateOrUpdateOperationResult);
 
         public IActionResult PerformDeleteOperation<TResult>(Func<TResult> operation) =>
-            this.PerformOperation(operation, TransformDeleteOperationResult);
+            PerformOperation(operation, TransformDeleteOperationResult);
 
         public Task<IActionResult> PerformCreateOperation<TResult>(Func<Task<TResult>> operation) =>
-            this.PerformOperationAsync(operation, TransformCreateOperationResult);
+            PerformOperationAsync(operation, TransformCreateOperationResult);
 
         public Task<IActionResult> PerformUpdateOperation<TResult>(Func<Task<TResult>> operation) =>
-            this.PerformOperationAsync(operation, TransformUpdateOperationResult);
+            PerformOperationAsync(operation, TransformUpdateOperationResult);
 
         public Task<IActionResult> PerformCreateOrUpdateOperation<TResult>(Func<Task<TResult>> operation) =>
-            this.PerformOperationAsync(operation, TransformCreateOrUpdateOperationResult);
+            PerformOperationAsync(operation, TransformCreateOrUpdateOperationResult);
 
         public Task<IActionResult> PerformDeleteOperation<TResult>( Func<Task<TResult>> operation) =>
-            this.PerformOperationAsync(operation, TransformDeleteOperationResult);
+            PerformOperationAsync(operation, TransformDeleteOperationResult);
 
         public Task<IActionResult> PerformCommandOperation<TResult>(Func<Task<TResult>> operation) =>
-            this.PerformOperationAsync(operation, TransformCommandOperationResult);
+            PerformOperationAsync(operation, TransformCommandOperationResult);
         public IActionResult PerformCommandOperation<TResult>(Func<TResult> operation) =>
-            this.PerformOperation(operation, TransformCommandOperationResult);
-
-
+            PerformOperation(operation, TransformCommandOperationResult);
         private static IActionResult TransformCreateOperationResult<TResult>(TResult result) =>
             new OkObjectResult(result);
 
@@ -78,47 +76,47 @@ namespace Bff.Core.Framework
             {
                 var result = await operation();
 
-                return result == null ? this.OperationResultFactory.NoContent() : transformResult(result);
+                return result == null ? OperationResultFactory.NoContent() : transformResult(result);
             }
             catch (UnprocessableEntityException e)
             {
-                return this.OperationResultFactory.UnprocessableEntity(e);
+                return OperationResultFactory.UnprocessableEntity(e);
             }
             catch (ResourceNotFoundException e)
             {
-                return this.OperationResultFactory.NotFound(e);
+                return OperationResultFactory.NotFound(e);
             }
             catch (UnauthorizedException e)
             {
-                return this.OperationResultFactory.Unauthorized(e);
+                return OperationResultFactory.Unauthorized(e);
             }
             catch (ForbiddenException e)
             {
-                return this.OperationResultFactory.Forbidden(e);
+                return OperationResultFactory.Forbidden(e);
             }
             catch (TooManyRequestsException e)
             {
-                return this.OperationResultFactory.TooManyRequests(e);
+                return OperationResultFactory.TooManyRequests(e);
             }
             catch (ArgumentNullException e)
             {
-                return this.OperationResultFactory.ArgumentNull(e);
+                return OperationResultFactory.ArgumentNull(e);
             }
             catch (ArgumentException e)
             {
-                return this.OperationResultFactory.Argument(e);
+                return OperationResultFactory.Argument(e);
             }
             catch (DataConflictException e)
             {
-                return this.OperationResultFactory.DataConflict(e);
+                return OperationResultFactory.DataConflict(e);
             }
             catch (OverflowException e)
             {
-                return this.OperationResultFactory.Forbidden(new ForbiddenException("FRAMEWORK_OVERFLOW_ERRORMESSAGE", e));
+                return OperationResultFactory.Forbidden(new ForbiddenException("FRAMEWORK_OVERFLOW_ERRORMESSAGE", e));
             }
             catch (Exception)
             {
-                return this.OperationResultFactory.InternalServerError();
+                return OperationResultFactory.InternalServerError();
             }
         }
 
@@ -127,47 +125,47 @@ namespace Bff.Core.Framework
             try
             {
                 var result = operation();
-                return result == null ? this.OperationResultFactory.NoContent() : transformResult(result);
+                return result == null ? OperationResultFactory.NoContent() : transformResult(result);
             }
             catch (UnprocessableEntityException e)
             {
-                return this.OperationResultFactory.UnprocessableEntity(e);
+                return OperationResultFactory.UnprocessableEntity(e);
             }
             catch (ResourceNotFoundException e)
             {
-                return this.OperationResultFactory.NotFound(e);
+                return OperationResultFactory.NotFound(e);
             }
             catch (UnauthorizedException e)
             {
-                return this.OperationResultFactory.Unauthorized(e);
+                return OperationResultFactory.Unauthorized(e);
             }
             catch (ForbiddenException e)
             {
-                return this.OperationResultFactory.Forbidden(e);
+                return OperationResultFactory.Forbidden(e);
             }
             catch (TooManyRequestsException e)
             {
-                return this.OperationResultFactory.TooManyRequests(e);
+                return OperationResultFactory.TooManyRequests(e);
             }
             catch (DataConflictException e)
             {
-                return this.OperationResultFactory.DataConflict(e);
+                return OperationResultFactory.DataConflict(e);
             }
             catch (ArgumentNullException e)
             {
-                return this.OperationResultFactory.ArgumentNull(e);
+                return OperationResultFactory.ArgumentNull(e);
             }
             catch (ArgumentException e)
             {
-                return this.OperationResultFactory.Argument(e);
+                return OperationResultFactory.Argument(e);
             }
             catch (OverflowException e)
             {
-                return this.OperationResultFactory.Forbidden(new ForbiddenException("FRAMEWORK_OVERFLOW_ERRORMESSAGE", e));
+                return OperationResultFactory.Forbidden(new ForbiddenException("FRAMEWORK_OVERFLOW_ERRORMESSAGE", e));
             }
             catch (Exception)
             {
-                return this.OperationResultFactory.InternalServerError();
+                return OperationResultFactory.InternalServerError();
             }
         }
     }

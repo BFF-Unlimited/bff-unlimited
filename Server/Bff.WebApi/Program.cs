@@ -1,9 +1,8 @@
-using Autofac.Core;
 using Bff.Core.Framework;
+using Bff.Core.Framework.Handlers;
+using Bff.Core.Framework.Logging;
 using Bff.Core.Framework.RequestErrorHandling;
-using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Ninject;
 

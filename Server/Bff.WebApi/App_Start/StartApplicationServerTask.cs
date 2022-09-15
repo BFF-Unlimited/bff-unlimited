@@ -1,4 +1,5 @@
 ﻿using Bff.Core.Framework;
+using Bff.Core.Framework.Logging;
 using Ninject;
 using System.Reflection;
 
