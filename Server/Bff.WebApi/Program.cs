@@ -1,13 +1,16 @@
 using Autofac.Core;
+using Bff.Domain.Model.Core.Framework;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Ninject;
 
 namespace Bff.WebApi
 {
-    internal class Program
+    public class Program
     {
-        private static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -22,15 +25,24 @@ namespace Bff.WebApi
             LoggerConfig.Configure(builder.Services);
 
             builder.Services.AddHttpClient();
+            var kernel = new StandardKernel();
+
+            builder.Services.AddSingleton<IKernel>(kernel);
+            builder.Services.AddSingleton<IRovictLogger>(x => new DefaultApplicationServerLogger(new LoggerFactory()));
+            builder.Services.AddSingleton<IHandlerFactory>(x => new MagicNinjectFactory(kernel));
+            builder.Services.AddSingleton<IOperationResultFactory>(new OperationResultFactory());
+            builder.Services.AddSingleton<IExceptionHandler>(new DefaultExceptionHandler(new OperationResultFactory()));
 
             builder.Services
                 .AddSignalR()
                 .AddNewtonsoftJsonProtocol();
-
+            
             builder.Services.Replace(new ServiceDescriptor(
                 typeof(IHubActivator<>),
                 typeof(NinjectHubActivator<>),
                 ServiceLifetime.Scoped));
+
+            builder.Services.AddStartupTask<StartApplicationServerTask>();
 
             var app = builder.Build();
 
@@ -48,22 +60,6 @@ namespace Bff.WebApi
 
             app.MapControllers();
             app.UseBlockPentestingMiddleware();
-/*
- * 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapHealthChecks("/health/ready", new HealthCheckOptions { Predicate = check => check.Tags.Contains("ready"), ResponseWriter = WriteResponse });
-                endpoints.MapHealthChecks("/health/live", new HealthCheckOptions { Predicate = check => check.Tags.Contains("live"), ResponseWriter = WriteResponse });
-
-                // asp.net registrations for the signalr hubs. Don't forget to register the IHubContext<T> in ninject also (see Bootstrap)
-                endpoints.MapHub<PrinterServiceHub>("/notifications/printerservice");
-                endpoints.MapHub<NotificationsHub>("/notifications/common");
-                endpoints.MapHub<ManagementNotificationsHub>("/notifications/management");
-
-                endpoints.MapControllers();
-                endpoints.MapDefaultControllerRoute();
-                endpoints.MapRazorPages();
-            });*/
 
             app.Run();
         }

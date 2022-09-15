@@ -1,0 +1,53 @@
+version: '3.8'
+services:
+  db: 
+    image: mysql:latest
+    container_name: bff_unlimited_db
+    restart: always
+    ports: 
+      - 3306:3306
+    networks:
+      - bff_unlimited_network
+    environment: 
+      - MYSQL_DATABASE=bff_unlimited
+      - MYSQL_ROOT_PASSWORD=bffunlimited123
+    volumes:
+      - db-data:/var/lib/mysql
+
+  client: 
+    build: 
+      context: ./client
+    container_name: bff_unlimited_client
+    command: npm run dev
+    ports: 
+      - 3000:3000
+    networks:
+      - bff_unlimited_network
+
+  server: 
+    build: 
+      context: ./Server
+      dockerfile: Bff.WebApi/Dockerfile
+    container_name: bff_unlimited_server
+    ports:
+      - 5000:80
+      - 5001:443
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_HTTPS_PORT=5001
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=bff123
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/Bff.WebApi.pfx
+    networks:
+      - bff_unlimited_network
+    volumes:
+      - ~/.aspnet/https:/https:ro
+    depends_on:
+      - db
+
+volumes:
+  db-data:
+  
+networks:
+  bff_unlimited_network:
+    name: bff_unlimited_network

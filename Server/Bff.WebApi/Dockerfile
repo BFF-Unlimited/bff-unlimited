@@ -7,16 +7,18 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["WebApi/WebApi.csproj", "WebApi/"]
-RUN dotnet restore "WebApi/WebApi.csproj"
+COPY ["Bff.WebApi/Bff.WebApi.csproj", "Bff.WebApi/"]
+COPY ["Bff.WebApi.Administrations/Bff.WebApi.Services.Administrations.csproj", "Bff.WebApi.Administrations/"]
+COPY ["Bff.Domain.Model/Bff.Domain.Model.csproj", "Bff.Domain.Model/"]
+RUN dotnet restore "Bff.WebApi/Bff.WebApi.csproj"
 COPY . .
-WORKDIR "/src/WebApi"
-RUN dotnet build "WebApi.csproj" -c Release -o /app/build
+WORKDIR "/src/Bff.WebApi"
+RUN dotnet build "Bff.WebApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "WebApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Bff.WebApi.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "WebApi.dll"]
+ENTRYPOINT ["dotnet", "Bff.WebApi.dll"]
