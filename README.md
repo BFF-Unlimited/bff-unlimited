@@ -58,6 +58,16 @@ The following command can be executed with powershell:
     docker compose up -d
 ```
 
+Wanneer er wijzigingen zijn in de projecten en er opnieuw een schoon build (image) moet worden aangemaakt, dan kan de volgende commando worden uitgevoerd:
+
+```sh
+    docker-compose up --build --force-recreate -d 
+```
+of
+```sh
+    docker-compose up --build -d
+```
+
 ## Other scripts
 `npm run ...` | Description
 ---|---
