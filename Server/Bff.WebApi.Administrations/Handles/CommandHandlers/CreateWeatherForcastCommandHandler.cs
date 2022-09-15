@@ -2,7 +2,7 @@
 using Bff.Core.Framework.Exceptions;
 using Bff.WebApi.Services.Administrations.Requests.Commands;
 
-namespace Bff.WebApi.Services.Teacher.Handles.CommandHandlers
+namespace Bff.WebApi.Services.Administrations.Handles.CommandHandlers
 {
     internal class CreateWeatherForcastCommandHandler : CommandHandlerBase<CreateWeatherForcastCommand>
     {

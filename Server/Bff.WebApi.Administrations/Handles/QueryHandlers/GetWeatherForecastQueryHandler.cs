@@ -1,14 +1,8 @@
 ﻿using Bff.Core.Framework;
 using Bff.WebApi.Services.Administrations.Requests.Dto;
 using Bff.WebApi.Services.Administrations.Requests.Queries;
-using Ninject;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Bff.WebApi.Services.Administrations.Handles.Queries
+namespace Bff.WebApi.Services.Administrations.Handles.QueryHandlers
 {
     internal class GetWeatherForecastQueryHandler : QueryHandlerBase<GetWeatherForecastQuery>
     {
@@ -17,11 +11,8 @@ namespace Bff.WebApi.Services.Administrations.Handles.Queries
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly IKernel _kernel;
-
-        public GetWeatherForecastQueryHandler(IKernel kernel)
+        public GetWeatherForecastQueryHandler()
         {
-            _kernel = kernel;
         }
 
         /// <summary>
@@ -33,7 +24,7 @@ namespace Bff.WebApi.Services.Administrations.Handles.Queries
         {
             return Enumerable.Range(1, 5).Select(index =>
             {
-                var a = _kernel.Get<IWeatherForecast>();
+                var a = new WeatherForecastDto();
 
                 a.Date = DateTime.Now.AddDays(index);
                 a.TemperatureC = Random.Shared.Next(-20, 55);

@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Bff.Core\Bff.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Handles\QueryHandlers\" />
+  </ItemGroup>
+
 </Project>

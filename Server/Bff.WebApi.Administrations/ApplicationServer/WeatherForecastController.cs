@@ -1,13 +1,11 @@
 using Bff.Core.Framework;
 using Bff.Core.Framework.Attributes;
 using Bff.WebApi.Services.Administrations.Requests.Commands;
+using Bff.WebApi.Services.Administrations.Requests.Dto;
 using Bff.WebApi.Services.Administrations.Requests.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Ninject;
 using Swashbuckle.AspNetCore.Annotations;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Net;
 
 namespace Bff.WebApi.Services.Administrations.ApplicationServer
