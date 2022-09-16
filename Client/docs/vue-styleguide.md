@@ -48,5 +48,5 @@ props: {
 * Non-empty HTML attribute values should always be inside quotes:
 
 ```HTML
-<AppSidebar :style="{ width: sidebarWidth + 'px' }">
+<AppSidebar :class="{ open: isOpen }">
 ```
