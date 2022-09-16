@@ -35,7 +35,7 @@ All files in the `/src/styles` directory are imported in `index.css`.
 ### Component styling
 
 Each component in the `/src/components` directory has its own `.css` file, containing the component specific styling.
- 
+
 ## Target classes
 
 Add styles using classes (not tags), so that you are not tied to specific markup:
@@ -51,6 +51,8 @@ header {
   ...
 }
 ```
+
+Do not use inline styling.
 
 ## Code Formatting
 
@@ -87,11 +89,13 @@ Limit the use of shorthand declarations if you do not need to explicitly set add
 * Use `vw` and `vh` for things that should scale with the viewport
 * `line-height` should be a unitless multiplier of `font-size`
 
+For accessibility considerations, use `rem` ('root-em') for text sizes. It gives the user the ability to redefine their value, e.g. by using the broweser's zoom functionality.
+
 ## Specificity
 
 ### Rule Specificity
 
-Rules and properties should only be as specific as they need to be:
+Rules and properties should only be as [specific](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) as they need to be:
 
 ```css
 // Bad
@@ -104,6 +108,8 @@ Rules and properties should only be as specific as they need to be:
   ...
 }
 ```
+
+Overspecifing rules will lead to a less maintainable code base and makes code harder to read, while there is no real benefit.
 
 ### Nesting
 
