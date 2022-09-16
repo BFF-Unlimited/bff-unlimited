@@ -1,0 +1,18 @@
+.page__container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 
+    "header header "
+    "sidebar main";
+}
+
+.page__header {
+    grid-area: header;
+}
+.page__aside {
+    grid-area: sidebar;
+}
+.page__main {
+    grid-area: main;
+}
