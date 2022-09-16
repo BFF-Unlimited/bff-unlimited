@@ -84,8 +84,7 @@ Limit the use of shorthand declarations if you do not need to explicitly set add
 ## Units
 
 * Use `px` for things that should scale in a fixed manner
-* Use `rem` for things that should scale with the root `font-size`
-* Use `em` for things that should scale with the element `font-size`
+* [rem and em](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Values_and_units#ems_and_rems): Use `rem` for things that should scale with the root `font-size`. Use `em` for things that should scale with the element `font-size`
 * Use `vw` and `vh` for things that should scale with the viewport
 * `line-height` should be a unitless multiplier of `font-size`
 
