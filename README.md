@@ -64,7 +64,7 @@ When there are changes to the project, then a new build (image) must be created.
     docker-compose up --build --force-recreate -d 
 ```
 
-of
+or
 
 ```sh
     docker-compose up --build -d
