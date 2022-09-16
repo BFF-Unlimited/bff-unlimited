@@ -1,0 +1,26 @@
+.side-nav {
+    padding: 2rem 1rem;
+}
+.side-nav ul {
+    list-style: none;
+}
+.side-nav li {
+    margin-bottom: 0.5rem;
+}
+.side-nav-ul {
+    padding-left: 0;
+}
+.side-sub-ul {
+    padding-left: 1rem;
+    margin-top: 0.5rem;
+}
+a:has(strong) {
+    text-decoration: none;
+}
+
+li strong {
+    font-size: 1.2rem;
+}
+li.active {
+    font-weight: bold;
+}
