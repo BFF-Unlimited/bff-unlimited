@@ -37,7 +37,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const router = useRouter();
 const username = ref('');
 const password = ref('');
@@ -45,8 +45,8 @@ const shouldValidate = ref(false);
 function onValidated() {
   shouldValidate.value = true;
 }
-function onSuccess() {
-  console.log("succes bitches")
+function onSuccess(data: any) {
+  window.localStorage.setItem("token", data.value)
   router.push({ path: '/' });
 }
 </script>
