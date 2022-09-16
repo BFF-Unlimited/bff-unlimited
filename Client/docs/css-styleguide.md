@@ -1,4 +1,4 @@
-# CSS styleguide
+# oCSS styleguide
 
 This document outlines best practices on writing semantic, scalable, and modular CSS.
 
@@ -125,7 +125,7 @@ Overspecifing rules will lead to a less maintainable code base and makes code ha
 }
 ```
 
-Nesting can easily make things much more complex and hard to digest. Therefor, use nesting sparingly and limit it to 3 levels or less.
+Nesting can easily make things much more complex and hard to digest. Therefore, use nesting sparingly and limit it to 3 levels or less.
 
 ## Variables
 
