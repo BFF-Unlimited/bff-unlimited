@@ -73,7 +73,7 @@ of
 Caveats: 
 * Developing frontend means turning off the bff_unlimited_client container.
 * Developing backend means turning off the bff_unlimited_client container.
-* When the code for frontend and backend is complete. Then you can use the `docker-compose up --build -d` to view the full result of both fronten and backend. Only needs to be done when developing is finished.
+* When the code for frontend and backend is complete. Then you can use the `docker-compose up --build -d` to view the full result of both frontend and backend. Only needs to be done when developing is finished.
 
 ## Other scripts
 `npm run ...` | Description
