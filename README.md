@@ -58,15 +58,22 @@ The following command can be executed with powershell:
     docker compose up -d
 ```
 
-Wanneer er wijzigingen zijn in de projecten en er opnieuw een schoon build (image) moet worden aangemaakt, dan kan de volgende commando worden uitgevoerd:
+When there are changes to the project, then a new build (image) must be created. This can be done with the command: 
 
 ```sh
     docker-compose up --build --force-recreate -d 
 ```
-of
+
+or
+
 ```sh
     docker-compose up --build -d
 ```
+
+Caveats: 
+* Developing frontend means turning off the bff_unlimited_client container.
+* Developing backend means turning off the bff_unlimited_client container.
+* When the code for frontend and backend is complete. Then you can use the `docker-compose up --build -d` to view the full result of both frontend and backend. Only needs to be done when developing is finished.
 
 ## Other scripts
 `npm run ...` | Description
