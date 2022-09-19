@@ -9,7 +9,7 @@ import { onMounted, onBeforeMount } from 'vue';
 export function useClickOutside(element, callbackFunction) {
   if (!element) return;
 
-  let listener = (event) => {
+  const listener = (event) => {
     if (event.target !== element.value && event.composedPath().includes(element.value)) {
       return;
     }
