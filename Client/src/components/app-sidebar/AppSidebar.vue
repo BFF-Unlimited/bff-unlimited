@@ -1,19 +1,27 @@
 <template>
-  <div class="side-nav">
+  <div
+    class="side-nav"
+    :class="{ minimal: isSidebarMinimal }"
+  >
+    <button
+      class="toggle-sidenav"
+      @click="toggleIsSidebarMinimal"
+    >Lalla</button>
     <ul class="side-nav-ul">
       <li
         v-for="item of menu"
         :key="item?.text"
-        v-bind:class="{ active: true }"
+        :class="{ active: item?.active }"
       >
         <NuxtLink :to="item?.link">{{ item?.text }}</NuxtLink>
         <ul
+          v-if="item?.submenu && item?.active"
           class="side-sub-ul"
-          v-if="item?.submenu"
         >
           <li
             v-for="sub of item.submenu"
             :key="sub?.text"
+            :class="{ active: sub?.active }"
           >
             <NuxtLink :to="sub?.link">{{ sub?.text }}</NuxtLink>
           </li>
@@ -24,42 +32,23 @@
 </template>
 
 <script setup>
+import { ref, emit } from 'vue';
+
 defineProps({
   menu: {
-    type: String,
-    default: 'button',
+    type: Object,
+    default(data) {
+      return { menu: data?.menu };
+    },
   },
 });
-</script>
 
-<script>
-const menu = [
-  {
-    text: 'Groep 4b',
-    link: '/',
-    submenu: [
-      {
-        text: 'Overzicht',
-        link: '/',
-      },
-      {
-        text: 'Groepsplan',
-        link: '/',
-      },
-      {
-        text: 'Over de groep',
-        link: '/',
-      },
-    ],
-  },
-];
-export default {
-  data() {
-    return {
-      menu,
-    };
-  },
-};
+const isSidebarMinimal = ref(true);
+function toggleIsSidebarMinimal() {
+  isSidebarMinimal.value = !isSidebarMinimal.value;
+
+  emit('toggle-sidebar', isSidebarMinimal.value)
+}
 </script>
 
 <style src="./app-sidebar.css" scoped lang="postcss" />
