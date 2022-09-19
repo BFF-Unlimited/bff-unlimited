@@ -7,7 +7,7 @@
     <button
       aria-expanded="false"
       class="expandible-button"
-      @click="isExpanded = !isExpanded"
+      @click="toggle"
     >
       <slot name="buttonText" />
     </button>
@@ -25,7 +25,11 @@ import { ref } from 'vue';
 import { useClickOutside } from './../../composables/useClickOutside';
 
 const expandible = ref(null);
-let isExpanded = ref(false);
+const isExpanded = ref(false);
+
+function toggle() {
+  isExpanded.value = !isExpanded.value;
+}
 
 useClickOutside(expandible, () => {
   isExpanded.value = false;

@@ -1,7 +1,7 @@
-import AppExpandible from "./AppExpandible.vue";
+import AppExpandible from './AppExpandible.vue';
 
 export default {
-  title: "Expandible",
+  title: 'Expandible',
   component: AppExpandible,
 };
 
@@ -10,16 +10,14 @@ const Template = (args, { argTypes }) => ({
   components: { AppExpandible },
   template: `
   <AppExpandible v-bind="$props">
-    <template v-slot:buttonText>${args.buttonText}</template>
-    <template v-slot:content>${args.content}</template>
+    <template #buttonText>${args.buttonText}</template>
+    <template #content>${args.content}</template>
   </AppExpandible>
   `,
-
 });
 
 export const Expandible = Template.bind({});
 Expandible.args = {
-  buttonText: "Menu",
-  content:
-    "Menu item 1",
+  buttonText: 'Menu',
+  content: 'Menu item 1',
 };
