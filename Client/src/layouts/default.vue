@@ -1,5 +1,5 @@
 <template>
-  <div class="page__container">
-    <Nuxt />
+  <div>
+    <slot />
   </div>
 </template>
