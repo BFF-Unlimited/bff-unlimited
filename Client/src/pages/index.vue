@@ -5,7 +5,6 @@
       #sidebar
       ><AppSidebar
         :menu="menu"
-        @toggle-sidebar="updateParentSidebar"
     /></template>
     <template #default><h1>Hello World</h1></template>
   </NuxtLayout>
@@ -15,12 +14,6 @@
 definePageMeta({
   layout: false,
 });
-
-const parentSidebar = ref(null);
-
-function updateParentSidebar(value) {
-  parentSidebar.value = value;
-}
 
 export default {
   data() {

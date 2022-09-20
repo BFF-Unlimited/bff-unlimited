@@ -18,6 +18,9 @@
     height: 100%;
     background: var(--main-color)
 }
+.page__aside.minimal {
+    max-width: 50px;
+}
 .page__main {
     padding: 1rem;
     grid-area: main;

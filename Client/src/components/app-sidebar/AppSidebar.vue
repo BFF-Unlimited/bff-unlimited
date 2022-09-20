@@ -1,19 +1,41 @@
 <template>
   <div
     class="side-nav"
-    :class="{ minimal: isSidebarMinimal }"
+    :class="{ minimal: sidebar.isMinimal }"
   >
     <button
       class="toggle-sidenav"
-      @click="toggleIsSidebarMinimal"
-    >Lalla</button>
+      @click="sidebar.toggleIsMinimal"
+    >
+      <span
+        v-if="!sidebar.isMinimal"
+        class="icon"
+        >⬅️</span
+      >
+      <span
+        v-if="sidebar.isMinimal"
+        class="icon"
+        >➡️</span
+      >
+    </button>
     <ul class="side-nav-ul">
       <li
         v-for="item of menu"
         :key="item?.text"
         :class="{ active: item?.active }"
       >
-        <NuxtLink :to="item?.link">{{ item?.text }}</NuxtLink>
+        <NuxtLink :to="item?.link">
+          <span
+            v-if="!sidebar.isMinimal"
+            class="text"
+            >{{ item?.text }}</span
+          >
+          <span
+            v-if="sidebar.isMinimal"
+            class="icon"
+            >➡️</span
+          >
+        </NuxtLink>
         <ul
           v-if="item?.submenu && item?.active"
           class="side-sub-ul"
@@ -32,7 +54,7 @@
 </template>
 
 <script setup>
-import { ref, emit } from 'vue';
+import { sidebar } from '../../stores/sidebar';
 
 defineProps({
   menu: {
@@ -42,13 +64,6 @@ defineProps({
     },
   },
 });
-
-const isSidebarMinimal = ref(true);
-function toggleIsSidebarMinimal() {
-  isSidebarMinimal.value = !isSidebarMinimal.value;
-
-  emit('toggle-sidebar', isSidebarMinimal.value)
-}
 </script>
 
 <style src="./app-sidebar.css" scoped lang="postcss" />
