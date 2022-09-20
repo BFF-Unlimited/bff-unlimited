@@ -6,6 +6,7 @@ public class GroepIdentificationDto : BaseDto
 
     public GroepIdentificationDto(string name)
     {
+        Id = Guid.NewGuid();
         Name = name;
     }
 }

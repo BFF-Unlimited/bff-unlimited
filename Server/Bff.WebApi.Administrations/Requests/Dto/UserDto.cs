@@ -12,6 +12,7 @@ public class UserDto : BaseDto
     public UserDto(string userName, VestigingIdentificationDto activeVestiging, GroepIdentificationDto activeGroep,
         VestigingIdentificationDto[] vestigingen, GroepIdentificationDto[] groepen, PermissionDto[] permissions)
     {
+        Id = Guid.NewGuid();
         UserName = userName;
         ActiveVestiging = activeVestiging;
         ActiveGroep = activeGroep;

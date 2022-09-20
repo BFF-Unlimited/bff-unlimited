@@ -7,6 +7,7 @@ public class VestigingIdentificationDto : BaseDto
 
     public VestigingIdentificationDto(string logoUrl, string name)
     {
+        Id = Guid.NewGuid();
         LogoUrl = logoUrl;
         Name = name;
     }

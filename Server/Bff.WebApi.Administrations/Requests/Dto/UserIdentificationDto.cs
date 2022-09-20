@@ -6,6 +6,7 @@ public class UserIdentificationDto : BaseDto
 
     public UserIdentificationDto(string userName)
     {
+        Id = Guid.NewGuid();
         UserName = userName;
     }
 }

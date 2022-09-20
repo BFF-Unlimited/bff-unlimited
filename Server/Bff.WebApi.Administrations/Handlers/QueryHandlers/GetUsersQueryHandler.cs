@@ -4,14 +4,14 @@ using Bff.WebApi.Services.Administrations.Requests.Queries;
 
 namespace Bff.WebApi.Services.Administrations.Handlers.QueryHandlers;
 
-internal class GetUsersQueryHandler : QueryHandlerBase<GetUsersQuery>
+internal class GetUsersQueryHandler : AsyncQueryHandlerBase<GetUsersQuery>
 {
-    protected override UserIdentificationDto[] DoExecute(GetUsersQuery query)
+    protected override async Task<object> DoExecute(GetUsersQuery query)
     {
-        return new UserIdentificationDto[]
+        return await Task.FromResult(new UserIdentificationDto[]
         {
             new UserIdentificationDto("Ans"),
             new UserIdentificationDto("Willem")
-        };
+        });
     }
 }

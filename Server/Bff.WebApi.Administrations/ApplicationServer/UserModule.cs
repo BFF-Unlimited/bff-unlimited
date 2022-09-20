@@ -10,9 +10,9 @@ namespace Bff.WebApi.Services.Administrations.ApplicationServer
     {
         protected override void DoInitializeNinject(IKernel container)
         {
-            container.Bind<IQueryHandler<GetActiveUserQuery>>().To<GetActiveUserQueryHandler>();
-            container.Bind<IQueryHandler<GetUsersQuery>>().To<GetUsersQueryHandler>();
-            container.Bind<IQueryHandler<GetUserQuery>>().To<GetUserQueryHandler>();
+            container.Bind<IAsyncQueryHandler<GetActiveUserQuery>>().To<GetActiveUserQueryHandler>();
+            container.Bind<IAsyncQueryHandler<GetUsersQuery>>().To<GetUsersQueryHandler>();
+            container.Bind<IAsyncQueryHandler<GetUserQuery>>().To<GetUserQueryHandler>();
         }
     }
 }
