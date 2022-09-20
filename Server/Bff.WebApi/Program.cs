@@ -1,3 +1,4 @@
+using Autofac.Core;
 using Bff.Core.Framework;
 using Bff.Core.Framework.Handlers;
 using Bff.Core.Framework.Logging;
@@ -5,13 +6,40 @@ using Bff.Core.Framework.RequestErrorHandling;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Ninject;
+using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 
 namespace Bff.WebApi
 {
     public class Program
     {
+        private const string CorsDevelopment = "CorsRovictDevelopmentPolicy";
+        private const string CorsProduction = "CorsRovictProductionPolicy";
+
         public static void Main(string[] args)
         {
+            var builder = SetupServices(args);
+
+            var app = builder.Build();
+
+            SetupDevelopmentEnviroment(app);
+            SetupProductionEnviroment(app);
+
+            app.UseHttpsRedirection();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.MapControllers();
+            app.UseBlockPentestingMiddleware();
+
+            app.Run();
+        }
+
+        private static WebApplicationBuilder SetupServices(string[] args)
+        {
+            var kernel = SetupDependecyInjection();
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
@@ -25,18 +53,18 @@ namespace Bff.WebApi
             LoggerConfig.Configure(builder.Services);
 
             builder.Services.AddHttpClient();
-            var kernel = new StandardKernel();
 
-            builder.Services.AddSingleton<IKernel>(kernel);
-            builder.Services.AddSingleton<IRovictLogger>(x => new DefaultApplicationServerLogger(new LoggerFactory()));
-            builder.Services.AddSingleton<IHandlerFactory>(x => new MagicNinjectFactory(kernel));
-            builder.Services.AddSingleton<IOperationResultFactory>(new OperationResultFactory());
-            builder.Services.AddSingleton<IExceptionHandler>(new DefaultExceptionHandler(new OperationResultFactory()));
+            SetupWebApiDepencenyServices(builder, kernel);
+            builder.Services.AddControllers().AddJsonOptions(x =>
+            {
+                // serialize enums as strings in api responses (e.g. Role)
+                x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
 
             builder.Services
                 .AddSignalR()
                 .AddNewtonsoftJsonProtocol();
-            
+
             builder.Services.Replace(new ServiceDescriptor(
                 typeof(IHubActivator<>),
                 typeof(NinjectHubActivator<>),
@@ -44,32 +72,51 @@ namespace Bff.WebApi
 
             builder.Services.AddStartupTask<StartApplicationServerTask>();
 
-            var app = builder.Build();
+            return builder;
+        }
 
-            // Configure the HTTP request pipeline.
+        private static void SetupProductionEnviroment(WebApplication app)
+        {
             if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-                app.UseDeveloperExceptionPage();
-            }
+                return; 
 
+            // Setup Cors for some private adressen
             app.UseCors(builder =>
-            {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            });
+                        builder.AllowAnyOrigin()
+                               .AllowAnyHeader()
+                       );
+            app.UseHsts();
+        }
 
-            app.UseHttpsRedirection();
+        private static void SetupDevelopmentEnviroment(WebApplication app)
+        {
+            // Configure the HTTP request pipeline.
+            if (!app.Environment.IsDevelopment())
+                return;
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            // Disable Cors for development to make live simpler
+            app.UseCors(builder =>
+                        builder.AllowAnyOrigin()
+                               .AllowAnyHeader()
+                        );
 
-            app.MapControllers();
-            app.UseBlockPentestingMiddleware();
+            app.UseSwagger();
+            app.UseSwaggerUI();
+            app.UseDeveloperExceptionPage();
+        }
 
-            app.Run();
+        private static void SetupWebApiDepencenyServices(WebApplicationBuilder builder, IKernel kernel)
+        {
+            builder.Services.AddSingleton(kernel);
+            builder.Services.AddSingleton(x => kernel.Get<IRovictLogger>());
+            builder.Services.AddSingleton(x => kernel.Get<IHandlerFactory>());
+            builder.Services.AddSingleton(x => kernel.Get<IOperationResultFactory>());
+            builder.Services.AddSingleton(x => kernel.Get<IExceptionHandler>());
+        }
+
+        private static StandardKernel SetupDependecyInjection()
+        {
+            return new StandardKernel();
         }
     }
 }
