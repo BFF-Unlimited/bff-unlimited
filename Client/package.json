@@ -10,7 +10,9 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "format": "prettier .  --write",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "docker-compose": "docker compose up -d",
+    "docker-rebuild": "docker compose up --build -d"
   },
   "devDependencies": {
     "@babel/core": "^7.19.0",

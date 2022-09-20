@@ -12,7 +12,8 @@ node_modules
 .vite
 .vs
 dist
-
+*.pfx
+**/.DS_Store
 
 # Build results Visual Studio 
 [Dd]ebug/

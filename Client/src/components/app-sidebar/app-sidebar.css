@@ -1,18 +1,38 @@
 .side-nav {
+    padding: 2rem;
+    position: relative;
+    height: 100%;
+}
+.side-nav.minimal {
+    width: 50px;
     padding: 2rem 1rem;
 }
 .side-nav ul {
     list-style: none;
 }
 .side-nav li {
+    line-height: 1.5;
     margin-bottom: 0.5rem;
 }
 .side-nav-ul {
     padding-left: 0;
 }
+.side-nav-ul > li {
+    margin-bottom: 1rem;
+}
+.side-nav-ul > li > a {
+    font-size: 1.3rem;
+}
+.side-nav-ul > li > a .icon {
+    font-size: 1rem;
+}
 .side-sub-ul {
     padding-left: 1rem;
     margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+.minimal .side-sub-ul {
+    display: none;
 }
 a:has(strong) {
     text-decoration: none;
@@ -21,6 +41,20 @@ a:has(strong) {
 li strong {
     font-size: 1.2rem;
 }
-li.active {
+li > a {
+    text-decoration: none;
+    display: block;
+}
+li > a:hover,
+li.active > a {
     font-weight: bold;
+}
+
+.toggle-sidenav {
+    cursor: pointer;
+    position: absolute;
+    bottom: 0; right: -52px;
+    border: 0;
+    outline: 0;
+    padding: 0.5rem 1rem;
 }
