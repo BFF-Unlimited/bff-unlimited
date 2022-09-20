@@ -8,6 +8,44 @@ A proof of concept of the landing page of 'ESIS Nieuw'.
 git clone https://github.com/BFF-Unlimited/bff-unlimited.git
 ```
 
+### Development env
+
+#### Docker
+*Nothing*
+
+#### Setup visualstudeo
+*Nothing*
+
+#### Setup visualstudeo code
+*Install the folowing add-ins:*
+- C#
+
+Welcome to the C# extension for Visual Studio Code! This extension provides the following features inside VS Code:
+Lightweight development tools for .NET Core.
+Great C# editing support, including Syntax Highlighting, IntelliSense, Go to Definition, Find All References, etc.
+Debugging support for .NET Core (CoreCLR). NOTE: Mono debugging is not supported. Desktop CLR debugging has limited support.
+Support for project.json and csproj projects on Windows, macOS and Linux.
+- EditorConfig for VS code
+
+For code formating
+- CSharpier - Code formatter (Optional) 
+
+Adds shortcuts and format on save
+- NuGet Package Manager
+- Prettier - Code formatter
+
+Prettier is an opinionated code formatter. It enforces a consistent style by parsing your code and re-printing it with its own rules that take the maximum line length into account, wrapping code when necessary.
+- Vue 3 Snippets (Optional)
+
+This extension adds Vue 2 Snippets and Vue 3 Snippets into Visual Studio Code.
+- Vue Language Features (Volar)
+
+Vue Language Features is a language support extension built for Vue, Vitepress and petite-vue. this is based on @vue/reactivity to calculate everything on-demand, to implement native TypeScript language service level performance.
+
+*Configuration:*
+Open the settings in VSCode and search for Omnisharp. 
+Than you need to "Enable Editor Config Support" and to "Enable Roslyn Analyzers"
+
 ### Server
 
 ```sh
