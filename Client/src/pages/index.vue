@@ -2,41 +2,54 @@
   <NuxtLayout name="main">
     <template #header>Header</template>
     <template #sidebar><AppSidebar :menu="menu" /></template>
-    <template #default><h1>Hello World</h1></template>
+    <template #default>
+      <h1>Hello World</h1>
+      <pre>
+        {{user}}
+      </pre>
+    </template>
   </NuxtLayout>
 </template>
 
 <script setup>
+import { useApi } from '~~/composables';
+
 const {
   public: { baseURL },
 } = useRuntimeConfig();
 
-let token = null;
-
-if (process?.client) {
-  token = window.localStorage.getItem('token');
-}
-
+const user = ref(null);
+const navigation = ref([])
 
 definePageMeta({
   layout: false,
 });
 
-console.log('loading: ', token);
-if (token) {
-  try {
-    console.log('baseURL: ', baseURL);
-    // console.log('ans: ', ans)
-    const data = await $fetch(baseURL + '/User/activeUser', {
-      headers: {
-        Authorization:  `Bearer ${token}`
-      }
-    });
-    console.log('response: ', data);
-  } catch (err) {
-    console.error(err);
-  }
+try {
+  console.log('baseURL: ', baseURL);
+  // console.log('ans: ', ans)
+  const data = await useApi(baseURL + '/User/activeUser');
+  console.log('response: ', data);
+  user.value = data;
+  const perm = {}
+  user.value?.permissions.forEach((item) => {
+    const [propName, child] = item.categoryDescription.split('.');
+    const name = propName.toLowerCase()
+    if (perm[name]) {
+      perm[name]?.items.push(item)
+    } else {
+      perm[name] = {}
+      perm[name].items = []
+      perm[name].name = propName
+    }
+  })
+
+  console.log('perm: ', Object.values(perm))
+} catch (err) {
+  console.error(err);
 }
+
+
 
 const menu = [
   {

@@ -23,5 +23,5 @@ export const useApi = async (url: string, options?: FetchOptions): Promise<any> 
     
     const apiUrl = url?.includes(baseURL) ? url : `${baseURL}${url}`
 
-  return await $fetch(apiUrl, options);
+  return await $fetch(apiUrl, tempOpts);
 };
