@@ -58,10 +58,8 @@ import { sidebar } from '../../stores/sidebar';
 
 defineProps({
   menu: {
-    type: Object,
-    default(data) {
-      return { menu: data?.menu };
-    },
+    type: Array,
+    default: null
   },
 });
 </script>

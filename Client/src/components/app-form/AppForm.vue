@@ -21,7 +21,9 @@
   </form>
 </template>
 
-<script setup lang="ts">
+<script setup>
+import { useApi } from '~~/composables';
+
 const props = defineProps({
   action: {
     type: String,
@@ -54,7 +56,9 @@ function checkValidity() {
 }
 
 async function onSubmit() {
-  const {public: {baseURL}} = useRuntimeConfig();
+  const {
+    public: { baseURL },
+  } = useRuntimeConfig();
   shouldValidate.value = true;
   emit('validated');
   isValid.value = form.value.checkValidity();
@@ -63,18 +67,16 @@ async function onSubmit() {
     return;
   }
 
-  try{
-    let response: any = await useFetch(props.action, {
+  try {
+    let resp = await useApi('/token', {
+      headers: new Headers({ 'content-type': 'application/json' }),
       method: props.method,
       body: JSON.stringify(Object.fromEntries(new FormData(form.value))),
-      baseURL
-    })
-    emit('success', response.data)
-  }
-  catch(err){
-    console.log(err)
-  }
-  finally {
+    });
+    emit('success', resp);
+  } catch (err) {
+    console.log(err);
+  } finally {
     isValid.value = false;
   }
 }

@@ -53,8 +53,10 @@ li.active > a {
 .toggle-sidenav {
     cursor: pointer;
     position: absolute;
-    bottom: 0; right: -52px;
+    bottom: 0; right: -55px;
     border: 0;
     outline: 0;
     padding: 0.5rem 1rem;
+    width: 54px;
+    height: 37px;
 }

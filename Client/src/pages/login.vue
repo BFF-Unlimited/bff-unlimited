@@ -39,7 +39,8 @@
   </NuxtLayout>
 </template>
 
-<script setup lang="ts">import { ref } from 'vue';
+<script setup lang="ts">
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -52,7 +53,8 @@ function onValidated() {
 }
 
 function onSuccess(data: any) {
-  window.localStorage.setItem('token', data.value);
+  console.log('data: ', data)
+  window.localStorage.setItem('token', data);
   router.push({ path: '/' });
 }
 </script>
