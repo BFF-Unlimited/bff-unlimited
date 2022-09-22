@@ -19,9 +19,9 @@ export const useApi = async (url: string, options?: FetchOptions): Promise<any> 
     };
 
     tempOpts = { ...options, headers: { ...headers } };
-    }
-    
-    const apiUrl = url?.includes(baseURL) ? url : `${baseURL}${url}`
+  }
+
+  const apiUrl = url?.includes(baseURL) ? url : `${baseURL}${url}`;
 
   return await $fetch(apiUrl, tempOpts);
 };
