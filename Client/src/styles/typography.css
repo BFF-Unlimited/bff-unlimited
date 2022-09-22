@@ -3,11 +3,3 @@ body {
     'Segoe UI Emoji', 'Segoe UI Symbol';
     color: var(--black);
 }
-
-a, a:visited {
-  color: var(--black)
-}
-
-a:hover {
-  text-decoration: none;
-}

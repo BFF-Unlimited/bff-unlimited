@@ -23,8 +23,12 @@
         v-for="item of menu"
         :key="item?.name"
         :class="{ active: item?.active }"
+        class="side-nav-item"
       >
-        <NuxtLink :to="item?.link">
+        <NuxtLink
+          class="side-nav-link"
+          :to="item?.link"
+        >
           <span
             v-if="!sidebarStore.isMinimal"
             class="text"
@@ -44,8 +48,13 @@
             v-for="sub of item.items"
             :key="sub?.id"
             :class="{ active: sub?.active }"
+            class="side-sub-item"
           >
-            <NuxtLink :to="sub?.link">{{ sub?.name }}</NuxtLink>
+            <NuxtLink
+              class="side-nav-link"
+              :to="sub?.link"
+              >{{ sub?.name }}</NuxtLink
+            >
           </li>
         </ul>
       </li>
@@ -59,7 +68,7 @@ import { sidebarStore } from '../../stores/sidebar';
 defineProps({
   menu: {
     type: Array,
-    default: null
+    default: null,
   },
 });
 </script>

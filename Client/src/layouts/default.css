@@ -1,4 +1,4 @@
-.page__container {
+.page-container {
     display: grid;
     grid-template-columns: auto 1fr;
     grid-template-rows: auto 1fr;
@@ -8,17 +8,17 @@
     min-height: 100vh;
 }
 
-.page__header {
+.page-header {
     grid-area: header;
     border-bottom: 1px solid rgb(201, 201, 201);
 }
-.page__aside {
+.page-aside {
     grid-area: sidebar;
     border-right: 1px solid rgb(201, 201, 201);
     height: 100%;
     background: var(--main-color)
 }
-.page__main {
+.page-main {
     padding: 1rem;
     grid-area: main;
 }

@@ -39,9 +39,10 @@ export const sidebarStore = reactive({
     return Object.values(perm);
   },
   createMenuItem(value: Permission): LinkObject {
+    const active = value.description === 'Groepsoverzicht';
     return {
       link: '/',
-      active: false,
+      active,
       id: value?.id,
       name: value?.description,
     };

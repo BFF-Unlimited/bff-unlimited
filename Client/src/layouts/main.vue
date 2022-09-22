@@ -1,13 +1,13 @@
 <template>
-  <div class="page__container">
-    <header class="page__header"><slot name="header" /></header>
+  <div class="page-container">
+    <header class="page-header"><slot name="header" /></header>
     <aside
-      class="page__aside"
+      class="page-aside"
       :class="{ minimal: sidebarStore.isMinimal }"
     >
       <slot name="sidebar" />
     </aside>
-    <main class="page__main"><slot /></main>
+    <main class="page-main"><slot /></main>
   </div>
 </template>
 
