@@ -1,19 +1,19 @@
 <template>
   <div
     class="side-nav"
-    :class="{ minimal: sidebar.isMinimal }"
+    :class="{ minimal: sidebarStore.isMinimal }"
   >
     <button
       class="toggle-sidenav"
-      @click="sidebar.toggleIsMinimal"
+      @click="sidebarStore.toggleIsMinimal"
     >
       <span
-        v-if="!sidebar.isMinimal"
+        v-if="!sidebarStore.isMinimal"
         class="icon"
         >⬅️</span
       >
       <span
-        v-if="sidebar.isMinimal"
+        v-if="sidebarStore.isMinimal"
         class="icon"
         >➡️</span
       >
@@ -21,31 +21,31 @@
     <ul class="side-nav-ul">
       <li
         v-for="item of menu"
-        :key="item?.text"
+        :key="item?.name"
         :class="{ active: item?.active }"
       >
         <NuxtLink :to="item?.link">
           <span
-            v-if="!sidebar.isMinimal"
+            v-if="!sidebarStore.isMinimal"
             class="text"
-            >{{ item?.text }}</span
+            >{{ item?.name }}</span
           >
           <span
-            v-if="sidebar.isMinimal"
+            v-if="sidebarStore.isMinimal"
             class="icon"
             >➡️</span
           >
         </NuxtLink>
         <ul
-          v-if="item?.submenu && item?.active"
+          v-if="item?.items && item?.active"
           class="side-sub-ul"
         >
           <li
-            v-for="sub of item.submenu"
-            :key="sub?.text"
+            v-for="sub of item.items"
+            :key="sub?.id"
             :class="{ active: sub?.active }"
           >
-            <NuxtLink :to="sub?.link">{{ sub?.text }}</NuxtLink>
+            <NuxtLink :to="sub?.link">{{ sub?.name }}</NuxtLink>
           </li>
         </ul>
       </li>
@@ -54,7 +54,7 @@
 </template>
 
 <script setup>
-import { sidebar } from '../../stores/sidebar';
+import { sidebarStore } from '../../stores/sidebar';
 
 defineProps({
   menu: {

@@ -3,7 +3,7 @@
     <header class="page__header"><slot name="header" /></header>
     <aside
       class="page__aside"
-      :class="{ minimal: sidebar.isMinimal }"
+      :class="{ minimal: sidebarStore.isMinimal }"
     >
       <slot name="sidebar" />
     </aside>
@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import { sidebar } from '../stores/sidebar';
+import { sidebarStore } from '../stores/sidebar';
 </script>
 
 <style src="./default.css" scoped lang="postcss" />
