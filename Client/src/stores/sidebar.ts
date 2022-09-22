@@ -17,12 +17,8 @@ export const sidebarStore = reactive({
     } = useRuntimeConfig();
 
     try {
-      console.log('baseURL: ', baseURL);
       const data = await useApi(baseURL + '/User/activeUser');
-      console.log('response: ', data);
-
       this.navigation = this.fromPermissionToMenu(data?.permissions);
-      console.log('navigation: ', this.navigation);
     } catch (err) {
       console.error(err);
     }

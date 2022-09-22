@@ -53,7 +53,6 @@ function onValidated() {
 }
 
 function onSuccess(data: any) {
-  console.log('data: ', data)
   window.localStorage.setItem('token', data);
   router.push({ path: '/' });
 }
