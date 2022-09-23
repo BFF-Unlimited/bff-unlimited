@@ -10,10 +10,16 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "format": "prettier .  --write",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "cypress:run": "cypress run -e PACT_PROVIDER=$PACT_PROVIDER",
+    "cypress:run:stubbed": "cypress run -c cypress-stubbed.json",
+    "cypress:open:stubbed": "cypress open -c cypress-stubbed.json"
   },
   "devDependencies": {
     "@babel/core": "^7.19.0",
+    "@pact-foundation/pact": "^10.1.4",
+    "@pact-foundation/pact-web": "^9.17.3",
+    "@pactflow/pact-cypress-adapter": "^1.3.0",
     "@storybook/addon-actions": "^6.5.10",
     "@storybook/addon-essentials": "^6.5.10",
     "@storybook/addon-interactions": "^6.5.10",
@@ -23,14 +29,19 @@
     "@storybook/testing-library": "^0.0.13",
     "@storybook/vue3": "^6.5.10",
     "@typescript-eslint/parser": "^5.36.2",
+    "axios": "^0.19.2",
     "babel-loader": "^8.2.5",
+    "cypress": "^10.8.0",
     "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-vue": "^9.4.0",
     "nuxt": "3.0.0-rc.9",
     "prettier": "2.7.1",
+    "rambda": "^5.9.0",
     "typescript": "^4.8.3",
     "vite-plugin-eslint": "^1.8.1",
     "vue-loader": "^16.8.3"
+  },
+  "dependencies": {
   }
 }
