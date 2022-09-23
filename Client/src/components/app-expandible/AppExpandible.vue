@@ -5,7 +5,7 @@
     :class="{ 'is-expanded': isExpanded }"
   >
     <button
-      aria-expanded="false"
+      :aria-expanded="isExpanded"
       class="expandible-button"
       @click="toggle"
     >
