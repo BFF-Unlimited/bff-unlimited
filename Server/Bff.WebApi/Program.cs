@@ -2,75 +2,79 @@ using Bff.Core.Framework;
 using Bff.Core.Framework.Handlers;
 using Bff.Core.Framework.Logging;
 using Bff.Core.Framework.RequestErrorHandling;
+using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Ninject;
 
 namespace Bff.WebApi
 {
-    public class Program
+    public static class Program
     {
-        public static void Main(string[] args)
+        private static WebApplication? _app;
+
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            _ = builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
+            _ = builder.Services.AddEndpointsApiExplorer();
             builder.UseAuthentication();
 
             SwaggerConfig.Configure(builder.Services);
             LoggerConfig.Configure(builder.Services);
 
-            builder.Services.AddHttpClient();
+            _ = builder.Services.AddHttpClient();
             var kernel = new StandardKernel();
 
-            builder.Services.AddSingleton<IKernel>(kernel);
-            builder.Services.AddSingleton<IRovictLogger>(x => new DefaultApplicationServerLogger(new LoggerFactory()));
-            builder.Services.AddSingleton<IHandlerFactory>(x => new MagicNinjectFactory(kernel));
-            builder.Services.AddSingleton<IOperationResultFactory>(new OperationResultFactory());
-            builder.Services.AddSingleton<IExceptionHandler>(new DefaultExceptionHandler(new OperationResultFactory()));
-            builder.Services.AddSingleton<IExceptionHandler>(typeof(DefaultExceptionHandler));
+            _ = builder.Services.AddSingleton<IKernel>(kernel);
+            _ = builder.Services.AddSingleton<IRovictLogger>(x => new DefaultApplicationServerLogger(new LoggerFactory()));
+            _ = builder.Services.AddSingleton<IHandlerFactory>(x => new MagicNinjectFactory(kernel));
+            _ = builder.Services.AddSingleton<IOperationResultFactory>(new OperationResultFactory());
+            _ = builder.Services.AddSingleton<IExceptionHandler>(new DefaultExceptionHandler(new OperationResultFactory()));
 
-            builder.Services
+            _ = builder.Services
                 .AddSignalR()
                 .AddNewtonsoftJsonProtocol();
-            
-            builder.Services.Replace(new ServiceDescriptor(
+
+            _ = builder.Services.Replace(new ServiceDescriptor(
                 typeof(IHubActivator<>),
                 typeof(NinjectHubActivator<>),
                 ServiceLifetime.Scoped));
 
-            builder.Services.AddStartupTask<StartApplicationServerTask>();
+            _ = builder.Services.AddStartupTask<StartApplicationServerTask>();
 
-            var app = builder.Build();
+            _app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            if(_app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-                app.UseDeveloperExceptionPage();
+                _ = _app.UseSwagger();
+                _ = _app.UseSwaggerUI();
+                _ = _app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(builder =>
+            _ = _app.UseCors(builder =>
             {
                 builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
             });
 
-            app.UseHttpsRedirection();
+            _ = _app.UseHttpsRedirection();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            _ = _app.UseAuthentication();
+            _ = _app.UseAuthorization();
 
-            app.MapControllers();
-            app.UseBlockPentestingMiddleware();
+            _ = _app.MapControllers();
+            _ = _app.UseBlockPentestingMiddleware();
 
-            app.Run();
+            await _app.RunAsync();
         }
+
+        public static string ServerUrl => "https://127.0.0.1:5101";
     }
 }

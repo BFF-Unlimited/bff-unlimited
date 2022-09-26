@@ -22,7 +22,7 @@ describe("Login page", () => {
         req.reply ({
           status: 200,
           headers: {
-            "Content-Type": "application/text; charset=utf-8",
+            "Content-Type": "application/json;charset=utf-8",
           },
           body: like(expectedLoginResult)
         });
