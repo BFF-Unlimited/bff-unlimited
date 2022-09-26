@@ -1,9 +1,11 @@
 import { reactive } from 'vue';
+import { Permission } from '../models/permission.model';
 import { useApi } from '../composables/useApi';
+import { userStore } from './user';
 
 export const sidebarStore = reactive({
   isMinimal: false,
-  navigation: ref([]),
+  navigation: ref<LinkParentObject[]>([]),
 
   toggleIsMinimal() {
     this.isMinimal = !this.isMinimal;
@@ -12,19 +14,13 @@ export const sidebarStore = reactive({
     this.isMinimal = value;
   },
   async getUserPermissions() {
-    const {
-      public: { baseURL },
-    } = useRuntimeConfig();
-
-    try {
-      const data = await useApi(baseURL + '/User/activeUser');
-      this.navigation = this.fromPermissionToMenu(data?.permissions);
-    } catch (err) {
-      console.error(err);
+    if (!userStore.user.id || userStore.user.id === '') {
+      await userStore.getActiveUser();
     }
+    this.navigation = this.fromPermissionToMenu(userStore.user?.permissions);
   },
   fromPermissionToMenu(permissions: Permission[]): LinkParentObject[] {
-    const perm = {};
+        const perm = {};
     permissions.forEach((item) => {
       const [propName, child] = item.categoryDescription.split('.');
       const name = propName.toLowerCase();
@@ -61,9 +57,4 @@ interface LinkParentObject {
   id: string;
   name: string;
   items?: LinkObject[];
-}
-interface Permission {
-  categoryDescription: string;
-  description: string;
-  id: string;
 }
