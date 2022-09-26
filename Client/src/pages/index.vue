@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout name="main">
-    <template #header>Header</template>
+    <template #header><TheHeader :user="userStore?.user" /></template>
     <template #sidebar><AppSidebar :menu="sidebarStore.navigation" /></template>
     <template #default>
       <h1>Hello World</h1>
