@@ -1,5 +1,5 @@
 a, a:visited {
-    color: var(--black)
+    color: var(--main-text-color)
   }
   
   a:hover {
