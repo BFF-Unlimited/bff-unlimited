@@ -21,5 +21,3 @@ definePageMeta({
   layout: false,
 });
 </script>
-
-<style src="../styles/pages/index.css" scoped lang="postcss" />
