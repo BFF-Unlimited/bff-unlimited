@@ -1,7 +1,6 @@
 ﻿namespace Bff.WebApi.Services.Administrations.Requests.Queries
 {
-    public class GetUserQuery
+    public class GetCardsDataQuery
     {
-        public Guid UserId { get; set; }
     }
 }

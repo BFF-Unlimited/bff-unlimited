@@ -1,14 +1,15 @@
-﻿namespace Bff.WebApi.Services.Administrations.Requests.Dto;
-
-public class VestigingIdentificationDto : BaseDto
+﻿namespace Bff.WebApi.Services.Administrations.Requests.Dto
 {
-    public string LogoUrl { get; set; }
-    public string Name { get; set; }
-
-    public VestigingIdentificationDto(string logoUrl, string name)
+    public class VestigingIdentificationDto : BaseDto
     {
-        Id = Guid.NewGuid();
-        LogoUrl = logoUrl;
-        Name = name;
+        public string LogoUrl { get; set; }
+        public string Name { get; set; }
+
+        public VestigingIdentificationDto(string logoUrl, string name)
+        {
+            Id = Guid.NewGuid();
+            LogoUrl = logoUrl;
+            Name = name;
+        }
     }
 }

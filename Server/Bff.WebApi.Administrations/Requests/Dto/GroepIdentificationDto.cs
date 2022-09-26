@@ -1,12 +1,13 @@
-﻿namespace Bff.WebApi.Services.Administrations.Requests.Dto;
-
-public class GroepIdentificationDto : BaseDto
+﻿namespace Bff.WebApi.Services.Administrations.Requests.Dto
 {
-    public string Name { get; set; }
-
-    public GroepIdentificationDto(string name)
+    public class GroepIdentificationDto : BaseDto
     {
-        Id = Guid.NewGuid();
-        Name = name;
+        public string Name { get; set; }
+
+        public GroepIdentificationDto(string name)
+        {
+            Id = Guid.NewGuid();
+            Name = name;
+        }
     }
 }

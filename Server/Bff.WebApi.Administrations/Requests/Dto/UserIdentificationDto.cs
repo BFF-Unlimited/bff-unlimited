@@ -1,12 +1,13 @@
-﻿namespace Bff.WebApi.Services.Administrations.Requests.Dto;
-
-public class UserIdentificationDto : BaseDto
+﻿namespace Bff.WebApi.Services.Administrations.Requests.Dto
 {
-    public string UserName { get; set; }
-
-    public UserIdentificationDto(string userName)
+    public class UserIdentificationDto : BaseDto
     {
-        Id = Guid.NewGuid();
-        UserName = userName;
+        public string UserName { get; set; }
+
+        public UserIdentificationDto(string userName)
+        {
+            Id = Guid.NewGuid();
+            UserName = userName;
+        }
     }
 }
