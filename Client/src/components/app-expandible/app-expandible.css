@@ -1,0 +1,46 @@
+.expandible {
+  position: relative;
+  display: inline;
+}
+
+.expandible-panel {
+  position: absolute;
+  top: 1.5rem;
+  left: 0;
+  padding: 0.5rem;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  color: black;
+  white-space: nowrap;
+}
+
+.expandible-button {
+  position: relative;
+  padding: 0;
+  background-color: inherit;
+  color: inherit;
+  border: none;
+  cursor: pointer;
+}
+
+.expandible-button:after {
+  content: '';
+  margin-left: 10px;
+  display: inline-block;
+  border-left: 2px solid #000;
+  border-bottom: 2px solid #000;
+  width: 8px;
+  height: 8px;
+  position: absolute;
+}
+
+.expandible:not(.is-expanded) .expandible-button:after {
+  transform: rotate(-45deg);
+  top: 7px;
+}
+
+.expandible.is-expanded .expandible-button:after {
+  transform: rotate(135deg);
+  top: 11px;
+}
