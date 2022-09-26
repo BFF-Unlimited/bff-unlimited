@@ -11,13 +11,12 @@ button {
 
 .primary-button {
   background-color: var(--main-color);
-  border: 1px solid #2e7b78;
-  color: #fff;
+  border: 1px solid #a9c3d2;
 }
 
 .primary-button:hover,
 .primary-button:focus {
-  background-color: #358e8a;
+  background-color: #bacfda;
 }
 .secondary-button {
   background-color: white;

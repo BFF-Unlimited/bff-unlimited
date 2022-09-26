@@ -3,7 +3,7 @@ import { ActiveUser, ActiveUserModel } from '../models/user.model';
 import { useApi } from '../composables/useApi';
 
 export const userStore = reactive({
-  user: ref<ActiveUser>(new ActiveUserModel({})),
+  user: ref<ActiveUser>(),
 
   async getActiveUser(): Promise<void> {
     const {
