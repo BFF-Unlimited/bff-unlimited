@@ -20,7 +20,7 @@ export const sidebarStore = reactive({
     this.navigation = this.fromPermissionToMenu(userStore.user?.permissions);
   },
   fromPermissionToMenu(permissions: Permission[]): LinkParentObject[] {
-        const perm = {};
+    const perm = {};
     permissions.forEach((item) => {
       const [propName, child] = item.categoryDescription.split('.');
       const name = propName.toLowerCase();

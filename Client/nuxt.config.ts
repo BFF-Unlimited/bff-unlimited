@@ -10,7 +10,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      baseURL: process.env.BASE_URL || 'https://localhost:7182',
+      baseURL: process.env.BASE_URL || 'https://localhost:5001',
     }
   },
   dirs: [
