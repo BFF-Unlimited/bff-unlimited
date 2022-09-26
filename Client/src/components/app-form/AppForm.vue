@@ -3,6 +3,7 @@
     ref="form"
     novalidate
     :class="{ 'is-validated': shouldValidate }"
+    class="login-form"
     @input="checkValidity"
     @submit.prevent="onSubmit"
   >
@@ -66,12 +67,12 @@ async function onSubmit() {
   }
 
   try {
-    let resp = await useApi('/token', {
+    let response = await useApi('/token', {
       headers: new Headers({ 'content-type': 'application/json' }),
       method: props.method,
       body: JSON.stringify(Object.fromEntries(new FormData(form.value))),
     });
-    emit('success', resp);
+    emit('success', response);
   } catch (err) {
     console.log(err);
   } finally {

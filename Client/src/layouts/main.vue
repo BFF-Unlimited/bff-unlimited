@@ -5,7 +5,6 @@
     <main class="page-main">
       <aside
         class="page-aside"
-        :class="{ minimal: sidebarStore.isMinimal }"
       >
         <slot name="sidebar" />
       </aside>
@@ -16,9 +15,5 @@
     </main>
   </div>
 </template>
-
-<script setup>
-import { sidebarStore } from '../stores/sidebar';
-</script>
 
 <style src="./default.css" scoped lang="postcss" />
