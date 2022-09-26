@@ -1,17 +1,11 @@
 <template>
   <div class="page-container">
-    <header class="page-header"><slot name="header" /></header>
-
+    <div class="page-header"><slot name="header" /></div>
+    <div class="page-sidebar">
+      <slot name="sidebar" />
+    </div>
     <main class="page-main">
-      <aside
-        class="page-aside"
-      >
-        <slot name="sidebar" />
-      </aside>
-      
-      <div class="main-wrapper">
-        <slot />
-      </div>
+      <slot />
     </main>
   </div>
 </template>
