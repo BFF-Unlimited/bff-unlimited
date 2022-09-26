@@ -2,7 +2,9 @@ using Bff.Core.Framework;
 using Bff.Core.Framework.Handlers;
 using Bff.Core.Framework.Logging;
 using Bff.Core.Framework.RequestErrorHandling;
+using Bff.WebApi.Services.Administrations.DataAccess.Mysql;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Ninject;
 
@@ -36,7 +38,7 @@ namespace Bff.WebApi
             builder.Services
                 .AddSignalR()
                 .AddNewtonsoftJsonProtocol();
-            
+
             builder.Services.Replace(new ServiceDescriptor(
                 typeof(IHubActivator<>),
                 typeof(NinjectHubActivator<>),
@@ -44,10 +46,12 @@ namespace Bff.WebApi
 
             builder.Services.AddStartupTask<StartApplicationServerTask>();
 
+            builder.Services.AddDbContext<AdministrationContext>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            if(app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
@@ -68,6 +72,12 @@ namespace Bff.WebApi
 
             app.MapControllers();
             app.UseBlockPentestingMiddleware();
+
+            using(var scope = app.Services.CreateScope())
+            {
+                var administrationContext = scope.ServiceProvider.GetRequiredService<AdministrationContext>();
+                administrationContext.Database.Migrate();
+            }
 
             app.Run();
         }
