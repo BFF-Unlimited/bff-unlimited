@@ -17,6 +17,7 @@
         class="icon"
         >➡️</span
       >
+      <span class="visually-hidden">{{ sidebarStore.isMinimal ? 'maximaliseer' : 'minimaliseer' }} sidebaar</span>
     </button>
     <ul class="side-nav-ul">
       <li
@@ -64,6 +65,8 @@
 
 <script setup>
 import { sidebarStore } from '../../stores/sidebar';
+
+const hiddenTextToggleButton = sidebarStore.isMinimal ? 'maximaliseer' : 'minimaliseer'
 
 defineProps({
   menu: {
