@@ -12,9 +12,15 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
+/**
+ * @type {Cypress.PluginConfig}
+ */
 const pactCypressPlugin = require('@pactflow/pact-cypress-adapter/dist/plugin')
 const fs = require('fs')
 
 module.exports = (on, config) => {
+  config.env.PACT_PROVIDER = process.env.PACT_PROVIDER || 'bff-packt-provider'
+  config.env.PACT_CONSUMER = process.env.PACT_CONSUMER || 'bff-packt-consumer'
   pactCypressPlugin(on, config, fs)
+  return config
 }

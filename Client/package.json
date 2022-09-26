@@ -11,7 +11,7 @@
     "format": "prettier .  --write",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "cypress:run": "cypress run -e PACT_PROVIDER=$PACT_PROVIDER"
+    "cypress:run": "cypress run -e PACT_PROVIDER=bff-mock-provider PACT_CONSUMER=bff-client"
   },
   "devDependencies": {
     "@babel/core": "^7.19.0",

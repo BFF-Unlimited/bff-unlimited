@@ -1,26 +1,31 @@
 import { Matchers } from "@pact-foundation/pact-web";
 const { like } = Matchers;
 
+const sendLogin = {
+  username: "Ans",
+  password: "1234"
+};
+
 const expectedLoginResult = "796dcfda-2b20-4927-abb7-c14d34e81eaf";
 
 describe("Login page", () => {
   describe("when user logs in", () => {
     before(() => {
-      cy.setupPact({
-        consumer: "pactflow-example-consumer-cypress",
-        provider: 'pactflow-example-provider',
-      });
+      cy.setupPact(Cypress.env('PACT_CONSUMER'), Cypress.env('PACT_PROVIDER'))
       cy.intercept(
       {
         method: "post",
-        url: "https://localhost:7182/token"
+        url: "**/token",
       },
+      (req) =>
       {
-        status: 200,
-        headers: {
-          "Content-Type": "application/text; charset=utf-8",
-        },
-        body: like(expectedLoginResult)
+        req.reply ({
+          status: 200,
+          headers: {
+            "Content-Type": "application/text; charset=utf-8",
+          },
+          body: like(expectedLoginResult)
+        });
       }).as('login');
     });
 

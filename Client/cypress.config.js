@@ -6,8 +6,11 @@ export default defineConfig({
       setupNodeEvents(on, config) {
         // implement node event listeners here
         registerPact(on, config)
-    
       },    
-    }
+    },
+    env: {
+      "headersBlocklist": ["ignore-me-globally"],
+      "ignoreDefaultBlocklist": false
+    },
   }
 );

@@ -76,3 +76,7 @@ UpgradeLog*.htm
 *.pidb
 *.log
 *.scc
+
+# Ignore cypress videos and screenshots
+/Client/cypress/screenshots/*
+/Client/cypress/videos/*
