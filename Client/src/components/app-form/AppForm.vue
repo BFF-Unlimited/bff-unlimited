@@ -22,8 +22,6 @@
 </template>
 
 <script setup>
-import { useApi } from '~~/composables';
-
 const props = defineProps({
   action: {
     type: String,
