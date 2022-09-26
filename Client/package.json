@@ -11,9 +11,7 @@
     "format": "prettier .  --write",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "cypress:run": "cypress run -e PACT_PROVIDER=$PACT_PROVIDER",
-    "cypress:run:stubbed": "cypress run -c cypress-stubbed.json",
-    "cypress:open:stubbed": "cypress open -c cypress-stubbed.json"
+    "cypress:run": "cypress run -e PACT_PROVIDER=$PACT_PROVIDER"
   },
   "devDependencies": {
     "@babel/core": "^7.19.0",

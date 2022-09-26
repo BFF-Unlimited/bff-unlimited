@@ -32,6 +32,7 @@ namespace Bff.WebApi
             builder.Services.AddSingleton<IHandlerFactory>(x => new MagicNinjectFactory(kernel));
             builder.Services.AddSingleton<IOperationResultFactory>(new OperationResultFactory());
             builder.Services.AddSingleton<IExceptionHandler>(new DefaultExceptionHandler(new OperationResultFactory()));
+            builder.Services.AddSingleton<IExceptionHandler>(typeof(DefaultExceptionHandler));
 
             builder.Services
                 .AddSignalR()
