@@ -1,5 +1,5 @@
 import { reactive } from 'vue';
-import { useApi } from '~~/composables';
+import { useApi } from '../composables/useApi';
 
 export const sidebarStore = reactive({
   isMinimal: false,
