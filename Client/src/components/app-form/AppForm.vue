@@ -3,6 +3,7 @@
     ref="form"
     novalidate
     :class="{ 'is-validated': shouldValidate }"
+    class="login-form"
     @input="checkValidity"
     @submit.prevent="onSubmit"
   >
@@ -21,7 +22,7 @@
   </form>
 </template>
 
-<script setup lang="ts">
+<script setup>
 const props = defineProps({
   action: {
     type: String,
@@ -54,7 +55,9 @@ function checkValidity() {
 }
 
 async function onSubmit() {
-  const {public: {baseURL}} = useRuntimeConfig();
+  const {
+    public: { baseURL },
+  } = useRuntimeConfig();
   shouldValidate.value = true;
   emit('validated');
   isValid.value = form.value.checkValidity();
@@ -63,18 +66,16 @@ async function onSubmit() {
     return;
   }
 
-  try{
-    let response: any = await useFetch(props.action, {
+  try {
+    let response = await useApi('/token', {
+      headers: new Headers({ 'content-type': 'application/json' }),
       method: props.method,
       body: JSON.stringify(Object.fromEntries(new FormData(form.value))),
-      baseURL
-    })
-    emit('success', response.data)
-  }
-  catch(err){
-    console.log(err)
-  }
-  finally {
+    });
+    emit('success', response);
+  } catch (err) {
+    console.log(err);
+  } finally {
     isValid.value = false;
   }
 }

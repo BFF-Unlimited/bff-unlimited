@@ -1,5 +1,8 @@
 .form-input {
   margin-bottom: 0.5rem;
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  align-items: center;
 }
 
 input {
@@ -9,9 +12,9 @@ input {
 }
 
 .is-validated input:invalid {
-  border-color: var(--error-color);;
+  border-color: var(--error-color);
 }
 
 .is-validated .error-message {
-  color: var(--error-color);;
+  color: var(--error-color);
 }
