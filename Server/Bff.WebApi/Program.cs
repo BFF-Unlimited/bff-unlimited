@@ -29,10 +29,21 @@ namespace Bff.WebApi
 
             app.MapControllers();
             app.UseBlockPentestingMiddleware();
-
+			
+			SetupDatabase(app);
+			
             app.Run();
         }
 
+		private static void SetupDatabase(WebApplication app)
+		{
+            using(var scope = app.Services.CreateScope())
+            {
+                var administrationContext = scope.ServiceProvider.GetRequiredService<AdministrationContext>();
+                administrationContext.Database.Migrate();
+            }
+		}
+		
         private static WebApplicationBuilder SetupServices(string[] args)
         {
             var kernel = SetupDependecyInjection();
@@ -68,7 +79,9 @@ namespace Bff.WebApi
                 ServiceLifetime.Scoped));
 
             builder.Services.AddStartupTask<StartApplicationServerTask>();
-
+			
+			builder.Services.AddDbContext<AdministrationContext>();
+			
             return builder;
         }
 
