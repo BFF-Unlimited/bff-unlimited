@@ -1,5 +1,7 @@
 ﻿using Bff.Core.Framework;
+using Bff.Core.Framework.Handlers;
 using Bff.Core.Framework.Logging;
+using Bff.Core.Framework.RequestErrorHandling;
 using Ninject;
 using System.Reflection;
 
@@ -58,11 +60,14 @@ namespace Bff.WebApi
         {
             // Make ASP .Net Core classes available to the ninject DI
             _kernel.Bind<IServiceProvider>().ToConstant(_serviceProvider);
-            _kernel.Bind<ILoggerFactory>().ToMethod(x => x.Kernel.Get<IServiceProvider>().GetRequiredService<ILoggerFactory>());
+            _kernel.Bind<ILoggerFactory>().ToMethod(x => x.Kernel.Get<IServiceProvider>().GetRequiredService<ILoggerFactory>()).InSingletonScope();
             _kernel.Bind<IHttpContextAccessor>().ToMethod(x => x.Kernel.Get<IServiceProvider>().GetRequiredService<IHttpContextAccessor>());
             _kernel.Bind<IHttpClientFactory>().ToMethod(x => x.Kernel.Get<IServiceProvider>().GetRequiredService<IHttpClientFactory>());
-            _kernel.Bind<IRovictLogger>().ToMethod(x => x.Kernel.Get<IServiceProvider>().GetRequiredService<IRovictLogger>());
             _kernel.Bind<IConfiguration>().ToMethod(x => x.Kernel.Get<IServiceProvider>().GetRequiredService<IConfiguration>());
+            _kernel.Bind<IRovictLogger>().To<DefaultApplicationServerLogger>().InSingletonScope();
+            _kernel.Bind<IHandlerFactory>().To<MagicNinjectFactory>().InSingletonScope();
+            _kernel.Bind<IOperationResultFactory>().To<OperationResultFactory>().InSingletonScope();
+            _kernel.Bind<IExceptionHandler>().To<DefaultExceptionHandler>().InSingletonScope();
         }
     }
 }
