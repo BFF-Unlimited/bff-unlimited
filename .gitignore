@@ -13,7 +13,8 @@ node_modules
 .vs
 .vscode
 dist
-
+*.pfx
+**/.DS_Store
 
 # Build results Visual Studio 
 [Dd]ebug/

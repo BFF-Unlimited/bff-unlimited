@@ -3,6 +3,7 @@
     ref="form"
     novalidate
     :class="{ 'is-validated': shouldValidate }"
+    class="login-form"
     @input="checkValidity"
     @submit.prevent="onSubmit"
   >
@@ -54,7 +55,9 @@ function checkValidity() {
 }
 
 async function onSubmit() {
-  const {public: {baseURL}} = useRuntimeConfig();
+  const {
+    public: { baseURL },
+  } = useRuntimeConfig();
   shouldValidate.value = true;
   errorMessage.value = ""
   emit('validated');
@@ -64,25 +67,35 @@ async function onSubmit() {
     return;
   }
 
-  try{
-    let {data, error}: any = await useFetch(props.action, {
+  // try{
+  //   let {data, error}: any = await useFetch(props.action, {
+  //     method: props.method,
+  //     body: JSON.stringify(Object.fromEntries(new FormData(form.value))),
+  //     baseURL,
+  //     initialCache: false
+  //   })
+
+  //   if(data.value == null){
+  //     errorMessage.value = error.value.data
+  //     return
+  //   }
+
+  //   emit('success', data.value)
+  // }
+  // catch(err){
+  //   console.log(err)
+  // }
+  // finally {
+  try {
+    let response = await useApi('/token', {
+      headers: new Headers({ 'content-type': 'application/json' }),
       method: props.method,
       body: JSON.stringify(Object.fromEntries(new FormData(form.value))),
-      baseURL,
-      initialCache: false
-    })
-
-    if(data.value == null){
-      errorMessage.value = error.value.data
-      return
-    }
-
-    emit('success', data.value)
-  }
-  catch(err){
-    console.log(err)
-  }
-  finally {
+    });
+    emit('success', response);
+  } catch (err) {
+    console.log(err);
+  } finally {
     isValid.value = false;
   }
 }
