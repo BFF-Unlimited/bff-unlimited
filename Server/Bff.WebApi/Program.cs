@@ -13,9 +13,6 @@ namespace Bff.WebApi
 {
     public class Program
     {
-        private const string CorsDevelopment = "CorsRovictDevelopmentPolicy";
-        private const string CorsProduction = "CorsRovictProductionPolicy";
-
         public static void Main(string[] args)
         {
             var builder = SetupServices(args);
