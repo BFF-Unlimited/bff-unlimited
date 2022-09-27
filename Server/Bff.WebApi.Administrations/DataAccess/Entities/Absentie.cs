@@ -2,10 +2,12 @@
 {
     public class Absentie
     {
-        public Guid Id { get; set; }
-        public Guid LeerlingId { get; set; }
+        public Guid AbsentieId { get; set; }
         public string Reason { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+
+        public Guid LeerlingId { get; set; }
+        public Leerling Leerling { get; set; }
     }
 }
