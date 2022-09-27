@@ -10,7 +10,7 @@
       v-if="shouldValidate && !isValid"
       class="error-message"
     >
-      Het formulier bevat fouten
+      {{errorMessage}}
     </p>
     <slot />
     <AppButton
@@ -46,7 +46,7 @@ const emit = defineEmits(['validated', 'success']);
 const form = ref(null);
 const isValid = ref(false);
 const shouldValidate = ref(false);
-
+let errorMessage = ref("");
 onMounted(() => checkValidity());
 
 function checkValidity() {
@@ -56,6 +56,7 @@ function checkValidity() {
 async function onSubmit() {
   const {public: {baseURL}} = useRuntimeConfig();
   shouldValidate.value = true;
+  errorMessage.value = ""
   emit('validated');
   isValid.value = form.value.checkValidity();
 
@@ -64,12 +65,19 @@ async function onSubmit() {
   }
 
   try{
-    let response: any = await useFetch(props.action, {
+    let {data, error}: any = await useFetch(props.action, {
       method: props.method,
       body: JSON.stringify(Object.fromEntries(new FormData(form.value))),
-      baseURL
+      baseURL,
+      initialCache: false
     })
-    emit('success', response.data)
+
+    if(data.value == null){
+      errorMessage.value = error.value.data
+      return
+    }
+
+    emit('success', data.value)
   }
   catch(err){
     console.log(err)

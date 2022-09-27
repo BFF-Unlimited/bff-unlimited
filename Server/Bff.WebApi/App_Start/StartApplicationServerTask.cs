@@ -1,5 +1,6 @@
 ﻿using Bff.Core.Framework;
 using Bff.Core.Framework.Logging;
+using Bff.WebApi.Services.Administrations.DataAccess.Mysql;
 using Ninject;
 using System.Reflection;
 
@@ -63,6 +64,7 @@ namespace Bff.WebApi
             _kernel.Bind<IHttpClientFactory>().ToMethod(x => x.Kernel.Get<IServiceProvider>().GetRequiredService<IHttpClientFactory>());
             _kernel.Bind<IRovictLogger>().ToMethod(x => x.Kernel.Get<IServiceProvider>().GetRequiredService<IRovictLogger>());
             _kernel.Bind<IConfiguration>().ToMethod(x => x.Kernel.Get<IServiceProvider>().GetRequiredService<IConfiguration>());
+            _kernel.Bind<IAdministrationContext>().To<AdministrationContext>().InSingletonScope();
         }
     }
 }
