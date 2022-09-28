@@ -27,5 +27,7 @@ namespace Bff.WebApi.Services.Administrations.DataAccess.Mysql
         public DbSet<Absentie>? Absenties { get; set; }
         public DbSet<Notitie>? Notities { get; set; }
         public DbSet<LaatstBekekenPagina>? LaatstBekekenPaginas { get; set; }
+        public DbSet<Groep>? Groepen { get; set; }
+        public DbSet<Vestiging>? Vestigingen { get; set; }
     }
 }
