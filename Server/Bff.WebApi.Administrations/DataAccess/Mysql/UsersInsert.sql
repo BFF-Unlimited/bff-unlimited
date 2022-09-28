@@ -1,11 +1,11 @@
-insert into Users (Username, Password)
-values ('Rahmat', '1234'),
-('Wouter', '1234'),
-('Gino', '1234'),
-('Sanne', '1234'),
-('Raymon', '1234'),
-('Ans', '1234'),
-('Marlies', '1234'),
-('Willem', '1234'),
-('test1', '1234'),
-('test12', '1234')
+insert into Users (UserId, Username, Password)
+values (uuid(),'Rahmat', '1234'),
+(uuid(),'Wouter', '1234'),
+(uuid(),'Gino', '1234'),
+(uuid(),'Sanne', '1234'),
+(uuid(),'Raymon', '1234'),
+(uuid(),'Ans', '1234'),
+(uuid(),'Marlies', '1234'),
+(uuid(),'Willem', '1234'),
+(uuid(),'test1', '1234'),
+(uuid(),'test12', '1234')
