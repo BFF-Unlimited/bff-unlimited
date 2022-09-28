@@ -67,34 +67,15 @@ async function onSubmit() {
     return;
   }
 
-  // try{
-  //   let {data, error}: any = await useFetch(props.action, {
-  //     method: props.method,
-  //     body: JSON.stringify(Object.fromEntries(new FormData(form.value))),
-  //     baseURL,
-  //     initialCache: false
-  //   })
-
-  //   if(data.value == null){
-  //     errorMessage.value = error.value.data
-  //     return
-  //   }
-
-  //   emit('success', data.value)
-  // }
-  // catch(err){
-  //   console.log(err)
-  // }
-  // finally {
   try {
-    let response = await useApi('/token', {
+    let response = await useApi(props.action, {
       headers: new Headers({ 'content-type': 'application/json' }),
       method: props.method,
       body: JSON.stringify(Object.fromEntries(new FormData(form.value))),
     });
     emit('success', response);
   } catch (err) {
-    console.log(err);
+    errorMessage.value = err.data
   } finally {
     isValid.value = false;
   }

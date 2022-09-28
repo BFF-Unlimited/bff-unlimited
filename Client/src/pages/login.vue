@@ -62,8 +62,6 @@ function onValidated() {
 
 function onSuccess(token: string) {
   window.localStorage.setItem("token", token)
-// function onSuccess(data: any) {
-//   window.localStorage.setItem('token', data);
-  // router.push({ path: '/' });
+  router.push({ path: '/' });
 }
 </script>

@@ -10,16 +10,16 @@ export const useApi = async (url: string, options?: any): Promise<any> => {
     token = window.localStorage.getItem('token');
   }
 
+  let headers = {};
   if (token) {
-    const headers = {
+    headers = {
       Authorization: `Bearer ${token}`,
       'content-type': 'application/json',
     };
-
-    tempOpts = { ...options, headers: { ...headers } };
   }
 
+  tempOpts = { ...options, headers: { ...headers } };
+
   const apiUrl = url?.includes(baseURL) ? url : `${baseURL}${url}`;
-  console.log({apiUrl})
   return await $fetch(apiUrl, tempOpts);
 };
