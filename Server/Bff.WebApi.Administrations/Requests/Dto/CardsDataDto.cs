@@ -2,10 +2,10 @@
 {
     public class CardsDataDto
     {
-        public PermissionDto[] LaatstBekekenPaginas { get; set; }
+        public LaatstBekekenPaginaDto[] LaatstBekekenPaginas { get; set; }
         public KoppelingDto[] Koppelingen { get; set; }
         public AbsentieDto[] Absenties { get; set; }
-        public NotitieDto[] Notitie { get; set; }
+        public NotitieDto[] Notities { get; set; }
         public LeerlingDto[] JarigeLeerlingen { get; set; }
     }
 }
