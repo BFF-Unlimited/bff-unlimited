@@ -1,4 +1,6 @@
-export const useApi = async (url: string, options?: any): Promise<any> => {
+import { FetchOptions } from 'ohmyfetch';
+
+export const useApi = async (url: string, options?: FetchOptions): Promise<any> => {
   let token = null;
   let tempOpts = {}; 
 
