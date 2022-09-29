@@ -62,7 +62,7 @@ namespace Bff.WebApi.Services.Administrations.Migrations
 
                     b.HasIndex("VestigingId");
 
-                    b.ToTable("Groep");
+                    b.ToTable("Groepen");
                 });
 
             modelBuilder.Entity("Bff.WebApi.Services.Administrations.DataAccess.Entities.Koppeling", b =>
@@ -218,7 +218,7 @@ namespace Bff.WebApi.Services.Administrations.Migrations
 
                     b.HasKey("VestigingId");
 
-                    b.ToTable("Vestiging");
+                    b.ToTable("Vestigingen");
                 });
 
             modelBuilder.Entity("Bff.WebApi.Services.Administrations.DataAccess.Entities.Absentie", b =>

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bff.WebApi.Services.Administrations.Migrations
 {
     [DbContext(typeof(AdministrationContext))]
-    [Migration("20220927145958_EntiteitRelatiesToegevoegd")]
-    partial class EntiteitRelatiesToegevoegd
+    [Migration("20220929080916_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,7 +64,7 @@ namespace Bff.WebApi.Services.Administrations.Migrations
 
                     b.HasIndex("VestigingId");
 
-                    b.ToTable("Groep");
+                    b.ToTable("Groepen");
                 });
 
             modelBuilder.Entity("Bff.WebApi.Services.Administrations.DataAccess.Entities.Koppeling", b =>
@@ -220,7 +220,7 @@ namespace Bff.WebApi.Services.Administrations.Migrations
 
                     b.HasKey("VestigingId");
 
-                    b.ToTable("Vestiging");
+                    b.ToTable("Vestigingen");
                 });
 
             modelBuilder.Entity("Bff.WebApi.Services.Administrations.DataAccess.Entities.Absentie", b =>
