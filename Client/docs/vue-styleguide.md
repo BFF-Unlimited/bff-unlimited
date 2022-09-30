@@ -14,6 +14,8 @@ This is a living document: if no rules are specified in this document yet, pleas
 * Components with no content should be self-closing. Components that self-close communicate that they not only have no content, but are meant to have no content.
 * Component names should prefer full words over abbreviations. The autocompletion in editors make the cost of writing longer names very low, while the clarity they provide is invaluable. Uncommon abbreviations, in particular, should always be avoided.
 
+---
+
 ## Props
 
 * Prop definitions should always be as detailed as possible, specifying at least type(s):
@@ -41,6 +43,8 @@ props: {
 <WelcomeMessage greeting-text="hi"/>
 ```
 
+---
+
 ## Attributes
 
 * For better readability, elements with multiple attributes should span multiple lines, with one attribute per line.
@@ -50,3 +54,79 @@ props: {
 ```HTML
 <AppSidebar :class="{ open: isOpen }">
 ```
+
+---
+
+## Fetch (Ajax calls)
+In this project we are mainly using `isFetch` for doing Ajax calls. Because `useFetch` is a smart wrapper around `useAsyncData` and `$fetch`.
+
+> `useFetch` only works during setup or Lifecycle Hooks ([read more about data fetching](https://v3.nuxtjs.org/getting-started/data-fetching/)).
+
+
+The `useFetch` can be simply used like the example below.
+
+```vue
+<script setup>
+const { data: count } = await useFetch('/api/count')
+</script>
+
+<template>
+  Page visits: {{ count }}
+</template>
+```
+
+The `useFetch` composable will return a few things next to the data from the response. The properties that are comming back are `data`, `pending`, `error` and `refresh`.
+
+- `data` will give the data from the response
+- `pending` will be true when the request has being called but not been resolved or reject. So this property will be excelent for showing a loading spinner.
+- `error` will give back an error when the request has been rejected for whatever reason
+- `refresh` is an method that is handy in the situations when you have to do the call again to refresh the data from the request.
+
+in the example below you can see how you can use them.
+
+```vue
+<template>
+  <!-- you'll need to handle a loading state -->
+  <div v-if="pending">
+    Loading ...
+  </div>
+  <div v-if="error">
+    The posts couldn't load from the API 😔
+  </div>
+  <div v-else>
+    <div v-for="post in posts">
+      <!-- do something -->
+    </div>
+  </div>
+  <button @click="refresh()"></button>
+</template>
+
+<script setup>
+const { data: posts, pending, error, refresh } = useFetch('/api/posts')
+</script>
+
+```
+
+
+
+---
+
+
+## Composable
+
+
+---
+
+
+## TypeScript interfaces usage in components
+
+
+
+---
+
+## Rule of thumb variables in VueJS
+
+- When using a `ref` of `reactive`, use a `const` variable.
+- If the value doesn't change, use `const`
+- When it's an `object` or `array`, use `const`
+- Want to change a variable (value and/or type) use `let`
