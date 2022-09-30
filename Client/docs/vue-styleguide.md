@@ -172,6 +172,32 @@ In the example above we make sure that the token is always given to a request fo
 
 ## TypeScript interfaces usage in components
 
+Working with interfaces when typing the props in Vue components is a bit different than using it in other frameworks.
+
+The script tag should have defined the lang property like this: `<script setup lang="ts">`. Import your interface, add an object literal to the `defineProps<{}>();`
+
+In the object literal you can give a type (with a reference to an interface, types won't work) to each property with an imported interface. [Directly using an interface won't work](https://vuejs.org/guide/typescript/composition-api.html#typing-component-props) like this `defineProps<Props>()`.
+
+```js
+<script setup lang="ts">
+import { LinkParentObject } from '../../models/sidebar.model';
+import { sidebarStore } from '../../stores/sidebar';
+
+const hiddenTextToggleButton = sidebarStore.isMinimal ? 'maximaliseer' : 'minimaliseer';
+
+defineProps<{ menu: LinkParentObject[] }>();
+</script>
+```
+
+You can also define the interface in the component itself, but this will prevent you from re-using it.
+
+```js
+<script setup>
+interface Props {/* ... */}
+
+defineProps<Props>()
+</script>
+```
 
 
 ---
