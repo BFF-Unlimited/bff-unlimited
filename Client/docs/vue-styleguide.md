@@ -107,12 +107,64 @@ const { data: posts, pending, error, refresh } = useFetch('/api/posts')
 
 ```
 
-
-
 ---
 
 
 ## Composable
+
+A composable is a reausable function that can hold a certain piece of application state in a Vue application.
+
+> The Vue documentation describes it as: "**In the context of Vue applications, a "composable" is a function that leverages Vue's Composition API to encapsulate and reuse stateful logic.**"
+
+Custom composables are automatically available in every component or page. So you don't need to import them there.
+
+This is an example of a composable we use in this application.
+
+```ts
+export const sidebarStore = reactive({
+  isMinimal: false,
+
+  toggleIsMinimal() {
+    this.isMinimal = !this.isMinimal;
+  },
+});
+
+```
+
+When you use this composable in two different components on the same page, it will share the same state. So if one component updates the `isMinimal` property with the method `toggleIsMinimal()`, it will be updated on all components.
+
+Composable can be used for all kinds of things next to holding a certain state of the application.
+
+```ts
+export const useApi = async (url: string, options?: FetchOptions): Promise<any> => {
+  let token = null;
+  let tempOpts = {};
+
+  const {
+    public: { baseURL },
+  } = useRuntimeConfig();
+
+  if (process?.client) {
+    token = window.localStorage.getItem('token');
+  }
+
+  if (token) {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'content-type': 'application/json',
+    };
+
+    tempOpts = { ...options, headers: { ...headers } };
+  }
+
+  const apiUrl = url?.includes(baseURL) ? url : `${baseURL}${url}`;
+
+  return await useFetch(apiUrl, tempOpts);
+};
+
+```
+
+In the example above we make sure that the token is always given to a request for the authorization. It is basically a wrapper around the build-in `useFetch` composable.
 
 
 ---
