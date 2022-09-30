@@ -11,7 +11,7 @@
       v-if="shouldValidate && !isValid"
       class="error-message"
     >
-      Het formulier bevat fouten
+      {{errorMessage}}
     </p>
     <slot />
     <AppButton
@@ -22,7 +22,7 @@
   </form>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
   action: {
     type: String,
@@ -47,7 +47,7 @@ const emit = defineEmits(['validated', 'success']);
 const form = ref(null);
 const isValid = ref(false);
 const shouldValidate = ref(false);
-
+const errorMessage = ref("");
 onMounted(() => checkValidity());
 
 function checkValidity() {
@@ -59,6 +59,7 @@ async function onSubmit() {
     public: { baseURL },
   } = useRuntimeConfig();
   shouldValidate.value = true;
+  errorMessage.value = ""
   emit('validated');
   isValid.value = form.value.checkValidity();
 
@@ -67,14 +68,14 @@ async function onSubmit() {
   }
 
   try {
-    let response = await useApi('/token', {
+    const response = await useApi(props.action, {
       headers: new Headers({ 'content-type': 'application/json' }),
       method: props.method,
       body: JSON.stringify(Object.fromEntries(new FormData(form.value))),
     });
     emit('success', response);
   } catch (err) {
-    console.log(err);
+    errorMessage.value = err.data
   } finally {
     isValid.value = false;
   }

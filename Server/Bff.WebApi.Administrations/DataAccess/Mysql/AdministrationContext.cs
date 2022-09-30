@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Bff.WebApi.Services.Administrations.DataAccess.Mysql
 {
-    public class AdministrationContext : DbContext
+    public class AdministrationContext : DbContext, IAdministrationContext
     {
         protected readonly IConfiguration Configuration;
 
@@ -25,6 +25,10 @@ namespace Bff.WebApi.Services.Administrations.DataAccess.Mysql
             options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
         }
 
-        public DbSet<User>? User { get; set; }
+        public DbSet<User>? Users { get; set; }
+
+        public async Task<User?> GetUser(string username, string password){
+            return await Users?.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
+        }
     }
 }
