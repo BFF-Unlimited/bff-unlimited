@@ -47,7 +47,7 @@ const emit = defineEmits(['validated', 'success']);
 const form = ref(null);
 const isValid = ref(false);
 const shouldValidate = ref(false);
-let errorMessage = ref("");
+const errorMessage = ref("");
 onMounted(() => checkValidity());
 
 function checkValidity() {
@@ -68,7 +68,7 @@ async function onSubmit() {
   }
 
   try {
-    let response = await useApi(props.action, {
+    const response = await useApi(props.action, {
       headers: new Headers({ 'content-type': 'application/json' }),
       method: props.method,
       body: JSON.stringify(Object.fromEntries(new FormData(form.value))),
