@@ -4,6 +4,7 @@ using Bff.Core.Framework.Handlers;
 using Bff.Core.Framework.Logging;
 using Bff.Core.Framework.RequestErrorHandling;
 using Bff.WebApi.Services.Administrations.DataAccess.Mysql;
+using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -13,9 +14,11 @@ using System.Text.Json.Serialization;
 
 namespace Bff.WebApi
 {
-    public class Program
+    public static class Program
     {
-        public static void Main(string[] args)
+        private static WebApplication? _app;
+
+        public static async Task Main(string[] args)
         {
             var builder = SetupServices(args);
 
@@ -71,7 +74,7 @@ namespace Bff.WebApi
                 x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
 
-            builder.Services
+            _ = builder.Services
                 .AddSignalR()
                 .AddNewtonsoftJsonProtocol();
 
@@ -131,5 +134,7 @@ namespace Bff.WebApi
         {
             return new StandardKernel();
         }
+
+        public static string ServerUrl => "https://127.0.0.1:5101";
     }
 }
