@@ -3,7 +3,9 @@ using Bff.Core.Framework;
 using Bff.Core.Framework.Handlers;
 using Bff.Core.Framework.Logging;
 using Bff.Core.Framework.RequestErrorHandling;
+using Bff.WebApi.Services.Administrations.DataAccess.Mysql;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Ninject;
 using System.Runtime.CompilerServices;
@@ -122,6 +124,7 @@ namespace Bff.WebApi
             builder.Services.AddSingleton(x => kernel.Get<IHandlerFactory>());
             builder.Services.AddSingleton(x => kernel.Get<IOperationResultFactory>());
             builder.Services.AddSingleton(x => kernel.Get<IExceptionHandler>());
+            builder.Services.AddSingleton(x => kernel.Get<IAdministrationContext>());
         }
 
         private static StandardKernel SetupDependecyInjection()

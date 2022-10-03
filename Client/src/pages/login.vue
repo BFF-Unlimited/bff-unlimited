@@ -48,12 +48,20 @@ const username = ref('');
 const password = ref('');
 const shouldValidate = ref(false);
 
+onMounted(() => loginGuard());
+
+//TODO: moet worden vervangen door routing guard middleware
+function loginGuard(){
+  let userIsLoggedIn: string = window.localStorage.getItem("token");
+  if(userIsLoggedIn) router.push({ path: '/' });
+}
+
 function onValidated() {
   shouldValidate.value = true;
 }
 
-function onSuccess(data: any) {
-  window.localStorage.setItem('token', data);
+function onSuccess(token: string) {
+  window.localStorage.setItem("token", token)
   router.push({ path: '/' });
 }
 </script>

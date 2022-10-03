@@ -1,6 +1,7 @@
-﻿namespace Bff.WebApi.Services.Administrations.Requests.Queries;
-
-public class GetUserQuery
+﻿namespace Bff.WebApi.Services.Administrations.Requests.Queries
 {
-    public Guid UserId { get; set; }
+    public class GetUserQuery
+    {
+        public Guid UserId { get; set; }
+    }
 }

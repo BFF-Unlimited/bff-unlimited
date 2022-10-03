@@ -11,6 +11,7 @@ node_modules
 .env
 .vite
 .vs
+.vscode
 dist
 *.pfx
 **/.DS_Store

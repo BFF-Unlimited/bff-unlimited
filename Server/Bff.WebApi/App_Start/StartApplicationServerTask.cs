@@ -2,6 +2,7 @@
 using Bff.Core.Framework.Handlers;
 using Bff.Core.Framework.Logging;
 using Bff.Core.Framework.RequestErrorHandling;
+using Bff.WebApi.Services.Administrations.DataAccess.Mysql;
 using Ninject;
 using System.Reflection;
 
@@ -68,6 +69,7 @@ namespace Bff.WebApi
             _kernel.Bind<IHandlerFactory>().To<MagicNinjectFactory>().InSingletonScope();
             _kernel.Bind<IOperationResultFactory>().To<OperationResultFactory>().InSingletonScope();
             _kernel.Bind<IExceptionHandler>().To<DefaultExceptionHandler>().InSingletonScope();
+            _kernel.Bind<IAdministrationContext>().To<AdministrationContext>().InSingletonScope();
         }
     }
 }
