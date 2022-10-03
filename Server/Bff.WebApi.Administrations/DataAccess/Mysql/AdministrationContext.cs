@@ -1,11 +1,6 @@
 ﻿using Bff.WebApi.Services.Administrations.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bff.WebApi.Services.Administrations.DataAccess.Mysql
 {
@@ -26,6 +21,14 @@ namespace Bff.WebApi.Services.Administrations.DataAccess.Mysql
         }
 
         public DbSet<User>? Users { get; set; }
+        public DbSet<Leerling>? Leerlingen { get; set; }
+        public DbSet<Permission>? Permissions { get; set; }
+        public DbSet<Koppeling>? Koppelingen { get; set; }
+        public DbSet<Absentie>? Absenties { get; set; }
+        public DbSet<Notitie>? Notities { get; set; }
+        public DbSet<LaatstBekekenPagina>? LaatstBekekenPaginas { get; set; }
+        public DbSet<Groep>? Groepen { get; set; }
+        public DbSet<Vestiging>? Vestigingen { get; set; }
 
         public async Task<User?> GetUser(string username, string password){
             return await Users?.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
