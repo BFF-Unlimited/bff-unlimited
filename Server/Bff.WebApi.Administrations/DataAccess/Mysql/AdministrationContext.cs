@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Bff.WebApi.Services.Administrations.DataAccess.Mysql
 {
-    public class AdministrationContext : DbContext
+    public class AdministrationContext : DbContext, IAdministrationContext
     {
         protected readonly IConfiguration Configuration;
 
@@ -29,5 +29,9 @@ namespace Bff.WebApi.Services.Administrations.DataAccess.Mysql
         public DbSet<LaatstBekekenPagina>? LaatstBekekenPaginas { get; set; }
         public DbSet<Groep>? Groepen { get; set; }
         public DbSet<Vestiging>? Vestigingen { get; set; }
+
+        public async Task<User?> GetUser(string username, string password){
+            return await Users?.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
+        }
     }
 }

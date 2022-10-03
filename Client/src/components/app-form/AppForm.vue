@@ -3,6 +3,7 @@
     ref="form"
     novalidate
     :class="{ 'is-validated': shouldValidate }"
+    class="login-form"
     @input="checkValidity"
     @submit.prevent="onSubmit"
   >
@@ -10,7 +11,7 @@
       v-if="shouldValidate && !isValid"
       class="error-message"
     >
-      Het formulier bevat fouten
+      {{errorMessage}}
     </p>
     <slot />
     <AppButton
@@ -46,7 +47,7 @@ const emit = defineEmits(['validated', 'success']);
 const form = ref(null);
 const isValid = ref(false);
 const shouldValidate = ref(false);
-
+const errorMessage = ref("");
 onMounted(() => checkValidity());
 
 function checkValidity() {
@@ -54,8 +55,11 @@ function checkValidity() {
 }
 
 async function onSubmit() {
-  const {public: {baseURL}} = useRuntimeConfig();
+  const {
+    public: { baseURL },
+  } = useRuntimeConfig();
   shouldValidate.value = true;
+  errorMessage.value = ""
   emit('validated');
   isValid.value = form.value.checkValidity();
 
@@ -63,18 +67,16 @@ async function onSubmit() {
     return;
   }
 
-  try{
-    let response: any = await useFetch(props.action, {
+  try {
+    const response = await useApi(props.action, {
+      headers: new Headers({ 'content-type': 'application/json' }),
       method: props.method,
       body: JSON.stringify(Object.fromEntries(new FormData(form.value))),
-      baseURL
-    })
-    emit('success', response.data)
-  }
-  catch(err){
-    console.log(err)
-  }
-  finally {
+    });
+    emit('success', response);
+  } catch (err) {
+    errorMessage.value = err.data
+  } finally {
     isValid.value = false;
   }
 }

@@ -19,12 +19,12 @@ namespace Bff.WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("token")]
-        public IActionResult Authenticate([FromBody] LoginDto loginCred)
+        public async Task<IActionResult> Authenticate([FromBody] LoginDto loginCred)
         {
-            var token = _customAuthenticationManager.Authenticate(loginCred.Username, loginCred.Password);
+            var token = await _customAuthenticationManager.Authenticate(loginCred.Username, loginCred.Password);
 
             if (token == null)
-                return Unauthorized();
+                return Unauthorized("Gebruiker is niet bekend");
 
             return Ok(token);
         }
