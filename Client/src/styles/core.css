@@ -1,0 +1,7 @@
+a, a:visited {
+    color: var(--main-text-color)
+  }
+  
+  a:hover {
+    text-decoration: none;
+  }

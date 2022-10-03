@@ -1,6 +1,7 @@
-﻿namespace Bff.WebApi.Services.Administrations.Requests.Dto;
-
-public class BaseDto
+﻿namespace Bff.WebApi.Services.Administrations.Requests.Dto
 {
-    public Guid Id { get; set; }
+    public class BaseDto
+    {
+        public Guid? Id { get; set; }
+    }
 }

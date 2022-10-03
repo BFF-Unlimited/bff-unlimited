@@ -1,0 +1,23 @@
+.header {
+  padding: 0.75rem 1rem;
+  background-color: var(--main-color);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-logo {
+  display: block;
+}
+
+.header-nav-item {
+  display: inline-block;
+}
+
+.header-nav-item:not(:last-child):after {
+  content: '|';
+  margin: 0 1rem;
+}

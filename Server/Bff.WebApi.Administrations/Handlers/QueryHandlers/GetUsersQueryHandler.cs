@@ -2,16 +2,17 @@
 using Bff.WebApi.Services.Administrations.Requests.Dto;
 using Bff.WebApi.Services.Administrations.Requests.Queries;
 
-namespace Bff.WebApi.Services.Administrations.Handlers.QueryHandlers;
-
-internal class GetUsersQueryHandler : AsyncQueryHandlerBase<GetUsersQuery>
+namespace Bff.WebApi.Services.Administrations.Handlers.QueryHandlers
 {
-    protected override async Task<object> DoExecute(GetUsersQuery query)
+    internal class GetUsersQueryHandler : AsyncQueryHandlerBase<GetUsersQuery>
     {
-        return await Task.FromResult(new UserIdentificationDto[]
+        protected override async Task<object> DoExecute(GetUsersQuery query)
         {
-            new UserIdentificationDto("Ans"),
-            new UserIdentificationDto("Willem")
-        });
+            return await Task.FromResult(new UserIdentificationDto[]
+            {
+                new UserIdentificationDto("Ans"),
+                new UserIdentificationDto("Willem")
+            });
+        }
     }
 }

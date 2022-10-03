@@ -1,4 +1,7 @@
 :root {
-  --main-color: #43b3ae;
+  --main-text-color: #000;
+  --white: #fff;
+
+  --main-color: #dbe6ec;
   --error-color: #d63232;
 }

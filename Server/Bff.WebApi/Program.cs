@@ -1,11 +1,16 @@
+using Autofac.Core;
 using Bff.Core.Framework;
 using Bff.Core.Framework.Handlers;
 using Bff.Core.Framework.Logging;
 using Bff.Core.Framework.RequestErrorHandling;
+using Bff.WebApi.Services.Administrations.DataAccess.Mysql;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Ninject;
+using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 
 namespace Bff.WebApi
 {
@@ -15,64 +20,119 @@ namespace Bff.WebApi
 
         public static async Task Main(string[] args)
         {
+            var builder = SetupServices(args);
+
+            var app = builder.Build();
+
+            SetupDevelopmentEnviroment(app);
+            SetupProductionEnviroment(app);
+
+            app.UseHttpsRedirection();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.MapControllers();
+            app.UseBlockPentestingMiddleware();
+			
+			SetupDatabase(app);
+			
+            app.Run();
+        }
+
+		private static void SetupDatabase(WebApplication app)
+		{
+            using(var scope = app.Services.CreateScope())
+            {
+                var administrationContext = scope.ServiceProvider.GetRequiredService<AdministrationContext>();
+                administrationContext.Database.Migrate();
+            }
+		}
+		
+        private static WebApplicationBuilder SetupServices(string[] args)
+        {
+            var kernel = SetupDependecyInjection();
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
 
-            _ = builder.Services.AddControllers();
+            builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            _ = builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddEndpointsApiExplorer();
             builder.UseAuthentication();
 
             SwaggerConfig.Configure(builder.Services);
             LoggerConfig.Configure(builder.Services);
 
-            _ = builder.Services.AddHttpClient();
-            var kernel = new StandardKernel();
+            builder.Services.AddHttpClient();
 
-            _ = builder.Services.AddSingleton<IKernel>(kernel);
-            _ = builder.Services.AddSingleton<IRovictLogger>(x => new DefaultApplicationServerLogger(new LoggerFactory()));
-            _ = builder.Services.AddSingleton<IHandlerFactory>(x => new MagicNinjectFactory(kernel));
-            _ = builder.Services.AddSingleton<IOperationResultFactory>(new OperationResultFactory());
-            _ = builder.Services.AddSingleton<IExceptionHandler>(new DefaultExceptionHandler(new OperationResultFactory()));
+            SetupWebApiDepencenyServices(builder, kernel);
+            builder.Services.AddControllers().AddJsonOptions(x =>
+            {
+                // serialize enums as strings in api responses (e.g. Role)
+                x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
 
             _ = builder.Services
                 .AddSignalR()
                 .AddNewtonsoftJsonProtocol();
 
-            _ = builder.Services.Replace(new ServiceDescriptor(
+            builder.Services.Replace(new ServiceDescriptor(
                 typeof(IHubActivator<>),
                 typeof(NinjectHubActivator<>),
                 ServiceLifetime.Scoped));
 
-            _ = builder.Services.AddStartupTask<StartApplicationServerTask>();
+            builder.Services.AddStartupTask<StartApplicationServerTask>();
+			
+			builder.Services.AddDbContext<AdministrationContext>();
+			
+            return builder;
+        }
 
-            _app = builder.Build();
+        private static void SetupProductionEnviroment(WebApplication app)
+        {
+            if (app.Environment.IsDevelopment())
+                return; 
 
+            // Setup Cors for some private adressen
+            app.UseCors(builder =>
+                        builder.AllowAnyOrigin()
+                               .AllowAnyHeader()
+                       );
+            app.UseHsts();
+        }
+
+        private static void SetupDevelopmentEnviroment(WebApplication app)
+        {
             // Configure the HTTP request pipeline.
-            if(_app.Environment.IsDevelopment())
-            {
-                _ = _app.UseSwagger();
-                _ = _app.UseSwaggerUI();
-                _ = _app.UseDeveloperExceptionPage();
-            }
+            if (!app.Environment.IsDevelopment())
+                return;
 
-            _ = _app.UseCors(builder =>
-            {
-                builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
-            });
+            // Disable Cors for development to make live simpler
+            app.UseCors(builder =>
+                        builder.AllowAnyOrigin()
+                               .AllowAnyHeader()
+                        );
 
-            _ = _app.UseHttpsRedirection();
+            app.UseSwagger();
+            app.UseSwaggerUI();
+            app.UseDeveloperExceptionPage();
+        }
 
-            _ = _app.UseAuthentication();
-            _ = _app.UseAuthorization();
+        private static void SetupWebApiDepencenyServices(WebApplicationBuilder builder, IKernel kernel)
+        {
+            builder.Services.AddSingleton(kernel);
+            builder.Services.AddSingleton(x => kernel.Get<IRovictLogger>());
+            builder.Services.AddSingleton(x => kernel.Get<IHandlerFactory>());
+            builder.Services.AddSingleton(x => kernel.Get<IOperationResultFactory>());
+            builder.Services.AddSingleton(x => kernel.Get<IExceptionHandler>());
+            builder.Services.AddSingleton(x => kernel.Get<IAdministrationContext>());
+        }
 
-            _ = _app.MapControllers();
-            _ = _app.UseBlockPentestingMiddleware();
-
-            await _app.RunAsync();
+        private static StandardKernel SetupDependecyInjection()
+        {
+            return new StandardKernel();
         }
 
         public static string ServerUrl => "https://127.0.0.1:5101";
