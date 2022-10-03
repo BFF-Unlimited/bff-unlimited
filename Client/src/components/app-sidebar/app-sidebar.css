@@ -1,23 +1,25 @@
 .side-nav {
-  padding: 2rem;
   position: relative;
+  padding: 2rem;
   height: 100%;
   width: 250px;
+  background: var(--main-color);
 }
+
 .side-nav.minimal {
   width: 50px;
   padding: 2rem 1rem;
 }
-.side-nav ul {
-  list-style: none;
-}
+
 .side-nav-item {
   line-height: 1.5;
   margin-bottom: 0.5rem;
 }
+
 .side-nav-ul {
   padding-left: 0;
 }
+
 .side-nav-item,
 .side-sub-item {
   margin-bottom: 1rem;
@@ -28,11 +30,13 @@
   text-decoration: none;
   display: block;
 }
+
 .side-nav-link:hover,
 .side-nav-item.active > .side-nav-link,
 .side-sub-item.active > .side-nav-link {
   font-weight: bold;
 }
+
 .side-nav-link .icon {
   font-size: 1rem;
 }
@@ -42,6 +46,7 @@
   margin-top: 0.5rem;
   margin-bottom: 1rem;
 }
+
 .minimal .side-sub-ul {
   display: none;
 }

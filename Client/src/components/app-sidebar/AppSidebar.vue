@@ -1,5 +1,5 @@
 <template>
-  <div
+  <nav
     class="side-nav"
     :class="{ minimal: sidebarStore.isMinimal }"
   >
@@ -60,7 +60,7 @@
         </ul>
       </li>
     </ul>
-  </div>
+  </nav>
 </template>
 
 <script setup>

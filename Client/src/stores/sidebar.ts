@@ -1,6 +1,5 @@
 import { reactive } from 'vue';
 import { Permission } from '../models/permission.model';
-import { useApi } from '../composables/useApi';
 import { userStore } from './user';
 
 export const sidebarStore = reactive({
@@ -10,29 +9,29 @@ export const sidebarStore = reactive({
   toggleIsMinimal() {
     this.isMinimal = !this.isMinimal;
   },
-  setIsMinimal(value) {
+  setIsMinimal(value: boolean) {
     this.isMinimal = value;
   },
   async getUserPermissions() {
-    if (!userStore.user.id || userStore.user.id === '') {
+    if (!userStore.user?.id || userStore.user?.id === '') {
       await userStore.getActiveUser();
     }
     this.navigation = this.fromPermissionToMenu(userStore.user?.permissions);
   },
   fromPermissionToMenu(permissions: Permission[]): LinkParentObject[] {
-        const perm = {};
+    const permission = {};
     permissions.forEach((item) => {
-      const [propName, child] = item.categoryDescription.split('.');
+      const [propName] = item.categoryDescription.split('.');
       const name = propName.toLowerCase();
-      if (perm[name]) {
-        perm[name]?.items.push(this.createMenuItem(item));
+      if (permission[name]) {
+        permission[name]?.items.push(this.createMenuItem(item));
       } else {
-        perm[name] = this.createMenuItem(item);
-        perm[name].items = [];
-        perm[name].name = propName;
+        permission[name] = this.createMenuItem(item);
+        permission[name].items = [];
+        permission[name].name = propName;
       }
     });
-    return Object.values(perm);
+    return Object.values(permission);
   },
   createMenuItem(value: Permission): LinkObject {
     const active = value.description === 'Groepsoverzicht';
