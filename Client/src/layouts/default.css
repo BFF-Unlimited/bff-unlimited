@@ -3,7 +3,7 @@
   grid-template-columns: auto 1fr;
   grid-template-rows: auto 1fr;
   grid-template-areas:
-    'header header '
+    'header header'
     'sidebar main';
   min-height: 100vh;
 }

@@ -23,7 +23,7 @@ export class ActiveUserModel {
   groepen: Groep[];
   permissions: Permission[];
 
-  constructor(input: any) {
+  constructor(input: ActiveUser) {
     this.id = input?.id ?? '';
     this.userName = input?.userName ?? '';
     this.activeVestiging = input?.activeVestiging ?? null;

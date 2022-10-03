@@ -13,4 +13,8 @@ export default defineNuxtConfig({
       baseURL: process.env.BASE_URL || 'https://localhost:5001',
     },
   },
+  dirs: [
+    // Scan top-level modules
+    'composables/index.ts',
+  ],
 });
