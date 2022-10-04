@@ -14,6 +14,30 @@ services:
     volumes:
       - db-data:/var/lib/mysql
 
+  mssql: 
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: shin_mssql
+    restart: always
+    ports: 
+      - 9999:1143
+    networks:
+      - bff_unlimited_network
+    environment: 
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=microsoft-squirrel-army
+
+  iam:
+    image: rovict.azurecr.io/esisshin-iam:latest-dev
+    ports:
+      - 7201:443
+    networks:
+      - bff_unlimited_network
+    depends_on:
+      - db
+    environment:
+      - ASPNETCORE_URLS=https://+:443
+      - ConnectionStrings__Default=Server=mssql;Database=Esis.Iam;User ID=sa;Password=microsoft-squirrel-army;MultipleActiveResultSets=true
+
   client: 
     build: 
       context: ./client
