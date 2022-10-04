@@ -40,7 +40,7 @@ namespace Bff.WebApi
             app.Run();
         }
 
-		private static void SetupDatabase(WebApplication app)
+        private static void SetupDatabase(WebApplication app)
 		{
             using(var scope = app.Services.CreateScope())
             {

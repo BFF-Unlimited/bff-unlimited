@@ -5,16 +5,16 @@ namespace Bff.WebApi.Tests
 {
     public class XUnitOutput : IOutput
     {
-        private readonly ITestOutputHelper output;
+        private readonly ITestOutputHelper _output;
 
         public XUnitOutput(ITestOutputHelper output)
         {
-            this.output = output;
+            _output = output;
         }
 
         public void WriteLine(string line)
         {
-            this.output.WriteLine(line);
+            _output.WriteLine(line);
         }
     }
 }
