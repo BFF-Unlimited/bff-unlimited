@@ -76,13 +76,13 @@ namespace Bff.WebApi
                     options.Scope.Add("offline_access");
                 }
             );
-            /*services.AddBff(options =>
+            services.AddBff(options =>
             {
                 // default value
                 options.ManagementBasePath = "/bff";
                 options.AntiForgeryHeaderName = "x-csrf";
                 options.AntiForgeryHeaderValue = "1";
-            });*/
+            });
         }
 
         private static Task ZetEigenClaimsInDeIngelogdeIdentity(UserInformationReceivedContext context)
@@ -106,12 +106,12 @@ namespace Bff.WebApi
 
         public static void UseIamAuthentication(this WebApplication app)
         {
-            //app.UseBff();
+            app.UseBff();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
-            //app.UseEndpoints(endpoints => endpoints.MapBffManagementEndpoints());
+            app.UseEndpoints(endpoints => endpoints.MapBffManagementEndpoints());
         }
     }
 }
