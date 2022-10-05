@@ -28,6 +28,7 @@ build/*.*
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
+.keys
 
 # User-specific files
 *.suo

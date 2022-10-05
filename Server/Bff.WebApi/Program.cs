@@ -1,4 +1,3 @@
-using Autofac.Core;
 using Bff.Core.Framework;
 using Bff.Core.Framework.Handlers;
 using Bff.Core.Framework.Logging;
@@ -8,7 +7,8 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Ninject;
-using System.Runtime.CompilerServices;
+using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
 using System.Text.Json.Serialization;
 
 namespace Bff.WebApi
@@ -18,13 +18,26 @@ namespace Bff.WebApi
         public static void Main(string[] args)
         {
             var builder = SetupServices(args);
+                builder.Host.UseSerilog(
+                (ctx, lc) =>
+                    lc.WriteTo
+                        .Console(
+                            outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}",
+                            theme: AnsiConsoleTheme.Literate
+                        )
+                        .Enrich.FromLogContext()
+                        .ReadFrom.Configuration(ctx.Configuration)
+            );
 
             var app = builder.Build();
+            app.UseSerilogRequestLogging();
 
             SetupDevelopmentEnviroment(app);
             SetupProductionEnviroment(app);
 
             app.UseHttpsRedirection();
+
+            app.UseBff();
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -57,7 +70,7 @@ namespace Bff.WebApi
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.UseAuthentication();
+            builder.Services.AddIamAuthentication(builder.Configuration, builder.Environment.IsDevelopment());
 
             SwaggerConfig.Configure(builder.Services);
             LoggerConfig.Configure(builder.Services);

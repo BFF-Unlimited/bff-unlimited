@@ -35,8 +35,13 @@ services:
     depends_on:
       - db
     environment:
-      - ASPNETCORE_URLS=https://+:443
+      - ASPNETCORE_URLS=https://+:443;http://+:80
       - ConnectionStrings__Default=Server=mssql;Database=Esis.Iam;User ID=sa;Password=microsoft-squirrel-army;MultipleActiveResultSets=true
+      - Clients__EsisShinBff__ClientId=EsisShin
+      - Clients__EsisShinBff__ClientSecret=ShinMegamiTensei
+      - Clients__EsisShinBff__Uri=https://localhost:5001
+    volumes:
+      - .keys:/root/.aspnet/DataProtection-Keys
 
   client: 
     build: 
@@ -59,15 +64,19 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_HTTPS_PORT=5001
       - ASPNETCORE_Kestrel__Certificates__Default__Password=bff123
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/Bff.WebApi.pfx
+      - Authentication__ClientId=EsisShin
+      - Authentication__ClientSecret=ShinMegamiTensei
+      - Authentication__ExternalUrl=https://localhost:7201
+      - Authentication__InternalUrl=http://iam
     networks:
       - bff_unlimited_network
     volumes:
       - ~/.aspnet/https:/https:ro
     depends_on:
       - db
+      - iam
 
 volumes:
   db-data:
