@@ -33,7 +33,7 @@ services:
     networks:
       - bff_unlimited_network
     depends_on:
-      - db
+      - mssql
     environment:
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - ConnectionStrings__Default=Server=mssql;Database=Esis.Iam;User ID=sa;Password=microsoft-squirrel-army;MultipleActiveResultSets=true
@@ -70,6 +70,8 @@ services:
       - Authentication__ClientSecret=ShinMegamiTensei
       - Authentication__ExternalUrl=https://localhost:7201
       - Authentication__InternalUrl=http://iam
+      #- FrontEnd=http://client:3000
+      - FrontEnd=http://host.docker.internal:3000
     networks:
       - bff_unlimited_network
     volumes:

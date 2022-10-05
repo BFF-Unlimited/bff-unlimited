@@ -31,7 +31,7 @@ namespace Bff.WebApi
                     options.Cookie.Name = "Esis.Shin-Host-web";
 
                     // strict SameSite handling
-                    options.Cookie.SameSite = isDevelopment ? SameSiteMode.None : SameSiteMode.Lax;
+                    options.Cookie.SameSite = SameSiteMode.Strict;
                     options.Cookie.HttpOnly = true;
                     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 }
