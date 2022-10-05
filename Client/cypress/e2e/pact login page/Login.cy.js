@@ -1,11 +1,6 @@
 import { Matchers } from "@pact-foundation/pact-web";
 const { like } = Matchers;
 
-const sendLogin = {
-  username: "Ans",
-  password: "1234"
-};
-
 const expectedLoginResult = "796dcfda-2b20-4927-abb7-c14d34e81eaf";
 
 describe("Login page", () => {

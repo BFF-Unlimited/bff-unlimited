@@ -74,7 +74,7 @@ namespace Bff.WebApi
                 x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
 
-            _ = builder.Services
+            builder.Services
                 .AddSignalR()
                 .AddNewtonsoftJsonProtocol();
 
