@@ -1,8 +1,8 @@
 ﻿using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.Text.Json;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.IdentityModel.Protocols;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace Bff.WebApi
 {
@@ -31,18 +31,22 @@ namespace Bff.WebApi
                     options.Cookie.Name = "Esis.Shin-Host-web";
 
                     // strict SameSite handling
-                    options.Cookie.SameSite = SameSiteMode.None;
+                    options.Cookie.SameSite = isDevelopment ? SameSiteMode.None : SameSiteMode.Lax;
+                    options.Cookie.HttpOnly = true;
+                    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 }
             )
             .AddOpenIdConnect(
                 "oidc",
                 options =>
                 {
-                    options.Authority = configuration["Authentication:ExternalUrl"];
-                    options.MetadataAddress = configuration["Authentication:InternalUrl"] + "/.well-known/openid-configuration";
+                    var internalAddress = configuration["Authentication:InternalUrl"];
+                    var externalAddress = configuration["Authentication:ExternalUrl"];
+                    options.Authority = externalAddress;
+                    options.MetadataAddress = $"{internalAddress}/.well-known/openid-configuration";
                     options.ConfigurationManager = new ConfigurationManager<OpenIdConnectConfiguration>(
-                        options.MetadataAddress, 
-                        new InternalExternalIdentityProviderOpenIdConfigurationRetreiver(configuration["Authentication:InternalUrl"], configuration["Authentication:ExternalUrl"], isDevelopment));
+                        options.MetadataAddress,
+                        new InternalExternalIdentityProviderOpenIdConfigurationRetreiver(internalAddress, externalAddress, isDevelopment));
                     options.RequireHttpsMetadata = !isDevelopment;
 
                     // confidential client using code flow + PKCE
@@ -57,19 +61,7 @@ namespace Bff.WebApi
                     options.MapInboundClaims = false;
                     options.GetClaimsFromUserInfoEndpoint = true;
 
-                    options.Events.OnUserInformationReceived = async context =>
-                    {
-                        var additionalClaims = context.User.Deserialize<IDictionary<string, string>>();
-                        if(
-                            additionalClaims != null
-                            && context.Principal!.Identity is ClaimsIdentity ingelogdeGebruiker
-                        )
-                        {
-                            ingelogdeGebruiker.AddClaims(
-                                additionalClaims.Select(c => new Claim(c.Key, c.Value))
-                            );
-                        }
-                    };
+                    options.Events.OnUserInformationReceived = ZetEigenClaimsInDeIngelogdeIdentity;
 
                     // save tokens into authentication session
                     // to enable automatic token management
@@ -77,48 +69,49 @@ namespace Bff.WebApi
 
                     // request scopes
                     options.Scope.Clear();
-                    options.Scope.Add("openid");
-                    options.Scope.Add("profile");
-                    options.Scope.Add("api");
-                    options.Scope.Add("rollen");
+                    foreach(var scope in GebruikersprofielEnEsisInformatie)
+                        options.Scope.Add(scope);
 
                     // and refresh token
                     options.Scope.Add("offline_access");
                 }
             );
-            services.AddBff(options =>
+            /*services.AddBff(options =>
             {
                 // default value
                 options.ManagementBasePath = "/bff";
                 options.AntiForgeryHeaderName = "x-csrf";
                 options.AntiForgeryHeaderValue = "1";
-            });
-        }
-    }
-
-    public class InternalExternalIdentityProviderOpenIdConfigurationRetreiver : IConfigurationRetriever<OpenIdConnectConfiguration>
-    {
-        private readonly IConfigurationRetriever<OpenIdConnectConfiguration> _defaultRetriever = new OpenIdConnectConfigurationRetriever();
-        private readonly string _internalAddress;
-        private readonly string _externalAddress;
-        private readonly bool _isDevelopment;
-
-        public InternalExternalIdentityProviderOpenIdConfigurationRetreiver(string internalAddress, string externalAddress, bool isDevelopment)
-        {
-            _internalAddress = internalAddress;
-            _externalAddress = externalAddress;
-            _isDevelopment = isDevelopment;
+            });*/
         }
 
-        public async Task<OpenIdConnectConfiguration> GetConfigurationAsync(string address, IDocumentRetriever retriever, CancellationToken cancel)
+        private static Task ZetEigenClaimsInDeIngelogdeIdentity(UserInformationReceivedContext context)
         {
-            if(retriever is HttpDocumentRetriever httpDocumentRetriever)
+            var additionalClaims = context.User.Deserialize<IDictionary<string, string>>();
+            if(
+                additionalClaims != null
+                && context.Principal!.Identity is ClaimsIdentity ingelogdeGebruiker
+            )
             {
-                httpDocumentRetriever.RequireHttps = !_isDevelopment;
+                ingelogdeGebruiker.AddClaims(
+                    additionalClaims.Select(c => new Claim(c.Key, c.Value))
+                );
             }
-            var configuration = await _defaultRetriever.GetConfigurationAsync(address, retriever, cancel);
-            configuration.AuthorizationEndpoint = configuration.AuthorizationEndpoint.Replace(_internalAddress, _externalAddress);
-            return configuration;
+
+            return Task.CompletedTask;
+        }
+
+        private static IEnumerable<string> GebruikersprofielEnEsisInformatie => new[] { "openid", "profile", "api", "rollen" };
+
+
+        public static void UseIamAuthentication(this WebApplication app)
+        {
+            //app.UseBff();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            //app.UseEndpoints(endpoints => endpoints.MapBffManagementEndpoints());
         }
     }
 }

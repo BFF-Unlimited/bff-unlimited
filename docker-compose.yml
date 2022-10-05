@@ -41,7 +41,7 @@ services:
       - Clients__EsisShinBff__ClientSecret=ShinMegamiTensei
       - Clients__EsisShinBff__Uri=https://localhost:5001
     volumes:
-      - .keys:/root/.aspnet/DataProtection-Keys
+      - .keys/iam:/root/.aspnet/DataProtection-Keys
 
   client: 
     build: 
@@ -74,6 +74,7 @@ services:
       - bff_unlimited_network
     volumes:
       - ~/.aspnet/https:/https:ro
+      - .keys/bff:/root/.aspnet/DataProtection-Keys
     depends_on:
       - db
       - iam

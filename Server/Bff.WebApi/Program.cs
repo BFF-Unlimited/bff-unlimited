@@ -36,11 +36,9 @@ namespace Bff.WebApi
             SetupProductionEnviroment(app);
 
             app.UseHttpsRedirection();
+            app.UseRouting();
 
-            app.UseBff();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
+            app.UseIamAuthentication();
 
             app.MapControllers();
             app.UseBlockPentestingMiddleware();
@@ -119,7 +117,7 @@ namespace Bff.WebApi
             if (!app.Environment.IsDevelopment())
                 return;
 
-            // Disable Cors for development to make live simpler
+            // Disable Cors for development to make life simpler
             app.UseCors(builder =>
                         builder.AllowAnyOrigin()
                                .AllowAnyHeader()
