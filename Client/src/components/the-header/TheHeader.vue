@@ -4,7 +4,7 @@
       <h1>
         <span class="visually-hidden">{{ user?.activeVestiging.name }}</span>
         <img
-          v-if="!!user"
+          v-if="user"
           :src="user?.activeVestiging.logoUrl"
           :alt="`Logo van ${user?.activeVestiging.name}`"
           height="40"

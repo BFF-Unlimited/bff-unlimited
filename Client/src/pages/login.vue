@@ -6,8 +6,10 @@
           <h2>Inloggen</h2>
         </template>
         <template #body>
-          <AppButton v-on:click="redirectToLogin()" 
-            :label="'Inloggen'"></AppButton>
+          <AppButton
+            :label="'Inloggen'"
+            @click="redirectToLogin()" 
+            ></AppButton>
         </template>
       </AppCard>
     </div>

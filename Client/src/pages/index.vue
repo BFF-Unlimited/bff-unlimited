@@ -2,12 +2,14 @@
   <NuxtLayout name="main">
     <template #header><TheHeader :user="userStore?.user" /></template>
     <template #sidebar><AppSidebar :menu="sidebarStore.navigation" /></template>
-    <template #default 
-      v-if="!!userStore?.user">
+    <template
+      v-if="!!userStore?.user"
+      #default>
       <h1>Hello World</h1>
     </template>
-    <template #default 
-      v-else>
+    <template
+      v-else
+      #default>
       <Login></Login>
     </template>
   </NuxtLayout>
