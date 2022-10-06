@@ -6,7 +6,7 @@
           <h2>Inloggen</h2>
         </template>
         <template #body>
-          <AppForm
+          <!--<AppForm
             action="/token"
             method="post"
             button-label="Inloggen"
@@ -32,7 +32,9 @@
               validation-error-message="Wachtwoord is verplicht"
               required
             />
-          </AppForm>
+          </AppForm>-->
+          <AppButton v-on:click="redirectToLogin()" 
+            :label="'Inloggen'"></AppButton>
         </template>
       </AppCard>
     </div>
@@ -63,5 +65,9 @@ function onValidated() {
 function onSuccess(token: string) {
   window.localStorage.setItem("token", token)
   router.push({ path: '/' });
+}
+
+function redirectToLogin() {
+  document.location = "/bff/login"
 }
 </script>
