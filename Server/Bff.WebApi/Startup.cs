@@ -1,12 +1,15 @@
-﻿using Bff.Core.Framework;
+﻿using Autofac.Core;
+using Bff.Core.Framework;
 using Bff.Core.Framework.Handlers;
 using Bff.Core.Framework.Logging;
 using Bff.Core.Framework.RequestErrorHandling;
 using Bff.WebApi.Services.Administrations.DataAccess.Mysql;
+using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Ninject;
+using Serilog;
 using System.Text.Json.Serialization;
 
 namespace Bff.WebApi
@@ -17,16 +20,21 @@ namespace Bff.WebApi
 
         public IConfiguration Configuration { get; }
 
-        public Startup(IConfiguration configuration)
+        public IHostEnvironment Environment { get; }
+
+        public Startup(IConfiguration configuration, IHostEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
             _kernel = SetupDependecyInjection();
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddHttpContextAccessor();
             services.AddEndpointsApiExplorer();
+            services.AddIamAuthentication(Configuration, Environment.IsDevelopment());
 
             SwaggerConfig.Configure(services);
             LoggerConfig.Configure(services);
@@ -51,20 +59,33 @@ namespace Bff.WebApi
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSerilogRequestLogging();
             SetupDevelopmentEnviroment(app, env);
             SetupProductionEnviroment(app, env);
-
+            
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseBlockPentestingMiddleware();
+            app.UseStaticFiles();
             app.UseRouting();
-            app.UseAuthorization();
+            
+            app.UseIamAuthentication();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
                 endpoints.MapControllerRoute(
                     "default", "{controller=Home}/{action=Index}/{id?}");
             });
+
+            if(env.IsDevelopment())
+            {
+                app.UseSpa(options =>
+                {
+                    options.UseProxyToSpaDevelopmentServer(Configuration["FrontEnd"]);
+                });
+            }
+
             SetupDatabase(app);
         }
 
@@ -97,11 +118,6 @@ namespace Bff.WebApi
             if(env.IsDevelopment())
                 return;
 
-            // Setup Cors for some private adressen
-            app.UseCors(builder =>
-                        builder.AllowAnyOrigin()
-                               .AllowAnyHeader()
-                       );
             app.UseHsts();
         }
 
@@ -110,12 +126,6 @@ namespace Bff.WebApi
             // Configure the HTTP request pipeline.
             if(!env.IsDevelopment())
                 return;
-
-            // Disable Cors for development to make live simpler
-            app.UseCors(builder =>
-                        builder.AllowAnyOrigin()
-                               .AllowAnyHeader()
-                        );
 
             app.UseSwagger();
             app.UseSwaggerUI();
