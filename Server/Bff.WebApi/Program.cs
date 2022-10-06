@@ -1,4 +1,3 @@
-using Autofac.Core;
 using Bff.Core.Framework;
 using Bff.Core.Framework.Handlers;
 using Bff.Core.Framework.Logging;
@@ -9,7 +8,8 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Ninject;
-using System.Runtime.CompilerServices;
+using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
 using System.Text.Json.Serialization;
 
 namespace Bff.WebApi
@@ -21,34 +21,54 @@ namespace Bff.WebApi
         public static async Task Main(string[] args)
         {
             var builder = SetupServices(args);
+            builder.Host.UseSerilog(
+            (ctx, lc) =>
+                lc.WriteTo
+                    .Console(
+                        outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}",
+                        theme: AnsiConsoleTheme.Literate
+                    )
+                    .Enrich.FromLogContext()
+                    .ReadFrom.Configuration(ctx.Configuration)
+        );
 
             var app = builder.Build();
+            app.UseSerilogRequestLogging();
 
             SetupDevelopmentEnviroment(app);
             SetupProductionEnviroment(app);
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            app.UseIamAuthentication();
 
             app.MapControllers();
             app.UseBlockPentestingMiddleware();
-			
-			SetupDatabase(app);
-			
+
+            if(app.Environment.IsDevelopment())
+            {
+                app.UseSpa(options =>
+                {
+                    options.UseProxyToSpaDevelopmentServer(app.Configuration["FrontEnd"]);
+                });
+            }
+
+            SetupDatabase(app);
+
             app.Run();
         }
 
         private static void SetupDatabase(WebApplication app)
-		{
+        {
             using(var scope = app.Services.CreateScope())
             {
                 var administrationContext = scope.ServiceProvider.GetRequiredService<AdministrationContext>();
                 administrationContext.Database.Migrate();
             }
-		}
-		
+        }
+
         private static WebApplicationBuilder SetupServices(string[] args)
         {
             var kernel = SetupDependecyInjection();
@@ -60,7 +80,8 @@ namespace Bff.WebApi
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.UseAuthentication();
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddIamAuthentication(builder.Configuration, builder.Environment.IsDevelopment());
 
             SwaggerConfig.Configure(builder.Services);
             LoggerConfig.Configure(builder.Services);
@@ -84,16 +105,16 @@ namespace Bff.WebApi
                 ServiceLifetime.Scoped));
 
             builder.Services.AddStartupTask<StartApplicationServerTask>();
-			
-			builder.Services.AddDbContext<AdministrationContext>();
-			
+
+            builder.Services.AddDbContext<AdministrationContext>();
+
             return builder;
         }
 
         private static void SetupProductionEnviroment(WebApplication app)
         {
-            if (app.Environment.IsDevelopment())
-                return; 
+            if(app.Environment.IsDevelopment())
+                return;
 
             // Setup Cors for some private adressen
             app.UseCors(builder =>
@@ -106,10 +127,10 @@ namespace Bff.WebApi
         private static void SetupDevelopmentEnviroment(WebApplication app)
         {
             // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
+            if(!app.Environment.IsDevelopment())
                 return;
 
-            // Disable Cors for development to make live simpler
+            // Disable Cors for development to make life simpler
             app.UseCors(builder =>
                         builder.AllowAnyOrigin()
                                .AllowAnyHeader()

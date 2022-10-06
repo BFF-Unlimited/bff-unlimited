@@ -7,6 +7,11 @@ export default defineNuxtConfig({
   css: ['@/styles/index.css'],
   vite: {
     plugins: [eslintPlugin()],
+    server: {
+      hmr: {
+        port: 5001,
+      },
+    },
   },
   runtimeConfig: {
     public: {

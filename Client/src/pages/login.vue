@@ -6,33 +6,10 @@
           <h2>Inloggen</h2>
         </template>
         <template #body>
-          <AppForm
-            action="/token"
-            method="post"
-            button-label="Inloggen"
-            has-primary-button
-            @validated="onValidated"
-            @success="onSuccess"
-          >
-            <FormInput
-              v-model="username"
-              type="text"
-              name="username"
-              label="Gebruikersnaam"
-              :should-validate="shouldValidate"
-              validation-error-message="Gebruikersnaam is verplicht"
-              required
-            />
-            <FormInput
-              v-model="password"
-              type="text"
-              name="password"
-              label="Password"
-              :should-validate="shouldValidate"
-              validation-error-message="Wachtwoord is verplicht"
-              required
-            />
-          </AppForm>
+          <AppButton
+            :label="'Inloggen'"
+            @click="redirectToLogin()" 
+            ></AppButton>
         </template>
       </AppCard>
     </div>
@@ -63,5 +40,9 @@ function onValidated() {
 function onSuccess(token: string) {
   window.localStorage.setItem("token", token)
   router.push({ path: '/' });
+}
+
+function redirectToLogin() {
+  document.location = "/bff/login"
 }
 </script>

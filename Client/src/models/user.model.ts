@@ -13,23 +13,32 @@ export interface ActiveUser {
   permissions: Permission[];
 }
 
+function isIngelogd(input: ActiveUser | {} | null) : input is ActiveUser {
+  return !!input && "id" in input;
+}
+
 export class ActiveUserModel {
   id: string;
   // TODO: Backend moet dit veranderen naar "username"
   userName: string;
-  activeVestiging: Vestiging;
-  activeGroep: Groep;
+  activeVestiging: Vestiging | null;
+  activeGroep: Groep | null;
   vestigingen: Vestiging[];
   groepen: Groep[];
   permissions: Permission[];
 
-  constructor(input: ActiveUser) {
-    this.id = input?.id ?? '';
-    this.userName = input?.userName ?? '';
-    this.activeVestiging = input?.activeVestiging ?? null;
-    this.activeGroep = input?.activeGroep ?? null;
-    this.vestigingen = input?.vestigingen ?? null;
-    this.groepen = input?.groepen ?? null;
-    this.permissions = input?.permissions ?? null;
+  constructor(input: ActiveUser | {}) {
+    if(!isIngelogd(input))
+    {
+      this.id = '';
+      this.userName = '';
+      this.activeVestiging = null;
+      this.activeGroep = null;
+      this.vestigingen = [];
+      this.groepen = [];
+      this.permissions = [];
+      return;
+    }
+    Object.assign(this, input);
   }
 }
