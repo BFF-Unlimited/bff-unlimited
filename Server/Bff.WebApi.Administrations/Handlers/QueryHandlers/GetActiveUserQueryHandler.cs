@@ -1,18 +1,29 @@
 ﻿using Bff.Core.Framework.Handlers;
 using Bff.WebApi.Services.Administrations.Requests.Dto;
 using Bff.WebApi.Services.Administrations.Requests.Queries;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace Bff.WebApi.Services.Administrations.Handlers.QueryHandlers
 {
-    internal class GetActiveUserQueryHandler : AsyncQueryHandlerBase<GetActiveUserQuery>
+    public class GetActiveUserQueryHandler : AsyncQueryHandlerBase<GetActiveUserQuery>
     {
-        protected override async Task<object> DoExecute(GetActiveUserQuery query)
+        private readonly IHttpContextAccessor _contextAccessor;
+
+        public GetActiveUserQueryHandler(IHttpContextAccessor httpContextAccessor)
         {
+            _contextAccessor = httpContextAccessor;
+        }
+
+        protected override Task<object> DoExecute(GetActiveUserQuery query)
+        {
+            if(_contextAccessor?.HttpContext?.User?.Identity is not ClaimsIdentity user)
+                return Task.FromResult(new object());
             var vestiging = new VestigingIdentificationDto("logoUrl", "Vestiging");
             var groep = new GroepIdentificationDto("Groep");
 
-            return await Task.FromResult(new UserDto(
-                userName: "Ans",
+            return Task.FromResult((object)new UserDto(
+                userName: user.Claims.FirstOrDefault(c => c.Type == "given_name")?.Value ?? "",
                 activeVestiging: vestiging,
                 activeGroep: groep,
                 vestigingen: new[] { vestiging },
