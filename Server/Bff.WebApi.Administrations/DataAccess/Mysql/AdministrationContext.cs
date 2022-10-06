@@ -6,6 +6,7 @@ namespace Bff.WebApi.Services.Administrations.DataAccess.Mysql
 {
     public class AdministrationContext : DbContext, IAdministrationContext
     {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
         protected readonly IConfiguration Configuration;
 
         public AdministrationContext(IConfiguration configuration)
@@ -21,8 +22,11 @@ namespace Bff.WebApi.Services.Administrations.DataAccess.Mysql
         }
 
         public DbSet<User>? Users { get; set; }
+
         public DbSet<Leerling>? Leerlingen { get; set; }
+
         public DbSet<Permission>? Permissions { get; set; }
+
         public DbSet<Koppeling>? Koppelingen { get; set; }
         public DbSet<Absentie>? Absenties { get; set; }
         public DbSet<Notitie>? Notities { get; set; }
@@ -30,8 +34,10 @@ namespace Bff.WebApi.Services.Administrations.DataAccess.Mysql
         public DbSet<Groep>? Groepen { get; set; }
         public DbSet<Vestiging>? Vestigingen { get; set; }
 
-        public async Task<User?> GetUser(string username, string password){
+        public async Task<User?> GetUser(string username, string password)
+        {
             return await Users?.FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
         }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
     }
 }
