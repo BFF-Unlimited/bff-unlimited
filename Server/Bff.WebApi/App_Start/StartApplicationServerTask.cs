@@ -30,9 +30,9 @@ namespace Bff.WebApi
             var logger = _loggerFactory.CreateLogger<StartApplicationServerTask>();
             logger.LogInformation("Starting application server");
 
-            this.ConfigureKernel();
+            ConfigureKernel();
 
-            this.LoadModules();
+            LoadModules();
 
             return Task.CompletedTask;
         }
@@ -47,9 +47,9 @@ namespace Bff.WebApi
             var files = di.GetFiles("*.Services.*.dll");
 
             var modules = files
-                .Select(f => Assembly.LoadFrom(f.FullName)
+                .SelectMany(f => Assembly.LoadFrom(f.FullName)
                     .GetExportedTypes()
-                    .FirstOrDefault(type => !type.IsAbstract && type.IsSubclassOf(typeof(ModuleComposite))))
+                    .Where(type => !type.IsAbstract && type.IsSubclassOf(typeof(ModuleComposite))))
                 .Where(a => a != null)
                 .Select(moduleType => (ModuleComposite)_kernel.Get(moduleType))
                 .ToList();

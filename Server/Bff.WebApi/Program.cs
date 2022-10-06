@@ -77,6 +77,7 @@ namespace Bff.WebApi
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddIamAuthentication(builder.Configuration, builder.Environment.IsDevelopment());
 
             SwaggerConfig.Configure(builder.Services);

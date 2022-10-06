@@ -113,6 +113,12 @@ Caveats:
 * Developing backend means turning off the bff_unlimited_client container.
 * When the code for frontend and backend is complete. Then you can use the `docker-compose up --build -d` to view the full result of both frontend and backend. Only needs to be done when developing is finished.
 
+Om Docker containers te kunnen pullen vanuit de privéregistry van Rovict, kun je de volgende commands gebruiken:
+```sh
+az login
+az acr login -n rovict
+```
+
 ## Other scripts
 `npm run ...` | Description
 ---|---
