@@ -1,11 +1,11 @@
-# BFF Unlimited
+# Esis Shin
 
 A proof of concept of the landing page of 'ESIS Nieuw'.
 
 ## Getting started
 
 ```sh
-git clone https://github.com/BFF-Unlimited/bff-unlimited.git
+git clone https://Rovict@dev.azure.com/Rovict/Esis%20%E6%96%B0/_git/Esis%20%E6%96%B0
 ```
 
 ### Development env
@@ -49,9 +49,9 @@ Than you need to "Enable Editor Config Support" and to "Enable Roslyn Analyzers"
 ### Server
 
 ```sh
-cd bff-unlimited/server
+cd Esis%20%E6%96%B0/server
 dotnet restore
-dotnet run --project Bff.WebApi\\Bff.WebApi.csproj
+dotnet run --project Esis.Shin\\Esis.Shin.csproj
 open browser naar: https://localhost:7182/swagger/index.html
 ```
 
@@ -60,7 +60,7 @@ open browser naar: https://localhost:7182/swagger/index.html
 The front-end requires [Node.js](http://nodejs.org/) and [npm](https://npmjs.org/) (comes with Node).
 
 ```sh
-cd bff-unlimited/client
+cd Esis Shin/client
 npm i
 ```
 
@@ -109,8 +109,8 @@ or
 ```
 
 Caveats: 
-* Developing frontend means turning off the bff_unlimited_client container.
-* Developing backend means turning off the bff_unlimited_client container.
+* Developing frontend means turning off the Esis_shin_client container.
+* Developing backend means turning off the Esis_shin_client container.
 * When the code for frontend and backend is complete. Then you can use the `docker-compose up --build -d` to view the full result of both frontend and backend. Only needs to be done when developing is finished.
 
 Om Docker containers te kunnen pullen vanuit de privéregistry van Rovict, kun je de volgende commands gebruiken:

@@ -9,7 +9,7 @@ services:
     networks:
       - Esis_shin_network
     environment: 
-      - MYSQL_DATABASE=Esis_shin
+      - MYSQL_DATABASE=bff_unlimited
       - MYSQL_ROOT_PASSWORD=bffunlimited123
     volumes:
       - db-data:/var/lib/mysql
@@ -57,7 +57,7 @@ services:
   server: 
     build: 
       context: ./Server
-      dockerfile: Bff.WebApi/Dockerfile
+      dockerfile: Esis.Shin/Dockerfile
     container_name: Esis_shin_server
     ports:
       - 5000:80
@@ -65,8 +65,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=bff123
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/Bff.WebApi.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=EsisShin123
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/Esis.Shin.pfx
       - Authentication__ClientId=EsisShin
       - Authentication__ClientSecret=ShinMegamiTensei
       - Authentication__ExternalUrl=https://localhost:7201

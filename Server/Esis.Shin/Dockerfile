@@ -8,7 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Esis.Shin/Esis.Shin.csproj", "Esis.Shin/"]
-COPY ["Esis.Shin.Administrations/Esis.Shin.Services.Administrations.csproj", "Esis.Shin.Administrations/"]
+COPY ["Esis.Shin.Services.Administrations/Esis.Shin.Services.Administrations.csproj", "Esis.Shin.Services.Administrations/"]
 COPY ["Esis.Shin.Core/Esis.Shin.Core.csproj", "Esis.Shin.Core/"]
 RUN dotnet restore "Esis.Shin/Esis.Shin.csproj"
 COPY . .

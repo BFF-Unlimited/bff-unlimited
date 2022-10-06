@@ -13,7 +13,7 @@
     "build-storybook": "build-storybook",
     "docker-compose": "docker compose up -d",
     "docker-rebuild": "docker compose up --build -d",
-    "cypress:run": "cypress run -e PACT_PROVIDER=bff-mock-provider PACT_CONSUMER=bff-client"
+    "cypress:run": "cypress run -e PACT_PROVIDER=Esis-shin-mock-provider PACT_CONSUMER=Esis-shin-client"
   },
   "devDependencies": {
     "@babel/core": "^7.19.0",

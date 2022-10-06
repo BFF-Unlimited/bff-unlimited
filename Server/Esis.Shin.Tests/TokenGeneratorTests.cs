@@ -49,7 +49,7 @@ namespace Esis.Shin.Tests
                                            "Client",
                                            "cypress",
                                            "pacts",
-                                           "bff-mock-provider-undefined.json");
+                                           "Esis-shin-mock-provider-undefined.json");
 
             _verifier
                 .ServiceProvider("Event API", _fixture.ServerUri)

@@ -19,8 +19,8 @@ const pactCypressPlugin = require('@pactflow/pact-cypress-adapter/dist/plugin')
 const fs = require('fs')
 
 module.exports = (on, config) => {
-  config.env.PACT_PROVIDER = process.env.PACT_PROVIDER || 'bff-packt-provider'
-  config.env.PACT_CONSUMER = process.env.PACT_CONSUMER || 'bff-packt-consumer'
+  config.env.PACT_PROVIDER = process.env.PACT_PROVIDER || 'Esis-shin-packt-provider'
+  config.env.PACT_CONSUMER = process.env.PACT_CONSUMER || 'Esis-shin-packt-consumer'
   pactCypressPlugin(on, config, fs)
   return config
 }
