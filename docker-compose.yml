@@ -29,6 +29,7 @@ services:
   iam:
     image: rovict.azurecr.io/esisshin-iam:latest-dev
     ports:
+      - 7200:80
       - 7201:443
     networks:
       - bff_unlimited_network
@@ -70,7 +71,6 @@ services:
       - Authentication__ClientSecret=ShinMegamiTensei
       - Authentication__ExternalUrl=https://localhost:7201
       - Authentication__InternalUrl=http://iam
-      #- FrontEnd=http://client:3000
       - FrontEnd=http://host.docker.internal:3000
     networks:
       - bff_unlimited_network
