@@ -15,29 +15,29 @@ namespace Bff.WebApi.Services.Administrations.Handlers.QueryHandlers
             _contextAccessor = httpContextAccessor;
         }
 
-        protected override Task<object> DoExecute(GetActiveUserQuery query)
+        protected override async Task<object> DoExecute(GetActiveUserQuery query)
         {
             if(_contextAccessor?.HttpContext?.User?.Identity is not ClaimsIdentity user)
                 return Task.FromResult(new object());
             var vestiging = new VestigingIdentificationDto("logoUrl", "Vestiging");
             var groep = new GroepIdentificationDto("Groep");
-
-            return Task.FromResult((object)new UserDto(
-                userName: user.Claims.FirstOrDefault(c => c.Type == "given_name")?.Value ?? "",
-                activeVestiging: vestiging,
-                activeGroep: groep,
-                vestigingen: new[] { vestiging },
-                groepen: new[] { groep },
-                permissions: new[] {
-                    new PermissionDto("permission://Groep.Overview", "Groep.Overview", "Groepsoverzicht"),
-                    new PermissionDto("permission://Groep.Groepsplan", "Groep.Groepsplan", "Groepsplan"),
-                    new PermissionDto("permission://Groep.About", "Groep.About", "Over"),
-                    new PermissionDto("permission://Leerling.Overview", "Leerling.Overview", "Leerlingenoverzicht"),
-                    new PermissionDto("permission://Leerling.Search", "Leerling.Search", "Leerling zoeken"),
-                    new PermissionDto("permission://Registration.Overview", "Registration.Overview", "Registratieoverzicht"),
-                    new PermissionDto("permission://Registration.Create", "Registration.Create", "Registratie aanmaken")
-                }));
-            ;
+            var result = new UserDto
+            {
+                UserName = user.Claims.FirstOrDefault(c => c.Type == "given_name")?.Value ?? "",
+                ActiveVestiging = vestiging,
+                ActiveGroep = groep
+            };
+            result.Vestigingen.Add(vestiging);
+            result.Groepen.Add(groep);
+            result.Permissions.Add(new PermissionDto("permission://Groep.Overview", "Groep.Overview", "Groepsoverzicht"));
+            result.Permissions.Add(new PermissionDto("permission://Groep.Groepsplan", "Groep.Groepsplan", "Groepsplan"));
+            result.Permissions.Add(new PermissionDto("permission://Groep.About", "Groep.About", "Over"));
+            result.Permissions.Add(new PermissionDto("permission://Leerling.Overview", "Leerling.Overview", "Leerlingenoverzicht"));
+            result.Permissions.Add(new PermissionDto("permission://Leerling.Search", "Leerling.Search", "Leerling zoeken"));
+            result.Permissions.Add(new PermissionDto("permission://Registration.Overview", "Registration.Overview", "Registratieoverzicht"));
+            result.Permissions.Add(new PermissionDto("permission://Registration.Create", "Registration.Create", "Registratie aanmaken"));
+            
+            return await Task.FromResult(result);
         }
     }
 }

@@ -3,14 +3,13 @@
     public class Groep
     {
         public Guid GroepId { get; set; }
-        public string Name { get; set; }
-
+        
+        public string Name { get; set; } = String.Empty;
 
         public Guid VestigingId { get; set; }
-        public Vestiging Vestiging { get; set; }
 
-        public ICollection<Leerling> Leerlingen { get; set; }
+        public Vestiging? Vestiging { get; set; }
 
-
+        public IList<Leerling> Leerlingen { get; } = new List<Leerling>();
     }
 }

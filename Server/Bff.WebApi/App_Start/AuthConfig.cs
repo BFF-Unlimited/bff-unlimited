@@ -104,7 +104,7 @@ namespace Bff.WebApi
         private static IEnumerable<string> GebruikersprofielEnEsisInformatie => new[] { "openid", "profile", "api", "rollen" };
 
 
-        public static void UseIamAuthentication(this WebApplication app)
+        public static void UseIamAuthentication(this IApplicationBuilder app)
         {
             app.UseBff();
 

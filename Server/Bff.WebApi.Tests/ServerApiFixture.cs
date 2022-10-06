@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading.Tasks;
 
@@ -8,14 +9,19 @@ namespace Bff.WebApi.Tests
 {
     public class ServerApiFixture
     {
-        public Uri ServerUri { get; }
+        public Uri ServerUri { get; } = new Uri("http://127.0.0.1:5000");
 
         public ServerApiFixture()
         {
-            var task = Program.Main(null);
-            _ = task.GetAwaiter();
-            _ = task.Wait(4000);
-            ServerUri = new Uri(Program.ServerUrl);
+            var host = Host.CreateDefaultBuilder()
+                .ConfigureWebHostDefaults(
+                    webBuilder =>
+                    {
+                        webBuilder.UseStartup<Startup>();
+                        webBuilder.UseUrls(ServerUri.ToString());
+                    }).Build();
+
+            host.RunAsync();
         }
     }
 }

@@ -6,6 +6,6 @@
         public string Username { get; set; } = String.Empty;
         public string Password { get; set; } = String.Empty;
 
-        public ICollection<Permission> Permissions { get; set; }
+        public IList<Permission> Permissions { get; } = new List<Permission>();
     }
 }

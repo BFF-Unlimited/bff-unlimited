@@ -1,9 +1,6 @@
-FROM node:lts-alpine
+FROM node:lts
 
 WORKDIR /app
-
-RUN apk update && apk upgrade
-RUN apk add git
 
 COPY ./package*.json /app/
 
